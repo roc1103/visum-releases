@@ -2,11 +2,13 @@
 
 This repository is the official native integration source for Visum. It packages one canonical `skills/visum` behaviour tree for ten current AI coding agents, plus a legacy Roo Code installation path. Visum Mode, guided numbered choices, `y`/`n` replies, natural conversation, entry and exit behaviour, local CLI orchestration, update checks, diagnostics boundaries and Confector authority rules are identical in every current package.
 
-The host AI handles conversation. The local Visum CLI and Visum Engine perform visual capture, teaching, training, testing, inference and authorised actions. Installing or using this integration is subject to the repository's Visum Software Licence, but it does not install the separate Visum CLI or accept the additional CLI/model installation terms on the user's behalf.
+The host AI handles conversation. The local Visum CLI and Visum Engine perform visual capture, teaching, training, testing, inference and authorised actions. This integration is open source, but it does not install the separate Visum CLI or accept the proprietary CLI/model installation terms on the user's behalf.
 
 ## Licence
 
-The Visum AI Skill and official Visum agent-integration packages are proprietary RO Company software supplied under the [Visum Software Licence Terms](LICENSE.txt). The licence permits installation and use with supported host agents and permits an RO Company-authorised marketplace to host and distribute the unmodified integration. It does not grant rights to redistribute Visum Developer, Visum Player, the Visum CLI, Visum Engine or official untrained RO Company base models.
+The source in this repository is licensed under the [Apache License 2.0](LICENSE.txt). This licence applies only to the Visum AI integration and its host-agent wrappers. Visum Developer, Visum Player, the Visum CLI, Visum Engine and official untrained RO Company base models are separate proprietary products governed by their own terms.
+
+The integration itself does not transmit user content. Optional Visum CLI diagnostics and explicit example sharing are separate, user-controlled features documented in the skill and covered by the [Visum legal and privacy notices](https://ai.rocompany.co.uk/legal). Support is available at `visum@rocompany.co.uk`.
 
 ## Claude Code terminal client
 
@@ -31,7 +33,7 @@ Native form: a project skill committed at `.claude/skills/visum` in the reposito
 From the repository directory in Terminal, install the verified project skill:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.3/install-claude-code-app.sh | sh -s -- --project "$PWD"
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.4/install-claude-code-app.sh | sh -s -- --project "$PWD"
 ```
 
 Then commit `.claude/skills/visum` to that repository. New Claude Code web/desktop cloud sessions clone the skill with the project and can enter Visum Mode when asked. A local Claude Code installation may instead use `--user` to install at `~/.claude/skills/visum`.

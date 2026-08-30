@@ -4,7 +4,7 @@ set -eu
 visum_repository="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 visum_expected_version="$(tr -d '\n' < "$visum_repository/skills/visum/VERSION")"
 visum_expected_cli_version="0.1.2"
-visum_expected_license="LicenseRef-Visum-Software-Licence-1.1"
+visum_expected_license="Apache-2.0"
 
 fail() {
     printf '%s\n' "FAIL: $*" >&2
@@ -70,10 +70,15 @@ visum_copilot_license="$(jq -r '.plugins[0].license // empty' "$visum_repository
 cmp -s "$visum_repository/LICENSE.txt" "$visum_repository/skills/visum/LICENSE.txt" || {
     fail "root and distributed skill licence texts differ"
 }
-grep -q '^Version: 1\.1' "$visum_repository/LICENSE.txt" || fail "licence is not version 1.1"
-grep -q 'Visum AI Skill' "$visum_repository/LICENSE.txt" || fail "licence does not cover the Visum AI Skill"
-grep -q 'agent-integration package' "$visum_repository/LICENSE.txt" || fail "licence does not cover agent integrations"
-pass "all supported manifests and distributed packages carry the exact Visum Software Licence 1.1"
+grep -q '^Apache License$' "$visum_repository/LICENSE.txt" || fail "licence is not Apache 2.0"
+grep -q '^Version 2\.0, January 2004$' "$visum_repository/LICENSE.txt" || fail "Apache licence version is missing"
+[ -s "$visum_repository/NOTICE.txt" ] || fail "Apache attribution notice is missing"
+[ -s "$visum_repository/skills/visum/NOTICE.txt" ] || fail "distributed skill notice is missing"
+cmp -s "$visum_repository/NOTICE.txt" "$visum_repository/skills/visum/NOTICE.txt" || {
+    fail "root and distributed skill notices differ"
+}
+grep -q '^Visum AI Integration$' "$visum_repository/NOTICE.txt" || fail "notice does not identify the integration"
+pass "all supported manifests and distributed packages carry Apache License 2.0"
 
 for visum_wrapper in visum-agent visum-claude visum-codex; do
     diff -rq \

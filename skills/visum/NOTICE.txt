@@ -1,0 +1,6 @@
+Visum AI Integration
+Copyright 2026 RO Company
+
+This repository contains the open-source conversational integration and host-agent wrappers for Visum.
+
+Visum Developer, Visum Player, Visum CLI, Visum Engine, official RO-ER base models, RO Company names and RO Company logos are not licensed under the Apache License 2.0 merely because this integration refers to them.

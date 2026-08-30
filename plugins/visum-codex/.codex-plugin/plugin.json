@@ -6,7 +6,7 @@
     "email": "visum@rocompany.co.uk",
     "url": "https://ai.rocompany.co.uk/visum"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "keywords": [
     "visum",
     "computer-vision",
@@ -14,7 +14,7 @@
     "local-ai"
   ],
   "repository": "https://github.com/roc1103/visum-releases",
-  "license": "LicenseRef-Visum-Software-Licence-1.1",
+  "license": "Apache-2.0",
   "skills": "./skills/",
   "interface": {
     "displayName": "Visum",

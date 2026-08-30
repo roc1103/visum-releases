@@ -1,126 +1,201 @@
-# Visum Software Licence Terms
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
 
-Version: 1.1  
-Effective date: the date the first Visum release carrying these version 1.1 terms is made publicly available in the official RO Company GitHub Release
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
-These terms are between **Rohan Nand Chawla, trading as RO Company**, of 2 Ocklye Cottages, Glenmore Road, Crowborough, East Sussex, TN6 1TW, England, United Kingdom (“RO Company”, “we”, “us”), and the person or organisation that installs or uses Visum Developer, Visum Player, the Visum CLI, Visum Engine, the Visum AI Skill, an official Visum agent-integration package or their bundled software (“you”).
+1. Definitions.
 
-By selecting **Agree and Continue**, installing or using the software, you agree to these terms. If you do not agree, do not use the software.
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
 
-## 1. Visum
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
 
-Visum is software for creating, training, testing, coordinating and running local visual models. Visum Developer creates editable visual solutions and exports `.visum` files. Visum Player runs `.visum` files. The CLI, SDK and Visum Engine expose the same capabilities for applications and workflows.
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   "control" means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
 
-The Visum AI Skill and official Visum agent-integration packages provide guided conversational access to documented Visum CLI and Engine workflows through supported host agents. They do not contain a separate visual model or grant a host agent authority beyond the permissions, confirmations and boundaries that apply to the underlying Visum operation.
+   "You" (or "Your") shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
 
-The initial release supports Apple Silicon Macs running macOS 14 or later. Training, captures, model execution and project data remain local unless you deliberately export, publish or send something elsewhere.
+   "Source" form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
 
-## 2. Licence grant
+   "Object" form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
 
-Subject to these terms, RO Company grants you a worldwide, non-exclusive, revocable licence to:
+   "Work" shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
 
-- install and use the software on devices you own or control;
-- copy, install and use an unmodified official Visum AI Skill or agent-integration package with a supported host agent;
-- use it for personal, educational, internal-business and commercial purposes;
-- create, edit, test and distribute your own Visum projects and trained visual solutions;
-- call documented Visum interfaces from your own applications and workflows; and
-- embed an unmodified copy of Visum Engine in an application you distribute, provided it is not offered as a standalone engine and the attribution in section 4 is retained.
+   "Derivative Works" shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
 
-RO Company may authorise an agent provider or marketplace operator to host, copy and distribute an unmodified official Visum AI Skill or agent-integration package solely for listing, installation, operation and updates through that provider or marketplace. This permission applies only while that distribution remains authorised by RO Company and preserves the licence, publisher identity and integrity of the package.
+   "Contribution" shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, "submitted"
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as "Not a Contribution."
 
-The software is licensed, not sold. Official RO-ER model packs are also governed by the RO-ER Model Licence.
+   "Contributor" shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
 
-## 3. Distribution restrictions
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
 
-You must not:
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
 
-- redistribute Visum Developer, Visum Player, the Visum CLI or Visum Engine as standalone software;
-- publish unofficial installers, mirrors or modified application bundles;
-- redistribute the Visum AI Skill or an official Visum agent-integration package through an unofficial mirror or marketplace, or publish a modified package as an official Visum integration;
-- redistribute official untrained RO Company base models or extract their weights for separate distribution;
-- remove or falsify provenance, lineage, rights, integrity, version, attribution or safety information;
-- bypass package validation, permissions, confirmations or other security boundaries;
-- use RO Company names, model names or logos to suggest endorsement of your application or trained model; or
-- use the software unlawfully or to infringe another person’s rights.
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
 
-You may direct others to the official download page and GitHub Release. Nothing in these terms restricts conduct that applicable law expressly permits despite a contractual restriction.
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
 
-## 4. Attribution
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
 
-An application or trained model distributed using official RO-ER models or an embedded Visum Engine must include this notice in its credits, documentation or other reasonably visible attribution area:
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
 
-> Built using RO Company’s RO-ER Visum models.
+   (d) If the Work includes a "NOTICE" text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
 
-You must not present the official models, Visum Engine or Visum formats as your own creation.
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
 
-Every hosted or redistributed copy of the Visum AI Skill or an official Visum agent-integration package must retain its licence notice and identify RO Company as its publisher. Merely using the integration does not require an additional public attribution from an end user.
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
 
-## 5. Your content and trained work
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
 
-You retain the rights you lawfully hold in your captures, recordings, labels, instructions, configurations and other original material. You are responsible for obtaining every permission, consent, licence and data-protection basis needed to capture, import, train on, distribute or publish that material.
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
 
-RO Company does not claim ownership of your project content. Rights in official base models remain with their respective rights holders. Distribution of a trained model containing or depending on official weights remains subject to the RO-ER Model Licence.
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
 
-## 6. Confector and computer actions
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf of
+   any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
 
-Confector is an execution system. It may carry out a typed computer action only through a host runtime that binds the action to a target, validates its schema, checks current permissions and applies the configured confirmation policy. Confector output does not itself grant authority.
+END OF TERMS AND CONDITIONS
 
-You are responsible for every target, instruction and action you enable. You must not use Confector to access a device or account without permission, evade security, manipulate credentials, make an unauthorised payment or commitment, or perform an unlawful action.
+APPENDIX: How to apply the Apache License to your work.
 
-## 7. Safety-critical and high-impact use
+   To apply the Apache License to your work, attach the following
+   boilerplate notice, with the fields enclosed by brackets "[]"
+   replaced with your own identifying information. (Don\'t include
+   the brackets!)  The text should be enclosed in the appropriate
+   comment syntax for the file format. We also recommend that a
+   file or class name and description of purpose be included on the
+   same "printed page" as the copyright notice for easier
+   identification within third-party archives.
 
-Visum and the RO-ER models are not designed, tested or certified as safety-critical systems. You must not use them as the sole control or sole decision-maker where an error could cause death, personal injury, physical damage, unlawful discrimination or another serious consequence.
+Copyright [yyyy] [name of copyright owner]
 
-You must provide suitable human supervision, independent safeguards, testing, fallbacks and authority checks for your deployment. You are responsible for deciding whether a model, dataset, threshold and action policy are suitable for your particular use.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-## 8. Alpha limitations
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Visual and temporal models can miss items, return false matches, lose track of state, abstain or select an incorrect result. Outputs may change with images, displays, operating-system changes, training data and model versions. Model cards and displayed limitations form part of the product description.
-
-You must test your own trained solution on representative independent data before relying on it. Alpha status does not remove any right or obligation that applicable law makes mandatory.
-
-## 9. Updates
-
-Visum Developer and Visum Player check their signed update feeds when they launch and every six hours while running. The Visum CLI and AI Skill check only when you or an authorised AI workflow runs a Visum update command. The updater may download, verify, replace and relaunch the relevant application after you approve installation; automatic installation is disabled. An update to Visum Developer may include compatible Visum Engine and official model components. Updates preserve user projects and exported files; a migration that changes stored project data must first create a recoverable local backup.
-
-We may issue compatible or incompatible updates. We do not guarantee a particular support period or response time, but aim to respond to support requests as soon as reasonably practicable.
-
-## 10. Charges
-
-Visum 0.1.0 Alpha is supplied free of charge. There is no subscription, purchase price or paid-service commitment under these terms. Separate future products or services will require their own clearly disclosed terms before any charge is made.
-
-## 11. Third-party software
-
-Visum contains third-party software and pretrained components. Their notices and licence texts are included with the distribution. Those licences govern the rights their authors grant directly and may provide additional rights.
-
-## 12. Privacy
-
-The Visum Privacy Notice explains the processing performed by the applications and update service. The current applications contain no analytics, advertising, telemetry or automatic crash-report upload.
-
-## 13. Responsibility and liability
-
-You use RO-ER models at your discretion and remain responsible for your deployment, data, instructions, permissions, supervision, integrations and resulting actions. RO Company is not responsible for loss caused by unlawful or prohibited use, ignored warnings, unsuitable or unauthorised data, inadequate testing or supervision, user or third-party modifications, third-party services, or operation outside documented capabilities.
-
-To the maximum extent permitted by law, the software and models are supplied without promises beyond their documented description, and RO Company excludes liability for indirect or consequential loss, loss of profits, revenue, business, opportunity, goodwill or data, and loss arising from a model output or automated action.
-
-For a business user, to the maximum extent permitted by law, RO Company’s total aggregate liability arising from this free Alpha software is **£0**. The business user will indemnify RO Company against third-party claims arising from that user’s deployment, instructions, data or breach of these terms, except to the extent a claim was caused by RO Company.
-
-Nothing in these terms excludes or limits liability where doing so would be unlawful, including liability for fraud or fraudulent misrepresentation, death or personal injury caused by negligence, or mandatory consumer rights. If applicable law does not permit a particular exclusion or limitation, it applies only to the maximum extent permitted.
-
-## 14. Ending the licence
-
-You may stop using and uninstall the software at any time. RO Company may end this licence if you materially breach it and fail to remedy the breach after any notice required by law. On termination, you must stop using and redistributing RO Company software and official model material, except where applicable law or another licence permits continued use. Your ownership of your original project content is not transferred.
-
-## 15. Changes to these terms
-
-The accepted legal version and a fingerprint of the exact documents are stored locally. A material change requires fresh acceptance. Continued silence will not be treated as acceptance where the law requires an active agreement.
-
-## 16. Law, contact and general terms
-
-These terms are governed by the law of England and Wales. Courts with jurisdiction under applicable consumer law retain that jurisdiction; otherwise the courts of England and Wales have exclusive jurisdiction.
-
-Support and complaints: `support@rocompany.co.uk`  
-Security reports: `security@rocompany.co.uk`  
-Postal contact: the address stated at the beginning of these terms.
-
-These terms, the applicable RO-ER Model Licence and third-party notices are the agreement for the supplied software. If a provision is unenforceable, the remaining provisions continue. A delay in enforcing a right is not a waiver.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
