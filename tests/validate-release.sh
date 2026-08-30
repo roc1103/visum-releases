@@ -113,6 +113,7 @@ pass "AI Skill version is independent and pins the existing public CLI $visum_ex
 
 grep -q '^name: visum$' "$visum_repository/skills/visum/SKILL.md" || fail "skill name is not visum"
 grep -q '^description: .' "$visum_repository/skills/visum/SKILL.md" || fail "skill description is missing"
+grep -q '^license: Apache-2\.0$' "$visum_repository/skills/visum/SKILL.md" || fail "skill SPDX licence metadata is missing"
 grep -q 'first line must be exactly `Visum Mode active\.`' "$visum_repository/skills/visum/SKILL.md" || {
     fail "exact Visum Mode activation token is not mandatory"
 }

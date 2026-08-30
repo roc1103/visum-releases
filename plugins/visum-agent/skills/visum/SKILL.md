@@ -1,6 +1,7 @@
 ---
 name: visum
 description: Operate the local Visum CLI to capture and teach visual material, train and test Visum models, manage Visum artifacts, coordinate model teams, run visual inference, and perform explicitly authorised Confector actions. Use for Visum Developer-compatible workflows and Visum file types; do not use for unrelated computer vision tools.
+license: Apache-2.0
 ---
 
 # Visum

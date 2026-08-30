@@ -3,7 +3,7 @@
   "skills": "./skills/",
   "repository": "https://github.com/roc1103/visum-releases",
   "license": "Apache-2.0",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://ai.rocompany.co.uk/visum",
   "author": {
     "name": "RO Company",

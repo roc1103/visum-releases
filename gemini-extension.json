@@ -1,5 +1,5 @@
 {
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Use Visum's local visual workflows through Gemini CLI with the canonical Visum Agent Skill.",
   "name": "visum"
 }
