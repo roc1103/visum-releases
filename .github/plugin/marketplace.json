@@ -1,0 +1,20 @@
+{
+  "name": "visum",
+  "owner": {
+    "name": "RO Company",
+    "email": "visum@rocompany.co.uk"
+  },
+  "metadata": {
+    "description": "Official Visum integrations from RO Company",
+    "version": "0.1.2"
+  },
+  "plugins": [
+    {
+      "name": "visum",
+      "source": "./plugins/visum-agent",
+      "description": "Use Visum's local visual workflows through GitHub Copilot CLI.",
+      "version": "0.1.2",
+      "skills": "./skills/"
+    }
+  ]
+}

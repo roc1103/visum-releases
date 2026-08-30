@@ -1,0 +1,34 @@
+{
+  "homepage": "https://ai.rocompany.co.uk/visum",
+  "name": "visum",
+  "author": {
+    "name": "RO Company",
+    "email": "visum@rocompany.co.uk",
+    "url": "https://ai.rocompany.co.uk/visum"
+  },
+  "version": "0.1.2",
+  "keywords": [
+    "visum",
+    "computer-vision",
+    "visual-ai",
+    "local-ai"
+  ],
+  "repository": "https://github.com/roc1103/visum-releases",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Visum",
+    "developerName": "RO Company",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Guided visual capture and teaching",
+      "Local model training and testing",
+      "Visum artifact management",
+      "Bounded Confector actions"
+    ],
+    "defaultPrompt": "Enter Visum Mode and show me the most relevant next step.",
+    "longDescription": "A guided conversational interface for Visum capture, teaching, training, testing, inference, model coordination and explicitly authorised Confector actions.",
+    "websiteURL": "https://ai.rocompany.co.uk/visum",
+    "shortDescription": "Use Visum's local visual workflows from Codex."
+  },
+  "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows."
+}

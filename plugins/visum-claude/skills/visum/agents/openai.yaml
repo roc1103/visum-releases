@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visum AI Skill"
+  short_description: "Operate Visum through its local CLI"
+  default_prompt: "Use $visum to enter Visum Mode and guide me through my visual workflow in natural language."

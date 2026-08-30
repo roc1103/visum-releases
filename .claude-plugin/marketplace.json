@@ -1,0 +1,18 @@
+{
+  "name": "visum",
+  "owner": {
+    "name": "RO Company",
+    "email": "visum@rocompany.co.uk",
+    "url": "https://ai.rocompany.co.uk/visum"
+  },
+  "metadata": {
+    "description": "Official Visum integrations from RO Company"
+  },
+  "plugins": [
+    {
+      "name": "visum",
+      "source": "./plugins/visum-claude",
+      "description": "Use Visum's local visual workflows through Claude Code."
+    }
+  ]
+}

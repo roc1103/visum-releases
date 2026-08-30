@@ -1,0 +1,18 @@
+{
+  "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows.",
+  "skills": "./skills/",
+  "repository": "https://github.com/roc1103/visum-releases",
+  "version": "0.1.2",
+  "homepage": "https://ai.rocompany.co.uk/visum",
+  "author": {
+    "name": "RO Company",
+    "email": "visum@rocompany.co.uk"
+  },
+  "keywords": [
+    "visum",
+    "computer-vision",
+    "visual-ai",
+    "local-ai"
+  ],
+  "name": "visum"
+}

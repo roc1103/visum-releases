@@ -1,0 +1,20 @@
+{
+  "name": "visum",
+  "repository": "https://github.com/roc1103/visum-releases",
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows.",
+  "keywords": [
+    "visum",
+    "computer-vision",
+    "visual-ai",
+    "local-ai",
+    "agent-skill"
+  ],
+  "homepage": "https://ai.rocompany.co.uk/visum",
+  "author": {
+    "name": "RO Company",
+    "email": "visum@rocompany.co.uk",
+    "url": "https://ai.rocompany.co.uk/visum"
+  },
+  "version": "0.1.2"
+}

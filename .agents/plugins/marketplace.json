@@ -1,0 +1,23 @@
+{
+  "name": "visum",
+  "interface": {
+    "displayName": "Visum"
+  },
+  "plugins": [
+    {
+      "name": "visum",
+      "source": {
+        "source": "local",
+        "path": "./plugins/visum-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_USE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
