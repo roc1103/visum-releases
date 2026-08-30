@@ -1,6 +1,6 @@
 {
   "name": "visum",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows.",
   "skills": "./skills/",
   "author": {

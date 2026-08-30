@@ -12,7 +12,7 @@ visum --version
 visum doctor --json
 ```
 
-If `visum` is absent, explain that the AI Skill is an instruction layer and requires the separate local CLI. Obtain explicit authorisation to install it. The user—not the agent—must review and accept the Visum Software Licence and RO-ER Model Licence.
+If `visum` is absent, explain that the AI Skill is an instruction layer and requires the separate local CLI. Obtain explicit authorisation to install it. The actual licensee—not the agent, administrator, installer, device owner, or person preparing a computer for somebody else—must review and accept the Visum Software Licence and RO-ER Model Licence. If that person is absent, stop before acceptance and do not provide an acceptance command as a workaround.
 
 The skill includes a pinned installer for the public `0.1.2` Alpha release:
 
@@ -20,7 +20,7 @@ The skill includes a pinned installer for the public `0.1.2` Alpha release:
 ./scripts/install_cli.sh --accept-licences
 ```
 
-Only pass `--accept-licences` after the user explicitly confirms acceptance. The installer:
+Only pass `--accept-licences` after the actual licensee explicitly confirms acceptance in the current conversation. Do not infer acceptance from an earlier request to install, an administrator role, device ownership, or a request to prepare the computer for another person. The installer:
 
 - downloads the official GitHub release asset;
 - verifies its pinned SHA-256 digest;

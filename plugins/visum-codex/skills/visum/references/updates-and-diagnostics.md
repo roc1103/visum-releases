@@ -32,7 +32,7 @@ Inspect the current choice:
 visum diagnostics status --json
 ```
 
-Enable or disable only after the user chooses:
+Enable or disable only after the person whose installation and data are affected chooses:
 
 ```sh
 visum diagnostics enable --json
@@ -40,6 +40,8 @@ visum diagnostics disable --json
 ```
 
 Anonymous diagnostics contain only approved structured fields such as product and model versions, command group, timing, error code, item count, coarse macOS version and whether an operation succeeded. They never contain files, captures, paths, filenames, labels, prompts or typed text. Failure to send diagnostics must never block local Visum work.
+
+Consent is personal. A device owner, administrator, developer, installer, or person preparing a computer for somebody else cannot choose diagnostics for the eventual user. In that situation, leave diagnostics disabled or undecided and tell the preparer that Visum will ask the affected person later. Do not provide an enable command as a workaround, even if the preparer asks to enable everything before handoff. Only show or run the enable command after the affected person makes the choice in the current conversation.
 
 ## Explicit visual-example sharing
 

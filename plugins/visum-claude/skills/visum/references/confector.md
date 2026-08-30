@@ -1,6 +1,6 @@
 # Confector execution
 
-Visum Confector is the executor. It can enact bounded computer actions through a validated `.visumbundle`; it is not merely an action-suggestion model.
+Visum Confector is the executor. It can enact bounded computer actions through a validated internal bundle packaged inside a public `.visum`; it is not merely an action-suggestion model. In ordinary user-facing conversation, call the runnable artifact a `.visum`. The internal `.visumbundle` name belongs only in exact CLI commands or technical explanations when the user explicitly asks for them; do not present it as another file users must choose or distribute. When refusing or pausing an unsafe, unauthorised, or insufficiently grounded action, explain what is missing without displaying a runnable Confector command or the internal bundle filename.
 
 ## Preconditions
 

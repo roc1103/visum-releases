@@ -14,8 +14,9 @@
 - `.visumproject`: persistent editable work for one visual solution. It may use multiple model roles.
 - `.visumset`: immutable prepared training, validation, and locked-test data.
 - `.visumpack`: one independently identifiable trained model, official base model, or Lux Reference Pack, including contracts, evidence, rights, lineage, provenance, and integrity records.
-- `.visumbundle`: a deterministic team of unchanged Model Packs plus Procurator routing, compatibility, governance, and optional Confector policy.
-- `.visum`: portable runnable and editable solution containing the coordinated bundle, its project, datasets, and training-compatible model weights.
+- `.visum`: the public portable runnable and editable solution containing its coordinated models, project, datasets, training-compatible model weights, Procurator routing, and optional Confector policy.
+
+Visum Engine uses an internal bundle artifact while building and validating a `.visum`. The CLI exposes `visum bundle` commands for technical workflows, but the internal extension is not a separate public format to offer in ordinary conversation. Never invent or propose a Visum file extension.
 
 ## Choosing the path
 

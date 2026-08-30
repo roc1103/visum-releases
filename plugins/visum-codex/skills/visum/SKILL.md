@@ -41,7 +41,7 @@ Follow the remaining exit and topic-change rules in the conversation reference.
 2. If the command is missing, read [references/installation.md](references/installation.md). Say that Visum CLI is required and offer installation as a specific `y`/`n` or numbered choice. Never accept a licence for the user, install software merely because the user requested a later Visum operation, or imply that operation started.
 3. Read the installed skill version from `VERSION`, then run `VISUM_AI_SKILL_VERSION="$(tr -d '\\n' < VERSION)" visum update check all --json` from this skill directory. If an update is available, explain it and obtain authorisation before installing it. Read [references/updates-and-diagnostics.md](references/updates-and-diagnostics.md) for the exact workflow.
 4. Run `visum doctor --json` before the first substantive operation. Report any failed capability instead of implying it works.
-5. If diagnostics are undecided, explain the privacy-safe fields and ask whether the user wants to enable them. Never enable diagnostics or submit visual material on the user's behalf.
+5. If diagnostics are undecided, explain the privacy-safe fields and ask whether the person whose Visum installation and data are affected wants to enable them. Never accept licences, enable diagnostics, or submit visual material on anyone's behalf. Device ownership, administrator access, setup work, or preparing a computer for somebody else does not transfer that decision. When the affected person is absent, leave diagnostics disabled or undecided and do not provide commands that would bypass their decision.
 6. Prefer `--json` for inspection, automation, inference, and validation. Treat a non-zero exit code as failure even if partial output exists.
 7. Run commands from the user's chosen working directory and quote paths. Do not move, rename, overwrite, delete, publish, or upload their artifacts unless requested.
 
@@ -66,6 +66,7 @@ Inspect the live command surface with `visum --help` when exact options matter. 
 - Prefer the compatible official base model when adapting Vexillum or Peritus. Use `--from-scratch` only when the user explicitly requests it. Lux reference training builds cumulative visual references; it does not retrain the official Lux encoder.
 - Peritus consumes ordered structured observations, normally produced by Vexillum. It does not interpret raw images directly.
 - Procurator coordinates unchanged model packs. Confector executes bounded computer actions; it is not a suggestion-only model.
+- The public coordinated solution is a `.visum`. The engine may use an internal bundle artifact and `visum bundle` commands, but ordinary user-facing replies must call the runnable result a `.visum`, never expose an internal bundle extension as a new public file type, and never invent a Visum extension.
 - Ultra is not part of the current executable release. Do not claim otherwise.
 - Do not describe validation on project data as proof of broad real-world accuracy. State the actual test scope and returned metrics.
 

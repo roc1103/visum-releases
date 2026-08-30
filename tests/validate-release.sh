@@ -122,6 +122,26 @@ grep -q 'first line must be exactly `Exiting Visum Mode\.`' "$visum_repository/s
 grep -q 'ask exactly this before handling the other topic' "$visum_repository/skills/visum/SKILL.md" || {
     fail "exact unrelated-topic gate is not mandatory"
 }
+grep -q 'preparing a computer for somebody else does not transfer that decision' \
+    "$visum_repository/skills/visum/SKILL.md" || {
+    fail "another-person consent boundary is not mandatory"
+}
+grep -q 'do not provide commands that would bypass their decision' \
+    "$visum_repository/skills/visum/SKILL.md" || {
+    fail "consent bypass commands are not forbidden"
+}
+grep -q 'ordinary user-facing replies must call the runnable result a `.visum`' \
+    "$visum_repository/skills/visum/SKILL.md" || {
+    fail "public .visum terminology boundary is not mandatory"
+}
+grep -q 'Never invent or propose a Visum file extension' \
+    "$visum_repository/skills/visum/references/models-and-artifacts.md" || {
+    fail "invented Visum extensions are not forbidden"
+}
+grep -q 'without displaying a runnable Confector command or the internal bundle filename' \
+    "$visum_repository/skills/visum/references/confector.md" || {
+    fail "blocked Confector responses can expose internal execution details"
+}
 grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "Roo Code is not marked legacy"
 if grep -q 'Existing compatible installations remain supported' "$visum_repository/README.md"; then
     fail "obsolete Gemini individual-account claim remains"
