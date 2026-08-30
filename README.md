@@ -1,14 +1,18 @@
 # Visum AI Skill
 
-This repository is the official native integration source for Visum. It packages one canonical `skills/visum` behaviour tree for eleven AI coding agents. Visum Mode, guided numbered choices, `y`/`n` replies, natural conversation, entry and exit behaviour, local CLI orchestration, update checks, diagnostics boundaries and Confector authority rules are identical in every package.
+This repository is the official native integration source for Visum. It packages one canonical `skills/visum` behaviour tree for ten current AI coding agents, plus a legacy Roo Code installation path. Visum Mode, guided numbered choices, `y`/`n` replies, natural conversation, entry and exit behaviour, local CLI orchestration, update checks, diagnostics boundaries and Confector authority rules are identical in every current package.
 
-The host AI handles conversation. The local Visum CLI and Visum Engine perform visual capture, teaching, training, testing, inference and authorised actions. Installing this integration does not install the separate Visum CLI or accept any licence for the user.
+The host AI handles conversation. The local Visum CLI and Visum Engine perform visual capture, teaching, training, testing, inference and authorised actions. Installing or using this integration is subject to the repository's Visum Software Licence, but it does not install the separate Visum CLI or accept the additional CLI/model installation terms on the user's behalf.
 
-## Claude Code
+## Licence
+
+The Visum AI Skill and official Visum agent-integration packages are proprietary RO Company software supplied under the [Visum Software Licence Terms](LICENSE.txt). The licence permits installation and use with supported host agents and permits an RO Company-authorised marketplace to host and distribute the unmodified integration. It does not grant rights to redistribute Visum Developer, Visum Player, the Visum CLI, Visum Engine or official untrained RO Company base models.
+
+## Claude Code terminal client
 
 Native form: Claude Code plugin in the independent Visum marketplace.
 
-Run these commands inside Claude Code:
+Run these commands inside an interactive Claude Code terminal session:
 
 ```text
 /plugin marketplace add roc1103/visum-releases
@@ -17,6 +21,22 @@ Run these commands inside Claude Code:
 ```
 
 Enter Visum Mode with `/visum:visum` or ask Claude to use Visum. Claude Code refreshes this Git-backed marketplace through its normal plugin update flow.
+
+The `/plugin` commands are terminal-client commands. They are not available as chat commands in Claude Code's web/desktop Code tab.
+
+## Claude Code web/desktop projects
+
+Native form: a project skill committed at `.claude/skills/visum` in the repository Claude opens.
+
+From the repository directory in Terminal, install the verified project skill:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.3/install-claude-code-app.sh | sh -s -- --project "$PWD"
+```
+
+Then commit `.claude/skills/visum` to that repository. New Claude Code web/desktop cloud sessions clone the skill with the project and can enter Visum Mode when asked. A local Claude Code installation may instead use `--user` to install at `~/.claude/skills/visum`.
+
+Claude's hosted Code environment cannot run the macOS-only local Visum Engine. For live Mac capture, training, inference and Confector actions, use a local Claude Code session (including Remote Control to that local session). Hosted sessions can still use the Visum behaviour and work on compatible project files.
 
 ## OpenAI Codex
 
@@ -33,7 +53,7 @@ Mention `$visum` or ask Codex to enter Visum Mode. Refresh the source later with
 
 Native form: portable Agent Plugin.
 
-The repository root is a valid Agent Plugin and is prepared for Cursor Marketplace submission. Until it has been submitted and the marketplace review has completed, local validation is available by copying or linking this repository to `~/.cursor/plugins/local/visum`, reloading Cursor, and confirming the Visum skill in Customize. This development route is not presented as a marketplace installation.
+The repository root is a portable Agent Plugin. It has not yet been submitted to Cursor Marketplace. Local validation is available by copying or linking this repository to `~/.cursor/plugins/local/visum`, reloading Cursor, and confirming the Visum skill in Customize. This development route is not presented as a marketplace installation.
 
 Once listed, install Visum from Cursor's Customize page and invoke `/visum` or ask Cursor to enter Visum Mode.
 
@@ -45,15 +65,15 @@ Native form: portable Agent Plugin.
 agy plugin install https://github.com/roc1103/visum-releases
 ```
 
-Then ask Antigravity to use Visum or enter Visum Mode. Update and remove it through Antigravity's normal plugin controls.
+Then ask Antigravity to use Visum or enter Visum Mode. Update and remove it through Antigravity's normal plugin controls. This root package has passed validation and remote-install testing with Antigravity CLI 1.1.22.
 
 ## GitHub Copilot
 
-Native form: Agent Plugin in the Visum Git marketplace for GitHub Copilot CLI.
+Native form: Agent Plugin in the Visum Git marketplace for GitHub Copilot CLI and the GitHub Copilot app.
 
 ```sh
 copilot plugin marketplace add roc1103/visum-releases
-copilot plugins install visum@visum
+copilot plugin install visum@visum
 ```
 
 Then ask Copilot to use Visum or invoke the installed Visum skill. Copilot's plugin dashboard reports available upstream updates; refresh the source with `copilot plugin marketplace update visum`.
@@ -63,16 +83,16 @@ Then ask Copilot to use Visum or invoke the installed Visum skill. Copilot's plu
 Native form: Gemini CLI extension with the canonical Agent Skill bundled under `skills/`.
 
 ```sh
-gemini extensions install https://github.com/roc1103/visum-releases --ref main
+gemini extensions install https://github.com/roc1103/visum-releases --ref main --auto-update
 ```
 
-Restart Gemini CLI after installation, then ask it to use Visum. Update with `gemini extensions update visum` and uninstall with `gemini extensions uninstall visum`.
+Restart Gemini CLI after installation, then ask it to use Visum. The `--auto-update` option lets Gemini refresh the extension; update explicitly with `gemini extensions update visum` and uninstall with `gemini extensions uninstall visum`.
 
-Gemini CLI's individual-user service is transitioning to Antigravity CLI. Existing compatible installations remain supported by this extension; new individual users should use the Antigravity plugin where Gemini CLI is no longer available to their account.
+Since 2026-06-18, ordinary individual Google AI subscriptions are no longer served by Gemini CLI. The extension remains available to supported enterprise and API-key/provider installations. Individual users should use the Antigravity plugin.
 
-## Windsurf
+## Windsurf / Devin Desktop
 
-Native form: Cascade Agent Skill. Windsurf does not provide an appropriate public behavioural-plugin marketplace for this integration.
+Native form: Cascade Agent Skill. Windsurf/Devin Desktop does not provide an appropriate public behavioural-skill marketplace for this integration.
 
 From a verified checkout of this repository:
 
@@ -90,7 +110,7 @@ Native form: Cline Agent Skill for the Cline IDE extension.
 ./install-native-skill.sh cline
 ```
 
-Then ask Cline to use Visum. Cline's separate executable plugin API applies to Cline CLI, SDK and Kanban—not its VS Code or JetBrains extension—so this behavioural integration deliberately uses Cline's supported skill mechanism.
+Then ask Cline to use Visum. Cline's MCP marketplace and executable extension mechanisms are not substitutes for an IDE behavioural skill, so this integration deliberately uses Cline's documented skill folders.
 
 ## Kiro
 
@@ -104,15 +124,15 @@ https://github.com/roc1103/visum-releases
 
 Then ask Kiro to use the Visum Power or enter Visum Mode.
 
-## Roo Code
+## Roo Code (legacy only)
 
-Native form: Roo Agent Skill. Roo Code does not provide an appropriate public behavioural-plugin format for this integration.
+Roo Code and its services shut down on 2026-05-15 and the source repository is archived. It is not a current supported target. The command below is retained only for people who still have a historical Roo Code installation:
 
 ```sh
 ./install-native-skill.sh roo
 ```
 
-Then ask Roo Code to use Visum.
+No new user should install Roo Code for Visum. Cline is the migration path recommended by the former Roo maintainers. Roomote is a different product and has not been validated for Visum.
 
 ## OpenCode
 
@@ -122,7 +142,7 @@ Native form: OpenCode Agent Skill. OpenCode's executable JavaScript/TypeScript p
 ./install-native-skill.sh opencode
 ```
 
-Then ask OpenCode to use Visum.
+Then ask OpenCode to use Visum. OpenCode V2 also supports managed HTTP skill catalogues; Visum will advertise that route only after its versioned catalogue has been published and fetched successfully.
 
 ## Behaviour and safety
 

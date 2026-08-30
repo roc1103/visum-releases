@@ -62,7 +62,7 @@ visum_macos_major="$(/usr/bin/sw_vers -productVersion | /usr/bin/awk -F. '{print
 }
 
 visum_temp_root="$(mktemp -d "${TMPDIR:-/tmp}/visum-cli-install.XXXXXX")"
-trap 'rm -rf "$visum_temp_root"' EXIT HUP INT TERM
+trap 'find "$visum_temp_root" -depth -delete' EXIT HUP INT TERM
 
 if [ -z "$visum_archive_path" ]; then
     visum_archive_path="$visum_temp_root/Visum-CLI-${visum_release_version}.zip"

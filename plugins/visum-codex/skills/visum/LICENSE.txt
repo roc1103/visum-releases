@@ -1,0 +1,126 @@
+# Visum Software Licence Terms
+
+Version: 1.1  
+Effective date: the date the first Visum release carrying these version 1.1 terms is made publicly available in the official RO Company GitHub Release
+
+These terms are between **Rohan Nand Chawla, trading as RO Company**, of 2 Ocklye Cottages, Glenmore Road, Crowborough, East Sussex, TN6 1TW, England, United Kingdom (“RO Company”, “we”, “us”), and the person or organisation that installs or uses Visum Developer, Visum Player, the Visum CLI, Visum Engine, the Visum AI Skill, an official Visum agent-integration package or their bundled software (“you”).
+
+By selecting **Agree and Continue**, installing or using the software, you agree to these terms. If you do not agree, do not use the software.
+
+## 1. Visum
+
+Visum is software for creating, training, testing, coordinating and running local visual models. Visum Developer creates editable visual solutions and exports `.visum` files. Visum Player runs `.visum` files. The CLI, SDK and Visum Engine expose the same capabilities for applications and workflows.
+
+The Visum AI Skill and official Visum agent-integration packages provide guided conversational access to documented Visum CLI and Engine workflows through supported host agents. They do not contain a separate visual model or grant a host agent authority beyond the permissions, confirmations and boundaries that apply to the underlying Visum operation.
+
+The initial release supports Apple Silicon Macs running macOS 14 or later. Training, captures, model execution and project data remain local unless you deliberately export, publish or send something elsewhere.
+
+## 2. Licence grant
+
+Subject to these terms, RO Company grants you a worldwide, non-exclusive, revocable licence to:
+
+- install and use the software on devices you own or control;
+- copy, install and use an unmodified official Visum AI Skill or agent-integration package with a supported host agent;
+- use it for personal, educational, internal-business and commercial purposes;
+- create, edit, test and distribute your own Visum projects and trained visual solutions;
+- call documented Visum interfaces from your own applications and workflows; and
+- embed an unmodified copy of Visum Engine in an application you distribute, provided it is not offered as a standalone engine and the attribution in section 4 is retained.
+
+RO Company may authorise an agent provider or marketplace operator to host, copy and distribute an unmodified official Visum AI Skill or agent-integration package solely for listing, installation, operation and updates through that provider or marketplace. This permission applies only while that distribution remains authorised by RO Company and preserves the licence, publisher identity and integrity of the package.
+
+The software is licensed, not sold. Official RO-ER model packs are also governed by the RO-ER Model Licence.
+
+## 3. Distribution restrictions
+
+You must not:
+
+- redistribute Visum Developer, Visum Player, the Visum CLI or Visum Engine as standalone software;
+- publish unofficial installers, mirrors or modified application bundles;
+- redistribute the Visum AI Skill or an official Visum agent-integration package through an unofficial mirror or marketplace, or publish a modified package as an official Visum integration;
+- redistribute official untrained RO Company base models or extract their weights for separate distribution;
+- remove or falsify provenance, lineage, rights, integrity, version, attribution or safety information;
+- bypass package validation, permissions, confirmations or other security boundaries;
+- use RO Company names, model names or logos to suggest endorsement of your application or trained model; or
+- use the software unlawfully or to infringe another person’s rights.
+
+You may direct others to the official download page and GitHub Release. Nothing in these terms restricts conduct that applicable law expressly permits despite a contractual restriction.
+
+## 4. Attribution
+
+An application or trained model distributed using official RO-ER models or an embedded Visum Engine must include this notice in its credits, documentation or other reasonably visible attribution area:
+
+> Built using RO Company’s RO-ER Visum models.
+
+You must not present the official models, Visum Engine or Visum formats as your own creation.
+
+Every hosted or redistributed copy of the Visum AI Skill or an official Visum agent-integration package must retain its licence notice and identify RO Company as its publisher. Merely using the integration does not require an additional public attribution from an end user.
+
+## 5. Your content and trained work
+
+You retain the rights you lawfully hold in your captures, recordings, labels, instructions, configurations and other original material. You are responsible for obtaining every permission, consent, licence and data-protection basis needed to capture, import, train on, distribute or publish that material.
+
+RO Company does not claim ownership of your project content. Rights in official base models remain with their respective rights holders. Distribution of a trained model containing or depending on official weights remains subject to the RO-ER Model Licence.
+
+## 6. Confector and computer actions
+
+Confector is an execution system. It may carry out a typed computer action only through a host runtime that binds the action to a target, validates its schema, checks current permissions and applies the configured confirmation policy. Confector output does not itself grant authority.
+
+You are responsible for every target, instruction and action you enable. You must not use Confector to access a device or account without permission, evade security, manipulate credentials, make an unauthorised payment or commitment, or perform an unlawful action.
+
+## 7. Safety-critical and high-impact use
+
+Visum and the RO-ER models are not designed, tested or certified as safety-critical systems. You must not use them as the sole control or sole decision-maker where an error could cause death, personal injury, physical damage, unlawful discrimination or another serious consequence.
+
+You must provide suitable human supervision, independent safeguards, testing, fallbacks and authority checks for your deployment. You are responsible for deciding whether a model, dataset, threshold and action policy are suitable for your particular use.
+
+## 8. Alpha limitations
+
+Visual and temporal models can miss items, return false matches, lose track of state, abstain or select an incorrect result. Outputs may change with images, displays, operating-system changes, training data and model versions. Model cards and displayed limitations form part of the product description.
+
+You must test your own trained solution on representative independent data before relying on it. Alpha status does not remove any right or obligation that applicable law makes mandatory.
+
+## 9. Updates
+
+Visum Developer and Visum Player check their signed update feeds when they launch and every six hours while running. The Visum CLI and AI Skill check only when you or an authorised AI workflow runs a Visum update command. The updater may download, verify, replace and relaunch the relevant application after you approve installation; automatic installation is disabled. An update to Visum Developer may include compatible Visum Engine and official model components. Updates preserve user projects and exported files; a migration that changes stored project data must first create a recoverable local backup.
+
+We may issue compatible or incompatible updates. We do not guarantee a particular support period or response time, but aim to respond to support requests as soon as reasonably practicable.
+
+## 10. Charges
+
+Visum 0.1.0 Alpha is supplied free of charge. There is no subscription, purchase price or paid-service commitment under these terms. Separate future products or services will require their own clearly disclosed terms before any charge is made.
+
+## 11. Third-party software
+
+Visum contains third-party software and pretrained components. Their notices and licence texts are included with the distribution. Those licences govern the rights their authors grant directly and may provide additional rights.
+
+## 12. Privacy
+
+The Visum Privacy Notice explains the processing performed by the applications and update service. The current applications contain no analytics, advertising, telemetry or automatic crash-report upload.
+
+## 13. Responsibility and liability
+
+You use RO-ER models at your discretion and remain responsible for your deployment, data, instructions, permissions, supervision, integrations and resulting actions. RO Company is not responsible for loss caused by unlawful or prohibited use, ignored warnings, unsuitable or unauthorised data, inadequate testing or supervision, user or third-party modifications, third-party services, or operation outside documented capabilities.
+
+To the maximum extent permitted by law, the software and models are supplied without promises beyond their documented description, and RO Company excludes liability for indirect or consequential loss, loss of profits, revenue, business, opportunity, goodwill or data, and loss arising from a model output or automated action.
+
+For a business user, to the maximum extent permitted by law, RO Company’s total aggregate liability arising from this free Alpha software is **£0**. The business user will indemnify RO Company against third-party claims arising from that user’s deployment, instructions, data or breach of these terms, except to the extent a claim was caused by RO Company.
+
+Nothing in these terms excludes or limits liability where doing so would be unlawful, including liability for fraud or fraudulent misrepresentation, death or personal injury caused by negligence, or mandatory consumer rights. If applicable law does not permit a particular exclusion or limitation, it applies only to the maximum extent permitted.
+
+## 14. Ending the licence
+
+You may stop using and uninstall the software at any time. RO Company may end this licence if you materially breach it and fail to remedy the breach after any notice required by law. On termination, you must stop using and redistributing RO Company software and official model material, except where applicable law or another licence permits continued use. Your ownership of your original project content is not transferred.
+
+## 15. Changes to these terms
+
+The accepted legal version and a fingerprint of the exact documents are stored locally. A material change requires fresh acceptance. Continued silence will not be treated as acceptance where the law requires an active agreement.
+
+## 16. Law, contact and general terms
+
+These terms are governed by the law of England and Wales. Courts with jurisdiction under applicable consumer law retain that jurisdiction; otherwise the courts of England and Wales have exclusive jurisdiction.
+
+Support and complaints: `support@rocompany.co.uk`  
+Security reports: `security@rocompany.co.uk`  
+Postal contact: the address stated at the beginning of these terms.
+
+These terms, the applicable RO-ER Model Licence and third-party notices are the agreement for the supplied software. If a provision is unenforceable, the remaining provisions continue. A delay in enforcing a right is not a waiver.

@@ -1,6 +1,6 @@
 {
   "name": "visum",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows.",
   "skills": "./skills/",
   "author": {
@@ -10,6 +10,7 @@
   },
   "homepage": "https://ai.rocompany.co.uk/visum",
   "repository": "https://github.com/roc1103/visum-releases",
+  "license": "LicenseRef-Visum-Software-Licence-1.1",
   "keywords": [
     "visum",
     "computer-vision",

@@ -12,6 +12,7 @@
     {
       "name": "visum",
       "source": "./plugins/visum-claude",
+      "license": "LicenseRef-Visum-Software-Licence-1.1",
       "description": "Use Visum's local visual workflows through Claude Code."
     }
   ]

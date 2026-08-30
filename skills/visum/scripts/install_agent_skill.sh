@@ -5,10 +5,12 @@ visum_skill_root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 visum_target=""
 visum_project=""
 visum_replace="no"
+visum_remove="no"
 visum_install_home="${VISUM_SKILL_INSTALL_HOME:-$HOME}"
 
 usage() {
-    printf '%s\n' "Usage: install_agent_skill.sh --target claude|codex|cursor|antigravity|copilot|gemini|windsurf|cline|kiro|roo|opencode|all [--project /path/to/repository] [--replace]"
+    printf '%s\n' "Usage: install_agent_skill.sh --target claude|codex|cursor|antigravity|copilot|gemini|windsurf|cline|kiro|opencode|all [--project /path/to/repository] [--replace|--remove]"
+    printf '%s\n' "Legacy only: --target roo"
 }
 
 while [ "$#" -gt 0 ]; do
@@ -25,6 +27,10 @@ while [ "$#" -gt 0 ]; do
             ;;
         --replace)
             visum_replace="yes"
+            shift
+            ;;
+        --remove)
+            visum_remove="yes"
             shift
             ;;
         --help|-h)
@@ -44,6 +50,11 @@ case "$visum_target" in
     *) usage >&2; exit 2 ;;
 esac
 
+if [ "$visum_replace" = "yes" ] && [ "$visum_remove" = "yes" ]; then
+    printf '%s\n' "--replace and --remove cannot be used together." >&2
+    exit 2
+fi
+
 [ -s "$visum_skill_root/SKILL.md" ] && [ -s "$visum_skill_root/VERSION" ] || {
     printf '%s\n' "The extracted Visum AI Skill is incomplete." >&2
     exit 3
@@ -61,9 +72,23 @@ if [ "$visum_target" = "copilot" ] || [ "$visum_target" = "all" ]; then
     visum_project="$(CDPATH= cd -- "$visum_project" && pwd)"
 fi
 
+if [ "$visum_target" = "claude" ] && [ -n "$visum_project" ]; then
+    [ -d "$visum_project" ] || {
+        printf '%s\n' "Claude project directory not found: $visum_project" >&2
+        exit 4
+    }
+    visum_project="$(CDPATH= cd -- "$visum_project" && pwd)"
+fi
+
 destination_for() {
     case "$1" in
-        claude) printf '%s\n' "$visum_install_home/.claude/skills/visum" ;;
+        claude)
+            if [ "$visum_target" = "claude" ] && [ -n "$visum_project" ]; then
+                printf '%s\n' "$visum_project/.claude/skills/visum"
+            else
+                printf '%s\n' "$visum_install_home/.claude/skills/visum"
+            fi
+            ;;
         codex) printf '%s\n' "$visum_install_home/.agents/skills/visum" ;;
         cursor) printf '%s\n' "$visum_install_home/.cursor/skills/visum" ;;
         antigravity) printf '%s\n' "$visum_install_home/.gemini/config/skills/visum" ;;
@@ -107,11 +132,41 @@ install_one() {
     printf '%s\n' "Installed Visum AI Skill for $visum_agent at: $visum_destination"
 }
 
+remove_one() {
+    visum_agent="$1"
+    visum_destination="$(destination_for "$visum_agent")"
+    if [ ! -e "$visum_destination" ]; then
+        printf '%s\n' "No Visum AI Skill is installed for $visum_agent at: $visum_destination"
+        return
+    fi
+    [ -d "$visum_destination" ] || {
+        printf '%s\n' "Refusing to remove a non-directory destination: $visum_destination" >&2
+        exit 7
+    }
+    find "$visum_destination" -depth -delete
+    [ ! -e "$visum_destination" ] || {
+        printf '%s\n' "Removing the Visum AI Skill for $visum_agent failed." >&2
+        exit 7
+    }
+    printf '%s\n' "Removed Visum AI Skill for $visum_agent from: $visum_destination"
+}
+
+if [ "$visum_remove" = "yes" ]; then
+    if [ "$visum_target" = "all" ]; then
+        for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
+            remove_one "$visum_agent"
+        done
+    else
+        remove_one "$visum_target"
+    fi
+    exit 0
+fi
+
 if [ "$visum_target" = "all" ]; then
-    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro roo opencode; do
+    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
         check_destination "$visum_agent"
     done
-    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro roo opencode; do
+    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
         install_one "$visum_agent"
     done
 else
