@@ -13,7 +13,7 @@ The official public source is `https://github.com/roc1103/visum-releases`.
 | Cursor | Agent Plugin | Install Visum from Cursor Marketplace when listed; local validation may use `~/.cursor/plugins/local/visum` | Invoke `/visum` or ask Cursor to enter Visum Mode. |
 | Google Antigravity | Agent Plugin | `agy plugin install https://github.com/roc1103/visum-releases` | Ask Antigravity to use Visum or enter Visum Mode. |
 | GitHub Copilot CLI | Agent Plugin in a Git marketplace | Add marketplace `roc1103/visum-releases`, then install `visum@visum` | Ask Copilot to use Visum or invoke the installed skill. |
-| Google Gemini CLI | Gemini CLI extension with bundled Agent Skill | `gemini extensions install https://github.com/roc1103/visum-releases` | Restart Gemini CLI, then ask it to use Visum. |
+| Google Gemini CLI | Gemini CLI extension with bundled Agent Skill | `gemini extensions install https://github.com/roc1103/visum-releases --ref main` | Restart Gemini CLI, then ask it to use Visum. |
 | Windsurf Cascade | Native Cascade Skill | Install the canonical skill at `~/.codeium/windsurf/skills/visum` | Mention `@visum` or ask Cascade to enter Visum Mode. |
 | Cline | Native Cline Skill | Install the canonical skill at `~/.cline/skills/visum` | Ask Cline to use Visum. |
 | Kiro | Kiro Power using the Agent Plugins standard | In the Powers panel, import `https://github.com/roc1103/visum-releases` from GitHub | Ask Kiro to use the Visum Power or enter Visum Mode. |

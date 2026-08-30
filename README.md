@@ -63,7 +63,7 @@ Then ask Copilot to use Visum or invoke the installed Visum skill. Copilot's plu
 Native form: Gemini CLI extension with the canonical Agent Skill bundled under `skills/`.
 
 ```sh
-gemini extensions install https://github.com/roc1103/visum-releases
+gemini extensions install https://github.com/roc1103/visum-releases --ref main
 ```
 
 Restart Gemini CLI after installation, then ask it to use Visum. Update with `gemini extensions update visum` and uninstall with `gemini extensions uninstall visum`.
