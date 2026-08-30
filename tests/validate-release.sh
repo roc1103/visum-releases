@@ -48,6 +48,14 @@ visum_copilot_version="$(jq -r '.plugins[0].version // empty' "$visum_repository
 [ "$visum_copilot_version" = "$visum_expected_version" ] || fail "Copilot marketplace version mismatch"
 pass "all package versions are $visum_expected_version"
 
+[ "$(jq -r '."$schema" // empty' "$visum_repository/plugins/visum-agent/plugin.json")" = \
+  "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json" ] || {
+    fail "Copilot plugin does not declare Agent Plugins v1 schema"
+}
+[ "$(jq -r 'has("skills")' "$visum_repository/plugins/visum-agent/plugin.json")" = "false" ] || {
+    fail "Copilot plugin uses obsolete top-level skills field"
+}
+
 for visum_licensed_json in \
     plugin.json \
     plugins/visum-agent/plugin.json \

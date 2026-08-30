@@ -1,8 +1,8 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "visum",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Use Visum's local visual capture, teaching, training, testing, inference, coordination and explicitly authorised computer-action workflows.",
-  "skills": "./skills/",
   "author": {
     "name": "RO Company",
     "email": "visum@rocompany.co.uk",
