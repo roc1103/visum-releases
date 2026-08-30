@@ -33,7 +33,7 @@ Mention `$visum` or ask Codex to enter Visum Mode. Refresh the source later with
 
 Native form: portable Agent Plugin.
 
-The repository root is a valid Agent Plugin and is the source submitted to Cursor Marketplace. Until the marketplace review has completed, local validation is available by copying or linking this repository to `~/.cursor/plugins/local/visum`, reloading Cursor, and confirming the Visum skill in Customize. This development route is not presented as a marketplace installation.
+The repository root is a valid Agent Plugin and is prepared for Cursor Marketplace submission. Until it has been submitted and the marketplace review has completed, local validation is available by copying or linking this repository to `~/.cursor/plugins/local/visum`, reloading Cursor, and confirming the Visum skill in Customize. This development route is not presented as a marketplace installation.
 
 Once listed, install Visum from Cursor's Customize page and invoke `/visum` or ask Cursor to enter Visum Mode.
 
