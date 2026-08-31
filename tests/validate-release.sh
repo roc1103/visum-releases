@@ -24,6 +24,7 @@ for visum_json in \
     .agents/plugins/marketplace.json \
     .github/plugin/marketplace.json \
     plugins/visum-agent/plugin.json \
+    plugins/visum-antigravity/plugin.json \
     plugins/visum-claude/.claude-plugin/plugin.json \
     plugins/visum-codex/.codex-plugin/plugin.json
 do
@@ -51,6 +52,14 @@ pass "all package versions are $visum_expected_version"
 [ "$(jq -r '."$schema" // empty' "$visum_repository/plugins/visum-agent/plugin.json")" = \
   "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json" ] || {
     fail "Copilot plugin does not declare Agent Plugins v1 schema"
+}
+
+[ "$(jq -r '."$schema" // empty' "$visum_repository/plugins/visum-antigravity/plugin.json")" = \
+  "https://antigravity.google/schemas/v1/plugin.json" ] || {
+    fail "Antigravity CLI plugin does not declare the Antigravity v1 schema"
+}
+[ "$(jq -r 'keys - ["$schema", "name", "description"] | length' "$visum_repository/plugins/visum-antigravity/plugin.json")" = "0" ] || {
+    fail "Antigravity CLI plugin contains fields rejected by its strict manifest schema"
 }
 [ "$(jq -r 'has("skills")' "$visum_repository/plugins/visum-agent/plugin.json")" = "false" ] || {
     fail "Copilot plugin uses obsolete top-level skills field"
@@ -88,7 +97,7 @@ cmp -s "$visum_repository/NOTICE.txt" "$visum_repository/skills/visum/NOTICE.txt
 grep -q '^Visum AI Integration$' "$visum_repository/NOTICE.txt" || fail "notice does not identify the integration"
 pass "all supported manifests and distributed packages carry Apache License 2.0"
 
-for visum_wrapper in visum-agent visum-claude visum-codex; do
+for visum_wrapper in visum-agent visum-antigravity visum-claude visum-codex; do
     diff -rq \
         "$visum_repository/skills/visum" \
         "$visum_repository/plugins/$visum_wrapper/skills/visum" >/dev/null || {

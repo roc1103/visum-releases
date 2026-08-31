@@ -10,23 +10,37 @@ The host AI conducts the conversation. The separate Visum CLI and Visum Engine p
 
 Installing this repository does **not** install Visum Developer, Visum Player, the Visum CLI, Visum Engine or the official base models. On a supported Mac, Visum Mode can guide the user through installing the Visum CLI before the first local operation. A cloud-hosted agent can discuss Visum and edit compatible repository files, but it cannot directly capture or control the user's Mac unless that host is connected to a local Mac session.
 
-## Current compatibility
+## Choose your agent and surface
 
-| Host | Works in | Available now | Distribution status |
-| --- | --- | --- | --- |
-| Claude Code | Terminal CLI; local/SSH sessions in Claude Desktop; repository skill in cloud sessions | Yes | Independent Git marketplace works now; official-directory submission is pending review |
-| OpenAI Codex | Codex in the ChatGPT desktop app; Codex CLI | Yes | Independent Git marketplace works now; not listed in the universal directory |
-| Cursor | Desktop and Cursor CLI | Yes, by native skill install | Direct skill installation works; Cursor Marketplace submission is pending review |
-| Google Antigravity | Antigravity CLI and Antigravity 2.0 desktop | Yes, with separate CLI and desktop routes | Direct installation; no marketplace approval required |
-| GitHub Copilot | Copilot CLI; Copilot app; repository-scoped skill | Yes | Independent Git marketplace works now; the Awesome Copilot public-listing submission was not accepted |
-| Google Gemini CLI | Gemini CLI only | Yes | Direct Git extension installation |
-| Windsurf / Cascade | Desktop Cascade | Yes | Direct global Agent Skill installation |
-| Devin | Cloud sessions, Devin Desktop/Local and Devin CLI when the repository is attached | Yes, as a repository skill | Devin's plugin marketplace is closed beta; no public listing is claimed |
-| Cline | IDE extension and Cline CLI/TUI | Yes | Direct global Agent Skill installation |
-| Kiro | Kiro IDE | Yes | Direct Git Power import; registry submission is pending, and CLI/Web support is not claimed while Kiro's own pages conflict |
-| OpenCode | Local OpenCode clients that use the standard skill directories | Yes | Direct global Agent Skill installation |
+There are two separate questions:
 
-“Available now” means the package and its direct installation route exist. It does not mean an external marketplace has completed its review. Marketplace status was last checked on 31 August 2026.
+1. **Can I install Visum today?** Yes for every host in the table below, using the listed direct route.
+2. **Can I find Visum by searching that company's public marketplace?** Only where the final column says so. A pending or unavailable public listing does not prevent direct installation.
+
+| Host | Desktop/app | Terminal/CLI | Best installation available now | Public marketplace status |
+| --- | --- | --- | --- | --- |
+| Claude Code | Yes — local/SSH Code sessions; cloud sessions use a repository skill | Yes | Git marketplace in CLI, or a personal/project skill for desktop and cloud | Anthropic directory review pending |
+| OpenAI Codex | Yes — Codex in the ChatGPT desktop app | Yes | Visum Git marketplace | Not in OpenAI's universal directory |
+| Cursor | Yes | Yes, on the same local machine | Native global skill | Cursor Marketplace review pending |
+| Google Antigravity | Yes — Antigravity 2.0 | Yes — `agy` | Desktop skill or the separate `agy` plugin wrapper | Direct install; no public listing required |
+| GitHub Copilot | Yes — Copilot app | Yes | Visum Git marketplace | Awesome Copilot listing was declined; direct Git install works |
+| Google Gemini CLI | No desktop route claimed | Yes | Git extension with auto-update | Direct Git distribution |
+| Windsurf / Cascade | Yes | No CLI route claimed | Native global skill | Direct skill distribution |
+| Devin | Yes — Desktop/Local and cloud sessions with a connected repository | Yes, when the repository is attached | Repository skill | Public plugins remain closed beta |
+| Cline | Yes — IDE extensions | Yes — CLI/TUI | Native global skill shared by Cline apps | Direct skill distribution |
+| Kiro | Yes — Kiro IDE | Not claimed | Import the repository as a Power | Kiro registry review pending |
+| OpenCode | Yes, for local clients that use OpenCode configuration | Yes | Native global skill | Direct skill distribution |
+
+The direct routes above are ready now. External review is still unfinished for the Claude, Cursor and Kiro public listings; the OpenAI universal-directory route was not submitted; and the separate Awesome Copilot listing was declined. Marketplace status was last checked on 31 August 2026.
+
+## What users install
+
+- A **plugin** is a host-specific package containing the Visum skill. Claude Code, Codex, Antigravity CLI and GitHub Copilot have plugin routes.
+- An **Agent Skill** is the `SKILL.md` behaviour plus its references and scripts. Cursor, Antigravity desktop, Windsurf, Devin, Cline and OpenCode can load it directly.
+- A **Gemini extension** packages that same skill for Gemini CLI.
+- A **Kiro Power** imports the portable root Agent Plugin.
+
+All routes load the same Visum Mode behaviour. They do not replace the local Visum CLI or Engine.
 
 ## Before using a native-skill command
 
@@ -48,7 +62,11 @@ The installer refuses to overwrite an existing Visum skill unless `--replace` is
 
 ## Claude Code
 
-**Works in:** Claude Code CLI and local/SSH Code sessions in Claude Desktop. Repository skills also load in cloud sessions. Claude's desktop documentation confirms that local desktop sessions can use personal, project and plugin skills, while cloud sessions use repository or account-synced configuration.
+**Ready now:** Yes, by direct install. Anthropic's public-directory review is still pending.
+
+**App:** Works in local and SSH Code sessions in Claude Desktop. For cloud Code sessions, put the skill in the repository.
+
+**CLI:** Works in the interactive Claude Code terminal client.
 
 ### Install the plugin in Claude Code CLI
 
@@ -98,7 +116,11 @@ Official references: [Claude Desktop skills and plugins](https://code.claude.com
 
 ## OpenAI Codex
 
-**Works in:** Codex in the ChatGPT desktop app and Codex CLI. OpenAI documents plugin browsing in both supported surfaces; the IDE extension does not support plugins.
+**Ready now:** Yes, through the Visum Git marketplace. It is not yet in OpenAI's universal directory.
+
+**App:** Works in Codex inside the ChatGPT desktop app.
+
+**CLI:** Works in Codex CLI. The Codex IDE extension does not support plugins.
 
 ### Install
 
@@ -124,7 +146,11 @@ Official reference: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.
 
 ## Cursor
 
-**Works in:** Cursor desktop and Cursor CLI. Cursor supports the Agent Plugins format used at this repository root.
+**Ready now:** Yes, through the native skill route. Cursor Marketplace review is still pending.
+
+**App:** Works in Cursor desktop.
+
+**CLI:** Works in Cursor CLI when it runs on the same machine. A local global skill is not copied automatically to Cursor Cloud Agents or remote workers; use a project skill there.
 
 ### Install now
 
@@ -163,15 +189,28 @@ Official references: [Cursor Agent Skills and global paths](https://cursor.com/d
 
 ## Google Antigravity
 
-**Works in:** Antigravity CLI and Antigravity 2.0 desktop. They share the agent model but use different global installation directories, so use the route for the surface you actually run.
+**Ready now:** Yes, but the CLI and desktop use different packages and directories.
+
+**App:** Antigravity 2.0 desktop uses the Agent Skill route.
+
+**CLI:** `agy` uses the Antigravity-specific plugin wrapper. Do not point `agy` at this repository's root `plugin.json`; the root manifest is the portable Agent Plugin used by Cursor and Kiro, while `agy` requires its own stricter manifest.
 
 ### Antigravity CLI
 
 ```sh
-agy plugin install https://github.com/roc1103/visum-releases
+git clone --depth 1 https://github.com/roc1103/visum-releases.git
+agy plugin install ./visum-releases/plugins/visum-antigravity
 ```
 
-Restart `agy`, run `/skills` to confirm Visum is present, then ask Antigravity to enter Visum Mode.
+If the repository is already checked out, run `git -C visum-releases pull --ff-only` instead of cloning it again. Restart `agy`, run `/skills` to confirm Visum is present, then type `/visum` or ask Antigravity to enter Visum Mode.
+
+To update it, pull the repository, uninstall the old plugin and install the same wrapper again:
+
+```sh
+git -C visum-releases pull --ff-only
+agy plugin uninstall visum
+agy plugin install ./visum-releases/plugins/visum-antigravity
+```
 
 To remove it:
 
@@ -179,7 +218,7 @@ To remove it:
 agy plugin uninstall visum
 ```
 
-If the installed CLI has no plugin update command, uninstall and reinstall from the same trusted Git URL to refresh it.
+The official CLI documentation does not currently list a separate update command, so the explicit pull, uninstall and reinstall sequence above is the documented-safe refresh route.
 
 ### Antigravity 2.0 desktop
 
@@ -206,7 +245,11 @@ Official references: [Antigravity plugins and CLI commands](https://www.antigrav
 
 ## GitHub Copilot
 
-**Works in:** GitHub Copilot CLI and the GitHub Copilot app. A repository skill also travels with a project for supported Copilot agents.
+**Ready now:** Yes, through the Visum Git marketplace. The separate Awesome Copilot listing was declined, but this does not disable direct installation.
+
+**App:** Works in the GitHub Copilot app. Repository configuration also supports the Copilot cloud agent.
+
+**CLI:** Works in GitHub Copilot CLI.
 
 ### Install the plugin for Copilot CLI
 
@@ -246,7 +289,11 @@ The independent marketplace above passed GitHub's automated manifest, lint and i
 
 ## Google Gemini CLI
 
-**Works in:** Gemini CLI only. These extension-management commands must be run in the normal shell, not inside Gemini's interactive prompt.
+**Ready now:** Yes, as a Git extension.
+
+**App:** No desktop route is claimed here.
+
+**CLI:** Works in Gemini CLI. Run extension-management commands in the normal shell, not inside Gemini's interactive prompt.
 
 ### Install
 
@@ -272,7 +319,11 @@ Official references: [Gemini CLI extension commands](https://github.com/google-g
 
 ## Windsurf / Cascade
 
-**Works in:** desktop Cascade. The skill is global on the current machine.
+**Ready now:** Yes, as a native global skill.
+
+**App:** Works in desktop Cascade on the current machine.
+
+**CLI:** No Windsurf CLI route is claimed here. Devin Local uses Devin's own repository-skill route below.
 
 ### Install
 
@@ -297,7 +348,11 @@ Official reference: [Cascade Skills, global paths and `@` invocation](https://do
 
 ## Devin
 
-**Works in:** Devin cloud sessions, Devin Desktop/Local and Devin CLI when the project repository is available. Devin skills are repository-scoped; there is no general user-global skill install.
+**Ready now:** Yes, as a repository skill. Devin's public plugin ecosystem is still closed beta.
+
+**App:** Works in Devin cloud sessions and Devin Desktop/Local when the project repository contains the skill.
+
+**CLI:** Works in Devin CLI when that repository is attached. Devin has no general user-global skill directory, so this installation is per repository.
 
 ### Install into a repository
 
@@ -324,7 +379,11 @@ Official references: [Devin repository skills and invocation](https://docs.devin
 
 ## Cline
 
-**Works in:** Cline IDE extensions and Cline CLI/TUI. Cline's global configuration is shared across its applications on the same machine.
+**Ready now:** Yes, as a native global skill.
+
+**App:** Works in Cline IDE extensions.
+
+**CLI:** Works in Cline CLI/TUI. Cline's global `~/.cline` configuration is shared across its applications on the same machine.
 
 ### Install
 
@@ -349,7 +408,11 @@ Official references: [Cline Skills](https://docs.cline.bot/customization/skills)
 
 ## Kiro
 
-**Works in:** Kiro IDE. Kiro's August 2026 documentation currently conflicts: its capability table lists Powers for CLI v3 and Web, while its public Power registry still says Powers are IDE-only. Visum therefore claims only the verified IDE route until Kiro resolves that conflict and the other surfaces are tested.
+**Ready now:** Yes, by importing the public repository as a custom Power. Kiro's public-registry review remains pending.
+
+**App:** Works in Kiro IDE.
+
+**CLI:** Not claimed. Kiro's August 2026 pages expose CLI and Web tabs for Powers, but Visum has not verified those surfaces, so the instructions below deliberately cover only the IDE.
 
 ### Install in Kiro IDE
 
@@ -369,7 +432,11 @@ Official references: [Kiro Power installation from GitHub](https://kiro.dev/docs
 
 ## OpenCode
 
-**Works in:** local OpenCode clients that read the standard global configuration. OpenCode discovers the global path used by this installer.
+**Ready now:** Yes, as a native global skill.
+
+**App:** Works in local OpenCode clients that use the standard OpenCode configuration.
+
+**CLI:** Works in OpenCode CLI. Both routes discover the `~/.config/opencode/skills/visum` path used by this installer.
 
 ### Install
 

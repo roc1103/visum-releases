@@ -1,0 +1,999 @@
+{
+  "schemaVersion": 1,
+  "interfaceVersion": "0.1.9",
+  "entryState": "home",
+  "protocol": {
+    "enter": "Visum Mode active.",
+    "exit": "Exiting Visum Mode.",
+    "invalid": "That is not one of the available choices. Reply with a displayed number or describe the same choice in words.",
+    "cancelled": "Cancelled. Nothing else was changed.",
+    "working": "Working on {task}…",
+    "failed": "I could not complete {task}: {reason}"
+  },
+  "rules": {
+    "numbering": "Option numbers retain their displayed meaning until the state changes.",
+    "yesNo": "Only y, yes, 1, n, no, or 2 resolve a confirmation. Other text may resolve only when it unambiguously means the displayed choice.",
+    "naturalLanguage": "Natural language selects an existing state or option. It never creates, renames, reorders, or combines options.",
+    "effects": "Inspect before changing state, run only the operation attached to the resolved option, and verify its result before transitioning.",
+    "placeholders": "Only values inside braces may vary. Do not paraphrase fixed screen text.",
+    "back": "back returns to the state's declared back target without undoing completed work; cancel stops only the pending operation; exit invokes the exit gate.",
+    "progress": "For long work, render the task's fixed progress line with real status from Visum and never invent a percentage.",
+    "models": "Route purposes internally: Lux recognises taught identity, Vexillum locates interface elements, Peritus follows structured changes, Procurator coordinates, and Confector executes bounded actions. Do not ask ordinary users to choose editions.",
+    "lockedTests": "Never inspect locked-test contents before replay.",
+    "authority": "Installation, diagnostics opt-in, uploads, publication, destructive changes and Confector actions use their dedicated confirmation states. A prior general request is not a substitute for the displayed confirmation."
+  },
+  "capture": {
+    "backend": "/usr/sbin/screencapture",
+    "permission": "Screen & System Audio Recording (shown as Screen Recording on some macOS versions)",
+    "still": {
+      "screen": "macOS captures the screen immediately.",
+      "window": "The pointer becomes a camera. Click the window to capture it, or press Escape to cancel.",
+      "region": "Drag over the region to capture it, then release. Press Escape to cancel."
+    },
+    "recording": {
+      "screen": "macOS starts a screen recording. Stop it from the menu-bar recording control or press Command-Control-Escape.",
+      "window": "macOS opens its capture controls for a window recording. Choose the window, start recording, then use the menu-bar recording control or Command-Control-Escape to stop.",
+      "region": "macOS opens its capture controls. Adjust the region, start recording, then use the menu-bar recording control or Command-Control-Escape to stop."
+    },
+    "recovery": "Open System Settings > Privacy & Security > Screen & System Audio Recording, enable the app or terminal running Visum, reopen it if macOS requires that, then choose Recheck permission."
+  },
+  "operations": {
+    "project.create": {"handler": "cli", "commandFamily": "visum project create; visum solution configure", "reference": "workflows.md#start-a-complete-project"},
+    "project.open": {"handler": "cli", "commandFamily": "visum solution show", "reference": "workflows.md#inspect-an-existing-project"},
+    "project.status": {"handler": "cli", "commandFamily": "visum solution show", "reference": "workflows.md#inspect-an-existing-project"},
+    "capture.screen": {"handler": "cli", "commandFamily": "visum capture screen", "reference": "commands.md#projects-and-capture"},
+    "capture.window": {"handler": "cli", "commandFamily": "visum capture window", "reference": "commands.md#projects-and-capture"},
+    "capture.region": {"handler": "cli", "commandFamily": "visum capture region", "reference": "commands.md#projects-and-capture"},
+    "capture.record-screen": {"handler": "cli", "commandFamily": "visum capture record-screen", "reference": "commands.md#projects-and-capture"},
+    "capture.record-window": {"handler": "cli", "commandFamily": "visum capture record-window", "reference": "commands.md#projects-and-capture"},
+    "capture.record-region": {"handler": "cli", "commandFamily": "visum capture record-region", "reference": "commands.md#projects-and-capture"},
+    "capture.permission.open": {"handler": "macos", "commandFamily": "open x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "capture.permission.recheck": {"handler": "macos", "commandFamily": "CGPreflightScreenCaptureAccess or one non-destructive capture preflight", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "source.import": {"handler": "cli", "commandFamily": "visum project import", "reference": "commands.md#import-and-teach"},
+    "source.extract-frames": {"handler": "cli", "commandFamily": "visum project source extract-frames", "reference": "commands.md#projects-and-capture"},
+    "region.select": {"handler": "host-visual-selection", "commandFamily": "collect normalized regions; persist through visum solution annotation-add", "reference": "workflows.md#teach-the-solution"},
+    "annotation.save": {"handler": "cli", "commandFamily": "visum solution annotation-add", "reference": "workflows.md#teach-the-solution"},
+    "annotation.save-new": {"handler": "cli", "commandFamily": "visum solution label-add; visum solution annotation-add", "reference": "workflows.md#teach-the-solution"},
+    "review.accept": {"handler": "cli", "commandFamily": "visum solution annotation-review --state accepted", "reference": "workflows.md#teach-the-solution"},
+    "review.reject": {"handler": "cli", "commandFamily": "visum solution annotation-review --state rejected", "reference": "workflows.md#teach-the-solution"},
+    "review.skip": {"handler": "state-only", "commandFamily": "leave annotation unchanged", "reference": "conversation.md#teach-correct-and-improve-cumulatively"},
+    "review.search": {"handler": "engine", "commandFamily": "Lux cumulative reference search over Vexillum candidates", "reference": "conversation.md#teach-correct-and-improve-cumulatively"},
+    "timeline.add": {"handler": "cli", "commandFamily": "visum solution timeline-add", "reference": "workflows.md#teach-a-sequence"},
+    "timeline.expected-set": {"handler": "cli", "commandFamily": "visum solution expected-set", "reference": "workflows.md#teach-a-sequence"},
+    "solution.status": {"handler": "cli", "commandFamily": "visum solution show", "reference": "workflows.md#inspect-an-existing-project"},
+    "solution.train": {"handler": "cli", "commandFamily": "visum solution prepare; visum train estimate; visum solution train", "reference": "workflows.md#train-the-solution"},
+    "solution.replay": {"handler": "cli", "commandFamily": "visum solution replay", "reference": "workflows.md#replay-a-locked-session"},
+    "solution.export": {"handler": "cli", "commandFamily": "visum solution export", "reference": "workflows.md#export-and-run"},
+    "model.test": {"handler": "cli", "commandFamily": "visum test lux-reference or visum run lux|vexillum|peritus|pipeline", "reference": "commands.md#lux"},
+    "run.project": {"handler": "cli", "commandFamily": "visum run lux|vexillum|pipeline using the active project's trained artifacts", "reference": "commands.md#vexillum-and-peritus"},
+    "run.visum": {"handler": "cli", "commandFamily": "visum run visum", "reference": "workflows.md#export-and-run"},
+    "run.capture-screen": {"handler": "composed", "commandFamily": "visum capture screen to a temporary PNG; run the active Visum; remove only that temporary PNG", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "run.capture-window": {"handler": "composed", "commandFamily": "visum capture window to a temporary PNG; run the active Visum; remove only that temporary PNG", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "run.capture-region": {"handler": "composed", "commandFamily": "visum capture region to a temporary PNG; run the active Visum; remove only that temporary PNG", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "watch.screen": {"handler": "player-or-loop", "commandFamily": "Visum Player live screen capture, or a bounded screencapture and Visum inference loop", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "watch.window": {"handler": "player-or-loop", "commandFamily": "Visum Player live selected-window capture, or a bounded screencapture and Visum inference loop", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "watch.region": {"handler": "player-or-loop", "commandFamily": "Visum Player live selected-region capture, or a bounded screencapture and Visum inference loop", "reference": "conversation.md#use-the-macos-capture-interface-accurately"},
+    "watch.folder": {"handler": "cli", "commandFamily": "visum watch lux|vexillum|bundle", "reference": "commands.md#watching-directories"},
+    "watch.stop": {"handler": "process", "commandFamily": "stop only the active Visum watcher", "reference": "commands.md#watching-directories"},
+    "result.export": {"handler": "host-file-save", "commandFamily": "write the verified JSON result to a new user-selected destination", "reference": "commands.md"},
+    "document.operation": {"handler": "cli", "commandFamily": "visum document validate|project-path|refresh|replace", "reference": "workflows.md#export-and-run"},
+    "library.list": {"handler": "cli", "commandFamily": "visum library list", "reference": "commands.md#library-bundles-and-documents"},
+    "library.add": {"handler": "cli", "commandFamily": "visum library add", "reference": "commands.md#library-bundles-and-documents"},
+    "model.validate": {"handler": "cli", "commandFamily": "visum model validate or visum model validate-reference", "reference": "commands.md#library-bundles-and-documents"},
+    "artifact.operation": {"handler": "cli", "commandFamily": "visum dataset build|validate|inspect|measure|split|prepare-training; visum model validate; visum bundle assess|validate", "reference": "commands.md#dataset-lifecycle"},
+    "update.check-all": {"handler": "cli", "commandFamily": "visum update check all", "reference": "updates-and-diagnostics.md"},
+    "update.check-cli": {"handler": "cli", "commandFamily": "visum update check cli", "reference": "updates-and-diagnostics.md"},
+    "update.check-skill": {"handler": "cli", "commandFamily": "visum update check ai-skill", "reference": "updates-and-diagnostics.md"},
+    "update.install": {"handler": "cli", "commandFamily": "visum update install cli or visum update install ai-skill", "reference": "updates-and-diagnostics.md"},
+    "diagnostics.status": {"handler": "cli", "commandFamily": "visum diagnostics status", "reference": "updates-and-diagnostics.md"},
+    "diagnostics.enable": {"handler": "cli", "commandFamily": "visum diagnostics enable", "reference": "updates-and-diagnostics.md"},
+    "diagnostics.disable": {"handler": "cli", "commandFamily": "visum diagnostics disable", "reference": "updates-and-diagnostics.md"},
+    "diagnostics.flush": {"handler": "cli", "commandFamily": "visum diagnostics flush", "reference": "updates-and-diagnostics.md"},
+    "diagnostics.submit-example": {"handler": "cli", "commandFamily": "visum diagnostics submit-example", "reference": "updates-and-diagnostics.md"},
+    "publish.terms": {"handler": "document", "commandFamily": "read the terms embedded in the selected trained .visum", "reference": "models-and-artifacts.md"},
+    "publish.transmit": {"handler": "authorised-external", "commandFamily": "upload or copy the exact trained .visum to the confirmed destination", "reference": "models-and-artifacts.md"},
+    "confector.preflight": {"handler": "cli", "commandFamily": "visum bundle validate; visum bundle instructions; visum bundle permissions; visum confector status", "reference": "confector.md#preconditions"},
+    "confector.reground": {"handler": "composed", "commandFamily": "capture current target application; rerun Visum grounding; repeat Confector preflight", "reference": "confector.md#preconditions"},
+    "confector.execute": {"handler": "cli", "commandFamily": "visum confector move|click|drag|scroll|type|key", "reference": "confector.md#commands"},
+    "confector.stop": {"handler": "cli", "commandFamily": "visum confector stop", "reference": "confector.md#commands"},
+    "doctor": {"handler": "cli", "commandFamily": "visum doctor", "reference": "SKILL.md#start-safely"},
+    "health.recover": {"handler": "guided-recovery", "commandFamily": "use the recovery attached to the first real failed doctor check", "reference": "conversation.md#progress-and-recovery"},
+    "cli.install": {"handler": "script", "commandFamily": "scripts/install_cli.sh after licence acceptance", "reference": "installation.md"},
+    "mode.exit": {"handler": "state-only", "commandFamily": "emit the exact exit token and clear Visum conversational state", "reference": "conversation.md#leave-or-change-topic"}
+  },
+  "intentRoutes": [
+    {"intents": ["new project", "create project", "start project"], "state": "project.new.name"},
+    {"intents": ["open project", "switch project", "my projects"], "state": "project.select"},
+    {"intents": ["capture", "screenshot", "record screen", "record window", "record region", "import images", "import video"], "state": "material.home"},
+    {"intents": ["teach", "label", "crop", "remember this"], "state": "teach.home"},
+    {"intents": ["review", "approve", "deny", "mistakes"], "state": "review.home"},
+    {"intents": ["sequence", "timeline", "follow changes"], "state": "sequence.home"},
+    {"intents": ["train", "retrain", "prepare model"], "state": "train.readiness"},
+    {"intents": ["test", "replay", "does it work"], "state": "test.home"},
+    {"intents": ["run my exported", "run an exported", "run", "analyse image", "analyze image", "watch"], "state": "run.home"},
+    {"intents": ["export", "build visum", "package models"], "state": "export.home"},
+    {"intents": ["open visum", "edit visum", "refresh visum"], "state": "document.home"},
+    {"intents": ["models", "model library", "install model"], "state": "library.home"},
+    {"intents": ["dataset", "visumset", "artifact"], "state": "artifacts.home"},
+    {"intents": ["update", "check updates"], "state": "updates.home"},
+    {"intents": ["diagnostics", "send feedback", "submit example"], "state": "diagnostics.home"},
+    {"intents": ["publish", "share", "sell", "upload"], "state": "publish.home"},
+    {"intents": ["click", "drag", "scroll", "type", "press key", "computer action"], "state": "confector.home"},
+    {"intents": ["doctor", "health", "is visum working"], "state": "health.home"}
+  ],
+  "states": {
+    "home": {
+      "title": "What would you like to do?",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Start or open a project", "next": "projects.home", "aliases": ["project", "projects", "start", "open"]},
+        {"key": "2", "label": "Teach Visum", "next": "teach.home", "aliases": ["teach", "label", "crop"]},
+        {"key": "3", "label": "Train or test", "next": "train-test.home", "aliases": ["train", "test"]},
+        {"key": "4", "label": "Run a Visum", "next": "run.home", "aliases": ["run", "use"]},
+        {"key": "5", "label": "More Visum tools", "next": "tools.home", "aliases": ["more", "tools"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "projects.home": {
+      "title": "Projects",
+      "body": ["A Visum Project can teach and coordinate several visual skills in one solution."],
+      "options": [
+        {"key": "1", "label": "Create a project", "next": "project.new.name", "aliases": ["create", "new"]},
+        {"key": "2", "label": "Open a project", "next": "project.select", "aliases": ["open", "select"]},
+        {"key": "3", "label": "Show project status", "next": "project.status.select", "aliases": ["status", "show"]},
+        {"key": "4", "label": "Back", "next": "home", "aliases": ["back"]}
+      ],
+      "back": "home",
+      "invalid": "protocol.invalid"
+    },
+    "project.new.name": {
+      "title": "Create a project",
+      "body": ["What should the project be called?"],
+      "input": {"name": "projectName", "type": "nonEmptyText", "next": "project.new.purpose"},
+      "back": "projects.home",
+      "invalid": "Enter a project name, or reply back."
+    },
+    "project.new.purpose": {
+      "title": "What should this Visum do?",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Recognise taught items", "action": "project.create", "value": ["recognise"], "aliases": ["recognise", "recognize", "identify"]},
+        {"key": "2", "label": "Find taught items on a larger screen", "action": "project.create", "value": ["recognise", "locate"], "aliases": ["find", "locate"]},
+        {"key": "3", "label": "Follow visual changes over time", "action": "project.create", "value": ["recognise", "locate", "follow"], "aliases": ["follow", "changes", "track"]},
+        {"key": "4", "label": "Do all three", "action": "project.create", "value": ["recognise", "locate", "follow"], "aliases": ["all", "all three"]}
+      ],
+      "success": "project.home",
+      "back": "project.new.name",
+      "invalid": "protocol.invalid"
+    },
+    "project.select": {
+      "title": "Open a project",
+      "body": ["Choose a Visum Project."],
+      "dynamicOptions": {"source": "project.list", "template": "{index}. {projectName} — {projectPath}", "action": "project.open"},
+      "empty": {"text": "No Visum Projects were found.", "next": "project.missing"},
+      "back": "projects.home",
+      "invalid": "Choose a displayed project number, enter a .visumproject path, or reply back."
+    },
+    "project.missing": {
+      "title": "No projects found",
+      "body": ["I could not find a Visum Project in the usual project folder."],
+      "options": [
+        {"key": "1", "label": "Create a project", "next": "project.new.name", "aliases": ["create", "new"]},
+        {"key": "2", "label": "Enter a project path", "next": "project.path", "aliases": ["path", "enter path"]},
+        {"key": "3", "label": "Back", "next": "projects.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "project.path": {
+      "title": "Open a project",
+      "body": ["Enter the path to the .visumproject."],
+      "input": {"name": "projectPath", "type": "existingVisumProject", "action": "project.open", "success": "project.home"},
+      "back": "project.missing",
+      "invalid": "Enter an existing .visumproject path, or reply back."
+    },
+    "project.home": {
+      "title": "{projectName}",
+      "body": ["{sourceCount} captures · {acceptedCount} reviewed examples · {sequenceCount} sequences"],
+      "options": [
+        {"key": "1", "label": "Add captures or recordings", "next": "material.home", "aliases": ["capture", "record", "import", "add"]},
+        {"key": "2", "label": "Teach Visum", "next": "teach.home", "aliases": ["teach", "label"]},
+        {"key": "3", "label": "Review teaching", "next": "review.home", "aliases": ["review"]},
+        {"key": "4", "label": "Build a sequence", "next": "sequence.home", "aliases": ["sequence", "timeline"]},
+        {"key": "5", "label": "Train and test", "next": "train-test.home", "aliases": ["train", "test"]},
+        {"key": "6", "label": "Run this Visum", "next": "run.home", "aliases": ["run", "use"]},
+        {"key": "7", "label": "Export an editable .visum", "next": "export.home", "aliases": ["export", "package"]},
+        {"key": "8", "label": "Project status", "next": "project.status", "aliases": ["status"]},
+        {"key": "9", "label": "Switch project", "next": "project.select", "aliases": ["switch", "projects"]}
+      ],
+      "back": "home",
+      "invalid": "protocol.invalid"
+    },
+    "project.status.select": {
+      "title": "Project status",
+      "body": ["Choose a project to inspect."],
+      "dynamicOptions": {"source": "project.list", "template": "{index}. {projectName}", "action": "project.status"},
+      "back": "projects.home",
+      "invalid": "Choose a displayed project number, or reply back."
+    },
+    "project.status": {
+      "title": "{projectName} status",
+      "body": ["Captures: {sourceCount}", "Reviewed examples: {acceptedCount}", "Sequences: {sequenceCount}", "Recognise items: {recogniseState}", "Find items on screen: {locateState}", "Follow changes: {followState}", "{warnings}"],
+      "options": [
+        {"key": "1", "label": "Open this project", "next": "project.home", "aliases": ["open"]},
+        {"key": "2", "label": "Add missing teaching", "next": "teach.home", "aliases": ["teach", "add"]},
+        {"key": "3", "label": "Train what is ready", "next": "train.readiness", "aliases": ["train"]},
+        {"key": "4", "label": "Back", "next": "projects.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "material.home": {
+      "title": "Add visual material",
+      "body": ["Choose how to add material to {projectName}."],
+      "options": [
+        {"key": "1", "label": "Capture the whole screen", "next": "capture.screen", "aliases": ["screen", "whole screen"]},
+        {"key": "2", "label": "Capture a window", "next": "capture.window", "aliases": ["window"]},
+        {"key": "3", "label": "Capture a region", "next": "capture.region", "aliases": ["region", "selection"]},
+        {"key": "4", "label": "Record the screen", "next": "capture.record-screen", "aliases": ["record screen"]},
+        {"key": "5", "label": "Record a window", "next": "capture.record-window", "aliases": ["record window"]},
+        {"key": "6", "label": "Record a region", "next": "capture.record-region", "aliases": ["record region", "record selection"]},
+        {"key": "7", "label": "Import existing images or videos", "next": "import.rights", "aliases": ["import", "files", "images", "videos"]}
+      ],
+      "back": "project.home",
+      "invalid": "protocol.invalid"
+    },
+    "capture.screen": {
+      "title": "Capture the whole screen?",
+      "body": ["macOS will capture the screen immediately and add it to {projectName}."],
+      "confirm": {"yes": {"action": "capture.screen", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.window": {
+      "title": "Capture a window?",
+      "body": ["The pointer will become a camera. Click the window to capture it, or press Escape to cancel."],
+      "confirm": {"yes": {"action": "capture.window", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.region": {
+      "title": "Capture a region?",
+      "body": ["Drag over the region to capture it, then release. Press Escape to cancel."],
+      "confirm": {"yes": {"action": "capture.region", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.record-screen": {
+      "title": "Record the screen?",
+      "body": ["macOS will start recording. Stop it from the menu-bar recording control or press Command-Control-Escape."],
+      "confirm": {"yes": {"action": "capture.record-screen", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.record-window": {
+      "title": "Record a window?",
+      "body": ["macOS will open its capture controls. Choose the window, start recording, then stop it from the menu bar or press Command-Control-Escape."],
+      "confirm": {"yes": {"action": "capture.record-window", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.record-region": {
+      "title": "Record a region?",
+      "body": ["macOS will open its capture controls. Adjust the region, start recording, then stop it from the menu bar or press Command-Control-Escape."],
+      "confirm": {"yes": {"action": "capture.record-region", "success": "capture.complete"}, "no": {"next": "material.home"}},
+      "back": "material.home",
+      "invalid": "Answer y or n."
+    },
+    "capture.permission": {
+      "title": "Screen capture permission is needed",
+      "body": ["Open System Settings > Privacy & Security > Screen & System Audio Recording, enable the app or terminal running Visum, and reopen it if macOS asks.", "No capture has started."],
+      "options": [
+        {"key": "1", "label": "Open System Settings", "action": "capture.permission.open", "aliases": ["open", "settings"]},
+        {"key": "2", "label": "Recheck permission", "action": "capture.permission.recheck", "aliases": ["recheck", "check", "done"]},
+        {"key": "3", "label": "Cancel capture", "next": "material.home", "aliases": ["cancel", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "capture.complete": {
+      "title": "Capture added",
+      "body": ["Added {filename} to {projectName}."],
+      "options": [
+        {"key": "1", "label": "Teach from this capture", "next": "teach.home", "aliases": ["teach", "crop"]},
+        {"key": "2", "label": "Add another capture", "next": "material.home", "aliases": ["another", "add"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "import.rights": {
+      "title": "Import visual material",
+      "body": ["What permission do you have to use these files?"],
+      "options": [
+        {"key": "1", "label": "I own them", "next": "import.personal", "value": "owned", "aliases": ["own", "owned"]},
+        {"key": "2", "label": "I have a licence to use them", "next": "import.personal", "value": "licensed", "aliases": ["licensed", "licence", "license"]},
+        {"key": "3", "label": "They were created for this project", "next": "import.personal", "value": "project-authored", "aliases": ["project", "created"]},
+        {"key": "4", "label": "Cancel import", "next": "material.home", "aliases": ["cancel", "back"]}
+      ],
+      "invalid": "Choose the applicable rights statement, or cancel."
+    },
+    "import.personal": {
+      "title": "Personal data",
+      "body": ["Do these files contain personal data?"],
+      "confirm": {"yes": {"next": "import.files", "value": "yes"}, "no": {"next": "import.files", "value": "no"}},
+      "back": "import.rights",
+      "invalid": "Answer y or n."
+    },
+    "import.files": {
+      "title": "Choose files to import",
+      "body": ["Enter one or more image or video paths. Separate multiple paths with |."],
+      "input": {"name": "sourcePaths", "type": "existingMediaPaths", "action": "source.import", "success": "import.complete"},
+      "back": "import.personal",
+      "invalid": "Enter existing image or video paths separated with |, or reply back."
+    },
+    "import.complete": {
+      "title": "Import complete",
+      "body": ["Imported {itemCount} item{itemPlural} into {projectName}."],
+      "options": [
+        {"key": "1", "label": "Teach from the imported material", "next": "teach.home", "aliases": ["teach"]},
+        {"key": "2", "label": "Import more material", "next": "import.rights", "aliases": ["more", "import"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "teach.home": {
+      "title": "Teach Visum",
+      "body": ["Choose what the selected visual example should teach."],
+      "options": [
+        {"key": "1", "label": "Recognise this item", "next": "teach.source", "value": "recognise", "aliases": ["recognise", "recognize", "identify"]},
+        {"key": "2", "label": "Recognise and find this item on a screen", "next": "teach.source", "value": "recognise-locate", "aliases": ["find", "locate", "recognise and find"]},
+        {"key": "3", "label": "Mark something whose changes matter", "next": "teach.source", "value": "follow", "aliases": ["follow", "change", "track"]},
+        {"key": "4", "label": "Add visual material first", "next": "material.home", "aliases": ["capture", "import", "add"]},
+        {"key": "5", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "teach.source": {
+      "title": "Choose a capture",
+      "body": ["Choose the source that contains the item."],
+      "dynamicOptions": {"source": "source.list", "template": "{index}. {filename}", "next": "teach.region"},
+      "empty": {"text": "This project has no captures yet.", "next": "material.home"},
+      "back": "teach.home",
+      "invalid": "Choose a displayed capture number, or reply back."
+    },
+    "teach.region": {
+      "title": "Select the teaching area",
+      "body": ["Choose how to select the visual example."],
+      "options": [
+        {"key": "1", "label": "Use the whole image", "next": "teach.meaning", "value": "whole", "aliases": ["whole", "whole image"]},
+        {"key": "2", "label": "Draw one or more crops", "action": "region.select", "success": "teach.meaning", "aliases": ["crop", "draw", "crops"]},
+        {"key": "3", "label": "Choose a different capture", "next": "teach.source", "aliases": ["different", "capture", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "teach.meaning": {
+      "title": "Name this item",
+      "body": ["What does the selected item mean?"],
+      "input": {"name": "concept", "type": "nonEmptyText", "nextByContext": {"recognise": "teach.label", "recognise-locate": "teach.element", "follow": "teach.label"}},
+      "back": "teach.region",
+      "invalid": "Enter a clear name for the item, or reply back."
+    },
+    "teach.element": {
+      "title": "What kind of interface element is this?",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Menu or area", "next": "teach.label", "value": "areaOrMenu", "aliases": ["menu", "area"]},
+        {"key": "2", "label": "Button or control", "next": "teach.label", "value": "buttonOrControl", "aliases": ["button", "control"]},
+        {"key": "3", "label": "Text", "next": "teach.label", "value": "text", "aliases": ["text"]},
+        {"key": "4", "label": "Icon or image", "next": "teach.label", "value": "iconOrImage", "aliases": ["icon", "image"]}
+      ],
+      "back": "teach.meaning",
+      "invalid": "protocol.invalid"
+    },
+    "teach.label": {
+      "title": "Reusable label",
+      "body": ["Choose an existing matching label or create one with the name {concept}."],
+      "dynamicOptions": {"source": "label.matches", "template": "{index}. Reuse {group}: {value}", "action": "annotation.save"},
+      "fixedOptions": [
+        {"key": "new", "label": "Create a new matching label", "action": "annotation.save-new", "aliases": ["create"]},
+        {"key": "back", "label": "Back", "next": "teach.meaning", "aliases": []}
+      ],
+      "invalid": "Choose a displayed label, create a new matching label, or reply back."
+    },
+    "teach.saved": {
+      "title": "Teaching saved",
+      "body": ["Saved {cropCount} teaching example{cropPlural} for {concept}."],
+      "confirmPrompt": "Add another crop from this or another capture?",
+      "confirm": {"yes": {"next": "teach.source"}, "no": {"next": "review.home"}},
+      "invalid": "Answer y or n."
+    },
+    "review.home": {
+      "title": "Review teaching",
+      "body": ["{proposedCount} proposed · {acceptedCount} approved · {rejectedCount} denied"],
+      "options": [
+        {"key": "1", "label": "Review proposed examples", "next": "review.item", "filter": "proposed", "aliases": ["proposed", "review"]},
+        {"key": "2", "label": "Review denied examples", "next": "review.item", "filter": "rejected", "aliases": ["denied", "rejected", "mistakes"]},
+        {"key": "3", "label": "Search other captures for taught items", "action": "review.search", "success": "review.search-result", "aliases": ["search", "recognise", "recognize"]},
+        {"key": "4", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "review.item": {
+      "title": "Review {concept}",
+      "body": ["Show the full source image with the proposed region marked. Item {reviewIndex} of {reviewTotal}."],
+      "options": [
+        {"key": "1", "label": "Approve", "action": "review.accept", "aliases": ["approve", "yes", "correct"]},
+        {"key": "2", "label": "Deny and retain as a hard negative", "action": "review.reject", "aliases": ["deny", "reject", "no", "wrong"]},
+        {"key": "3", "label": "Skip for now", "action": "review.skip", "aliases": ["skip", "later"]},
+        {"key": "4", "label": "Stop reviewing", "next": "review.complete", "aliases": ["stop", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "review.search-result": {
+      "title": "Search complete",
+      "body": ["Found {matchCount} possible match{matchPlural}. Previously approved examples were not proposed again; denied examples remain correction evidence."],
+      "options": [
+        {"key": "1", "label": "Review the new matches", "next": "review.item", "filter": "proposed", "aliases": ["review", "matches"]},
+        {"key": "2", "label": "Add more teaching", "next": "teach.home", "aliases": ["teach", "add"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "review.complete": {
+      "title": "Review saved",
+      "body": ["Approved: {acceptedThisReview} · Denied: {rejectedThisReview} · Skipped: {skippedThisReview}"],
+      "options": [
+        {"key": "1", "label": "Train what is ready", "next": "train.readiness", "aliases": ["train"]},
+        {"key": "2", "label": "Review more", "next": "review.home", "aliases": ["review", "more"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "sequence.home": {
+      "title": "Build a sequence",
+      "body": ["A sequence teaches Visum to follow structured visual changes across ordered captures or extracted video frames."],
+      "options": [
+        {"key": "1", "label": "Use existing captures", "next": "sequence.sources", "aliases": ["captures", "existing"]},
+        {"key": "2", "label": "Extract frames from a recording", "next": "sequence.extract", "aliases": ["extract", "recording", "video"]},
+        {"key": "3", "label": "Add a recording first", "next": "material.home", "aliases": ["record", "add"]},
+        {"key": "4", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "sequence.extract": {
+      "title": "Extract frames",
+      "body": ["Choose a recording and the frame interval in seconds."],
+      "input": {"name": "recordingAndInterval", "type": "recordingAndPositiveInterval", "action": "source.extract-frames", "success": "sequence.sources"},
+      "back": "sequence.home",
+      "invalid": "Choose a project recording and a positive frame interval, or reply back."
+    },
+    "sequence.sources": {
+      "title": "Order the sequence",
+      "body": ["Enter at least two displayed capture numbers in order, separated by commas."],
+      "dynamicOptions": {"source": "source.list", "template": "{index}. {filename}"},
+      "input": {"name": "orderedSources", "type": "orderedSourceNumbers", "next": "sequence.name"},
+      "back": "sequence.home",
+      "invalid": "Enter at least two valid displayed numbers separated by commas, or reply back."
+    },
+    "sequence.name": {
+      "title": "Name the sequence",
+      "body": ["What should this sequence be called?"],
+      "input": {"name": "sequenceName", "type": "nonEmptyText", "next": "sequence.split"},
+      "back": "sequence.sources",
+      "invalid": "Enter a sequence name, or reply back."
+    },
+    "sequence.split": {
+      "title": "How will this sequence be used?",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Training", "next": "sequence.stages", "value": "train", "aliases": ["training", "train"]},
+        {"key": "2", "label": "Validation", "next": "sequence.stages", "value": "validation", "aliases": ["validation", "validate"]},
+        {"key": "3", "label": "Final locked test", "next": "sequence.stages", "value": "locked-test", "aliases": ["test", "locked", "final"]}
+      ],
+      "back": "sequence.name",
+      "invalid": "protocol.invalid"
+    },
+    "sequence.stages": {
+      "title": "Describe the sequence",
+      "body": ["For each frame, enter its stage and what changed since the previous frame."],
+      "input": {"name": "frameStages", "type": "stageAndTransitionPerFrame", "action": "timeline.add", "success": "sequence.expected"},
+      "back": "sequence.split",
+      "invalid": "Describe every displayed frame, or reply back."
+    },
+    "sequence.expected": {
+      "title": "Expected result",
+      "body": ["Add an expected result for this sequence?"],
+      "confirm": {"yes": {"next": "sequence.expected-fields"}, "no": {"next": "sequence.complete"}},
+      "back": "sequence.stages",
+      "invalid": "Answer y or n."
+    },
+    "sequence.expected-fields": {
+      "title": "Expected result fields",
+      "body": ["Enter each expected field and value. Reply done after the final field."],
+      "input": {"name": "expectedFields", "type": "keyValueList", "action": "timeline.expected-set", "success": "sequence.complete"},
+      "back": "sequence.expected",
+      "invalid": "Enter a field and value, done, or back."
+    },
+    "sequence.complete": {
+      "title": "Sequence saved",
+      "body": ["Saved {sequenceName} with {frameCount} ordered frames."],
+      "options": [
+        {"key": "1", "label": "Build another sequence", "next": "sequence.home", "aliases": ["another", "more"]},
+        {"key": "2", "label": "Train and test", "next": "train-test.home", "aliases": ["train", "test"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "train-test.home": {
+      "title": "Train & Test",
+      "body": ["Choose the next operation for {projectName}."],
+      "options": [
+        {"key": "1", "label": "Check readiness", "next": "train.readiness", "aliases": ["readiness", "check", "status"]},
+        {"key": "2", "label": "Train what is ready", "next": "train.readiness", "value": "train", "aliases": ["train"]},
+        {"key": "3", "label": "Run the locked sequence test", "next": "test.locked-confirm", "aliases": ["test", "locked", "replay"]},
+        {"key": "4", "label": "Run a focused model test", "next": "test.focused", "aliases": ["focused", "model test"]},
+        {"key": "5", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "train.readiness": {
+      "title": "Training readiness",
+      "body": ["Recognise items: {recogniseState}", "Find items on screen: {locateState}", "Follow changes: {followState}", "{requirements}", "{estimate}"],
+      "options": [
+        {"key": "1", "label": "Train and test what is ready", "next": "train.confirm", "aliases": ["train", "go", "ready"]},
+        {"key": "2", "label": "Add missing teaching", "next": "teach.home", "aliases": ["teach", "add"]},
+        {"key": "3", "label": "Review teaching", "next": "review.home", "aliases": ["review"]},
+        {"key": "4", "label": "Back", "next": "train-test.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "train.confirm": {
+      "title": "Start training?",
+      "body": ["Visum will prepare the project, use the compatible official base models, create new immutable training runs, and test what is ready.", "Estimated time: {estimate}."],
+      "confirm": {"yes": {"action": "solution.train", "success": "train.complete"}, "no": {"next": "train.readiness"}},
+      "back": "train.readiness",
+      "invalid": "Answer y or n."
+    },
+    "train.complete": {
+      "title": "Training complete",
+      "body": ["{trainedWorkstreams}", "{metrics}", "{warnings}"],
+      "options": [
+        {"key": "1", "label": "Run the locked sequence test", "next": "test.locked-confirm", "aliases": ["test", "locked", "replay"]},
+        {"key": "2", "label": "Run this Visum", "next": "run.home", "aliases": ["run", "use"]},
+        {"key": "3", "label": "Export an editable .visum", "next": "export.home", "aliases": ["export", "package"]},
+        {"key": "4", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "test.home": {
+      "title": "Test Visum",
+      "body": ["Choose a test."],
+      "options": [
+        {"key": "1", "label": "Run the final locked sequence test", "next": "test.locked-confirm", "aliases": ["locked", "final", "replay"]},
+        {"key": "2", "label": "Test recognition on an image", "next": "test.focused", "value": "recognise", "aliases": ["recognition", "image", "lux"]},
+        {"key": "3", "label": "Test screen element finding", "next": "test.focused", "value": "locate", "aliases": ["find", "screen", "vexillum"]},
+        {"key": "4", "label": "Test change tracking", "next": "test.focused", "value": "follow", "aliases": ["change", "track", "peritus"]},
+        {"key": "5", "label": "Back", "next": "train-test.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "test.locked-confirm": {
+      "title": "Run the locked test?",
+      "body": ["Visum will replay the locked sequence without inspecting its contents first."],
+      "confirm": {"yes": {"action": "solution.replay", "success": "test.complete"}, "no": {"next": "test.home"}},
+      "back": "test.home",
+      "invalid": "Answer y or n."
+    },
+    "test.focused": {
+      "title": "Choose test input",
+      "body": ["Enter the image, recording or ordered image paths for this test."],
+      "input": {"name": "testInput", "type": "existingTestInput", "action": "model.test", "success": "test.complete"},
+      "back": "test.home",
+      "invalid": "Enter existing test input paths, or reply back."
+    },
+    "test.complete": {
+      "title": "Test complete",
+      "body": ["Scope: {testScope}", "Result: {testResult}", "{metrics}"],
+      "options": [
+        {"key": "1", "label": "Review the result", "next": "review.home", "aliases": ["review"]},
+        {"key": "2", "label": "Add teaching and retry", "next": "teach.home", "aliases": ["teach", "retry", "improve"]},
+        {"key": "3", "label": "Run another test", "next": "test.home", "aliases": ["another", "test"]},
+        {"key": "4", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "run.home": {
+      "title": "Run Visum",
+      "body": ["Choose how Visum should receive visual input."],
+      "options": [
+        {"key": "1", "label": "Open an image or recording", "next": "run.file", "aliases": ["open", "file", "image", "recording"]},
+        {"key": "2", "label": "Capture the screen once", "next": "run.capture", "aliases": ["capture", "screenshot"]},
+        {"key": "3", "label": "Watch the screen, a window or a region", "next": "run.live", "aliases": ["watch", "live", "screen", "window", "region"]},
+        {"key": "4", "label": "Open an exported .visum", "next": "run.visum", "aliases": ["visum", "exported"]},
+        {"key": "5", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "run.file": {
+      "title": "Open visual input",
+      "body": ["Enter the path to an image or recording."],
+      "input": {"name": "runInput", "type": "existingMediaPath", "action": "run.project", "success": "run.result"},
+      "back": "run.home",
+      "invalid": "Enter an existing image or recording path, or reply back."
+    },
+    "run.capture": {
+      "title": "Capture once",
+      "body": ["Choose what to capture."],
+      "options": [
+        {"key": "1", "label": "Whole screen", "action": "run.capture-screen", "success": "run.result", "aliases": ["screen", "whole"]},
+        {"key": "2", "label": "Window", "action": "run.capture-window", "success": "run.result", "aliases": ["window"]},
+        {"key": "3", "label": "Region", "action": "run.capture-region", "success": "run.result", "aliases": ["region", "selection"]},
+        {"key": "4", "label": "Back", "next": "run.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "run.live": {
+      "title": "Watch visual input",
+      "body": ["Choose the source to follow until you stop it."],
+      "options": [
+        {"key": "1", "label": "Whole screen", "action": "watch.screen", "success": "run.watching", "aliases": ["screen", "whole"]},
+        {"key": "2", "label": "Window", "action": "watch.window", "success": "run.watching", "aliases": ["window"]},
+        {"key": "3", "label": "Region", "action": "watch.region", "success": "run.watching", "aliases": ["region", "selection"]},
+        {"key": "4", "label": "Folder of incoming images", "action": "watch.folder", "success": "run.watching", "aliases": ["folder", "directory"]},
+        {"key": "5", "label": "Back", "next": "run.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "run.visum": {
+      "title": "Open a .visum",
+      "body": ["Enter the path to the exported .visum."],
+      "input": {"name": "visumPath", "type": "existingVisum", "action": "run.visum", "success": "run.home"},
+      "back": "run.home",
+      "invalid": "Enter an existing .visum path, or reply back."
+    },
+    "run.watching": {
+      "title": "Visum is watching {watchSource}",
+      "body": ["Latest result: {latestResult}", "Reply stop to end watching."],
+      "special": {"stop": {"action": "watch.stop", "success": "run.result"}},
+      "invalid": "Reply stop to end watching."
+    },
+    "run.result": {
+      "title": "Visum result",
+      "body": ["{resultSummary}", "{resultDetails}"],
+      "options": [
+        {"key": "1", "label": "Use another input", "next": "run.home", "aliases": ["another", "again"]},
+        {"key": "2", "label": "Correct this result", "next": "teach.home", "aliases": ["correct", "wrong", "teach"]},
+        {"key": "3", "label": "Export the result", "action": "result.export", "aliases": ["export", "save"]},
+        {"key": "4", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "export.home": {
+      "title": "Export your Visum",
+      "body": ["Procurator will coordinate the trained skills this project uses while keeping the individual models editable inside one .visum."],
+      "options": [
+        {"key": "1", "label": "Export for visual analysis only", "next": "export.path", "value": "without-confector", "aliases": ["analysis", "without confector"]},
+        {"key": "2", "label": "Add Confector for controlled computer actions", "next": "export.path", "value": "with-confector", "aliases": ["confector", "actions"]},
+        {"key": "3", "label": "Check export readiness", "action": "solution.status", "success": "project.status", "aliases": ["check", "readiness", "status"]},
+        {"key": "4", "label": "Back", "next": "project.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "export.path": {
+      "title": "Choose export location",
+      "body": ["The default is {downloadsPath}/{safeProjectName}.visum. Press Return to use it, or enter another .visum path."],
+      "input": {"name": "exportPath", "type": "newVisumPathOrDefault", "next": "export.confirm"},
+      "back": "export.home",
+      "invalid": "Enter a new .visum path, press Return for the default, or reply back."
+    },
+    "export.confirm": {
+      "title": "Export this Visum?",
+      "body": ["Project: {projectName}", "Destination: {exportPath}", "Confector: {confectorChoice}", "Procurator will validate and test the coordinated result before export."],
+      "confirm": {"yes": {"action": "solution.export", "success": "export.complete"}, "no": {"next": "export.home"}},
+      "back": "export.path",
+      "invalid": "Answer y or n."
+    },
+    "export.complete": {
+      "title": "Export complete",
+      "body": ["Created and validated {exportPath}.", "Open .visum files in Visum Player to use them, or in Visum Developer to continue editing them."],
+      "options": [
+        {"key": "1", "label": "Run the exported Visum", "next": "run.visum", "aliases": ["run", "open", "use"]},
+        {"key": "2", "label": "Publish or share it", "next": "publish.home", "aliases": ["publish", "share"]},
+        {"key": "3", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done", "back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "document.home": {
+      "title": "Visum documents",
+      "body": ["Choose what to do with a .visum."],
+      "options": [
+        {"key": "1", "label": "Validate a .visum", "next": "document.path", "value": "validate", "aliases": ["validate", "check"]},
+        {"key": "2", "label": "Open its editable project", "next": "document.path", "value": "project-path", "aliases": ["open", "edit", "project"]},
+        {"key": "3", "label": "Refresh it from its project", "next": "document.path", "value": "refresh", "aliases": ["refresh", "update"]},
+        {"key": "4", "label": "Replace a trained model inside it", "next": "document.path", "value": "replace", "aliases": ["replace", "model"]},
+        {"key": "5", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "document.path": {
+      "title": "Choose a .visum",
+      "body": ["Enter the path to the .visum."],
+      "input": {"name": "visumPath", "type": "existingVisum", "actionByContext": "document.operation", "success": "document.complete"},
+      "back": "document.home",
+      "invalid": "Enter an existing .visum path, or reply back."
+    },
+    "document.complete": {
+      "title": "Visum document updated",
+      "body": ["{documentResult}"],
+      "options": [
+        {"key": "1", "label": "Use this .visum", "next": "run.visum", "aliases": ["use", "run"]},
+        {"key": "2", "label": "Work with another .visum", "next": "document.home", "aliases": ["another"]},
+        {"key": "3", "label": "Back to tools", "next": "tools.home", "aliases": ["back", "tools"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "tools.home": {
+      "title": "More Visum tools",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Model library", "next": "library.home", "aliases": ["library", "models"]},
+        {"key": "2", "label": "Datasets and artifacts", "next": "artifacts.home", "aliases": ["datasets", "artifacts", "files"]},
+        {"key": "3", "label": "Visum documents", "next": "document.home", "aliases": ["documents", "visum"]},
+        {"key": "4", "label": "Updates", "next": "updates.home", "aliases": ["updates", "update"]},
+        {"key": "5", "label": "Diagnostics and corrected examples", "next": "diagnostics.home", "aliases": ["diagnostics", "feedback"]},
+        {"key": "6", "label": "Confector actions", "next": "confector.home", "aliases": ["confector", "actions"]},
+        {"key": "7", "label": "Check Visum health", "next": "health.home", "aliases": ["health", "doctor", "check"]},
+        {"key": "8", "label": "Back", "next": "home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "library.home": {
+      "title": "Model library",
+      "body": ["Compatible models: {compatibleCount} · Incompatible models: {incompatibleCount}"],
+      "options": [
+        {"key": "1", "label": "List installed models", "action": "library.list", "aliases": ["list", "show"]},
+        {"key": "2", "label": "Add a .visumpack", "next": "library.add", "aliases": ["add", "install"]},
+        {"key": "3", "label": "Validate a model", "next": "library.validate", "aliases": ["validate", "check"]},
+        {"key": "4", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "library.add": {
+      "title": "Add a model",
+      "body": ["Enter the path to a .visumpack. Visum will validate compatibility before adding it."],
+      "input": {"name": "modelPath", "type": "existingVisumPack", "action": "library.add", "success": "library.home"},
+      "back": "library.home",
+      "invalid": "Enter an existing .visumpack path, or reply back."
+    },
+    "library.validate": {
+      "title": "Validate a model",
+      "body": ["Enter the path to the .visumpack."],
+      "input": {"name": "modelPath", "type": "existingVisumPack", "action": "model.validate", "success": "library.home"},
+      "back": "library.home",
+      "invalid": "Enter an existing .visumpack path, or reply back."
+    },
+    "artifacts.home": {
+      "title": "Datasets and artifacts",
+      "body": ["Choose the artifact workflow."],
+      "options": [
+        {"key": "1", "label": "Build a .visumset from a project", "next": "artifacts.path", "value": "dataset.build", "aliases": ["build", "visumset"]},
+        {"key": "2", "label": "Validate a .visumset", "next": "artifacts.path", "value": "dataset.validate", "aliases": ["validate dataset", "validate"]},
+        {"key": "3", "label": "Inspect or measure a .visumset", "next": "artifacts.path", "value": "dataset.inspect", "aliases": ["inspect", "measure"]},
+        {"key": "4", "label": "Split and prepare a dataset", "next": "artifacts.path", "value": "dataset.prepare", "aliases": ["split", "prepare"]},
+        {"key": "5", "label": "Validate a .visumpack", "next": "artifacts.path", "value": "model.validate", "aliases": ["model", "visumpack"]},
+        {"key": "6", "label": "Validate or assess a coordinated .visum", "next": "artifacts.path", "value": "bundle.assess", "aliases": ["bundle", "assess", "visum"]},
+        {"key": "7", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "artifacts.path": {
+      "title": "Choose the artifact",
+      "body": ["Enter the project, .visumset, .visumpack or .visum path required by the selected operation."],
+      "input": {"name": "artifactPath", "type": "contextualArtifactPath", "actionByContext": "artifact.operation", "success": "artifacts.complete"},
+      "back": "artifacts.home",
+      "invalid": "Enter a compatible existing path, or reply back."
+    },
+    "artifacts.complete": {
+      "title": "Artifact operation complete",
+      "body": ["{artifactResult}"],
+      "options": [
+        {"key": "1", "label": "Work with another artifact", "next": "artifacts.home", "aliases": ["another", "more"]},
+        {"key": "2", "label": "Back to tools", "next": "tools.home", "aliases": ["back", "tools"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "updates.home": {
+      "title": "Updates",
+      "body": ["Choose what to check."],
+      "options": [
+        {"key": "1", "label": "Check Visum CLI and AI Skill", "action": "update.check-all", "success": "updates.result", "aliases": ["all", "check"]},
+        {"key": "2", "label": "Check Visum CLI", "action": "update.check-cli", "success": "updates.result", "aliases": ["cli"]},
+        {"key": "3", "label": "Check Visum AI Skill", "action": "update.check-skill", "success": "updates.result", "aliases": ["skill", "plugin"]},
+        {"key": "4", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "updates.result": {
+      "title": "Update check complete",
+      "body": ["{updateSummary}"],
+      "options": [
+        {"key": "1", "label": "Install the available update", "next": "updates.confirm", "aliases": ["install", "update"]},
+        {"key": "2", "label": "Back", "next": "updates.home", "aliases": ["back", "done"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "updates.confirm": {
+      "title": "Install this update?",
+      "body": ["Product: {updateProduct}", "Current version: {currentVersion}", "Available version: {availableVersion}", "The signed update will replace the installed copy after verification."],
+      "confirm": {"yes": {"action": "update.install", "success": "updates.home"}, "no": {"next": "updates.result"}},
+      "back": "updates.result",
+      "invalid": "Answer y or n."
+    },
+    "diagnostics.home": {
+      "title": "Diagnostics",
+      "body": ["Routine diagnostics never include captures, recordings, filenames, paths, labels or typed text."],
+      "options": [
+        {"key": "1", "label": "Show diagnostics status", "action": "diagnostics.status", "aliases": ["status", "show"]},
+        {"key": "2", "label": "Enable routine diagnostics", "next": "diagnostics.enable", "aliases": ["enable", "on"]},
+        {"key": "3", "label": "Disable routine diagnostics", "action": "diagnostics.disable", "aliases": ["disable", "off"]},
+        {"key": "4", "label": "Send queued routine diagnostics", "next": "diagnostics.flush", "aliases": ["send", "flush"]},
+        {"key": "5", "label": "Submit a selected corrected visual example", "next": "diagnostics.example", "aliases": ["example", "corrected", "feedback"]},
+        {"key": "6", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "diagnostics.enable": {
+      "title": "Enable routine diagnostics?",
+      "body": ["This records privacy-safe product events, versions, model editions, durations, counts and error codes. It does not include visual material or user text."],
+      "confirm": {"yes": {"action": "diagnostics.enable", "success": "diagnostics.home"}, "no": {"next": "diagnostics.home"}},
+      "back": "diagnostics.home",
+      "invalid": "Answer y or n."
+    },
+    "diagnostics.flush": {
+      "title": "Send queued routine diagnostics?",
+      "body": ["Visum will send only the privacy-safe queued events described above."],
+      "confirm": {"yes": {"action": "diagnostics.flush", "success": "diagnostics.home"}, "no": {"next": "diagnostics.home"}},
+      "back": "diagnostics.home",
+      "invalid": "Answer y or n."
+    },
+    "diagnostics.example": {
+      "title": "Submit a corrected example",
+      "body": ["Choose the exact visual files, describe the correction, and confirm that you have the right to share them. This is separate from routine diagnostics."],
+      "input": {"name": "exampleSubmission", "type": "filesCorrectionAndRights", "next": "diagnostics.example-confirm"},
+      "back": "diagnostics.home",
+      "invalid": "Provide selected files, the correction and sharing-rights answer, or reply back."
+    },
+    "diagnostics.example-confirm": {
+      "title": "Submit these corrected files?",
+      "body": ["Files: {selectedFileCount}", "Correction: {correctionSummary}", "Destination: RO Company Visum diagnostics service"],
+      "confirm": {"yes": {"action": "diagnostics.submit-example", "success": "diagnostics.home"}, "no": {"next": "diagnostics.home"}},
+      "back": "diagnostics.example",
+      "invalid": "Answer y or n."
+    },
+    "publish.home": {
+      "title": "Publish or share a trained Visum",
+      "body": ["Official untrained RO Company models and Visum Engine may not be redistributed separately. A trained .visum may be distributed subject to its terms and required attribution."],
+      "options": [
+        {"key": "1", "label": "Publish a trained .visum", "next": "publish.details", "aliases": ["publish", "upload"]},
+        {"key": "2", "label": "Share a trained .visum directly", "next": "publish.details", "aliases": ["share", "send"]},
+        {"key": "3", "label": "Review rights and attribution", "action": "publish.terms", "aliases": ["rights", "terms", "attribution"]},
+        {"key": "4", "label": "Back", "next": "export.complete", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "publish.details": {
+      "title": "Publication details",
+      "body": ["Enter the trained .visum path and exact publication destination. Confirm that you have rights to its training material and will preserve required RO Company attribution."],
+      "input": {"name": "publication", "type": "visumDestinationRightsAndAttribution", "next": "publish.confirm"},
+      "back": "publish.home",
+      "invalid": "Provide the trained .visum, destination, rights answer and attribution answer, or reply back."
+    },
+    "publish.confirm": {
+      "title": "Publish this trained Visum?",
+      "body": ["File: {visumPath}", "Destination: {publicationDestination}", "This will transmit the file outside this Mac."],
+      "confirm": {"yes": {"action": "publish.transmit", "success": "publish.complete"}, "no": {"next": "publish.home"}},
+      "back": "publish.details",
+      "invalid": "Answer y or n."
+    },
+    "publish.complete": {
+      "title": "Publication complete",
+      "body": ["Published {visumFilename} to {publicationDestination}."],
+      "options": [
+        {"key": "1", "label": "Return to the project", "next": "project.home", "aliases": ["project", "done"]},
+        {"key": "2", "label": "Publish another trained Visum", "next": "publish.home", "aliases": ["another", "publish"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "confector.home": {
+      "title": "Visum Confector",
+      "body": ["Confector executes bounded computer actions only after the target .visum, permissions and current visual grounding are validated."],
+      "options": [
+        {"key": "1", "label": "Move the pointer", "next": "confector.target", "value": "move", "aliases": ["move", "pointer"]},
+        {"key": "2", "label": "Click", "next": "confector.target", "value": "click", "aliases": ["click"]},
+        {"key": "3", "label": "Drag", "next": "confector.target", "value": "drag", "aliases": ["drag"]},
+        {"key": "4", "label": "Scroll", "next": "confector.target", "value": "scroll", "aliases": ["scroll"]},
+        {"key": "5", "label": "Type text", "next": "confector.target", "value": "type", "aliases": ["type", "text"]},
+        {"key": "6", "label": "Press a key", "next": "confector.target", "value": "key", "aliases": ["key", "press"]},
+        {"key": "7", "label": "Emergency stop", "action": "confector.stop", "aliases": ["stop", "emergency"]},
+        {"key": "8", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "confector.target": {
+      "title": "Choose the exact action target",
+      "body": ["Enter the validated .visum path, target application bundle identifier, and the visual target or bounded action details."],
+      "input": {"name": "confectorTarget", "type": "validatedVisumBundleAndActionTarget", "action": "confector.preflight", "success": "confector.preflight"},
+      "back": "confector.home",
+      "invalid": "Provide the .visum, exact target application and bounded action details, or reply back."
+    },
+    "confector.preflight": {
+      "title": "Confector preflight",
+      "body": ["Bundle validation: {bundleStatus}", "Action permission: {actionPermission}", "Accessibility permission: {accessibilityPermission}", "Current grounding: {groundingStatus}"],
+      "options": [
+        {"key": "1", "label": "Review the exact action", "next": "confector.confirm", "aliases": ["review", "continue", "action"]},
+        {"key": "2", "label": "Recapture and re-ground", "action": "confector.reground", "success": "confector.preflight", "aliases": ["recapture", "reground", "refresh"]},
+        {"key": "3", "label": "Stop Confector", "action": "confector.stop", "aliases": ["stop", "cancel"]},
+        {"key": "4", "label": "Back", "next": "confector.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "confector.confirm": {
+      "title": "Execute this action?",
+      "body": ["Action: {actionSummary}", "Application: {targetBundleIdentifier}", "Target: {groundedTarget}", "This will control the computer once."],
+      "confirm": {"yes": {"action": "confector.execute", "success": "confector.complete"}, "no": {"action": "confector.stop", "success": "confector.home"}},
+      "back": "confector.preflight",
+      "invalid": "Answer y or n."
+    },
+    "confector.complete": {
+      "title": "Confector action complete",
+      "body": ["{actionResult}"],
+      "options": [
+        {"key": "1", "label": "Perform another bounded action", "next": "confector.home", "aliases": ["another", "action"]},
+        {"key": "2", "label": "Stop Confector", "action": "confector.stop", "aliases": ["stop", "done"]},
+        {"key": "3", "label": "Back to tools", "next": "tools.home", "aliases": ["back", "tools"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "health.home": {
+      "title": "Check Visum health",
+      "body": ["I will check the installed CLI, Engine, models, permissions and local paths without changing them."],
+      "options": [
+        {"key": "1", "label": "Run the health check", "action": "doctor", "success": "health.result", "aliases": ["run", "check", "doctor"]},
+        {"key": "2", "label": "Back", "next": "tools.home", "aliases": ["back"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "health.result": {
+      "title": "Visum health",
+      "body": ["{healthChecks}"],
+      "options": [
+        {"key": "1", "label": "Fix the first failed check", "action": "health.recover", "aliases": ["fix", "recover"]},
+        {"key": "2", "label": "Run the check again", "action": "doctor", "success": "health.result", "aliases": ["again", "recheck"]},
+        {"key": "3", "label": "Back", "next": "tools.home", "aliases": ["back", "done"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "startup.install": {
+      "title": "Visum CLI is required",
+      "body": ["The conversational interface needs the local Visum CLI and Engine to perform visual work."],
+      "options": [
+        {"key": "1", "label": "Review the installation and licence", "next": "startup.install-confirm", "aliases": ["review", "install"]},
+        {"key": "2", "label": "Continue without installing", "next": "home", "aliases": ["continue", "skip", "no"]}
+      ],
+      "invalid": "protocol.invalid"
+    },
+    "startup.install-confirm": {
+      "title": "Install Visum CLI?",
+      "body": ["Show the bundled licence and exact destination before installation. Installation changes software on this Mac."],
+      "confirm": {"yes": {"action": "cli.install", "success": "health.home"}, "no": {"next": "startup.install"}},
+      "back": "startup.install",
+      "invalid": "Answer y or n."
+    },
+    "outside.confirm": {
+      "title": "That sounds outside Visum. Would you like to leave Visum Mode?",
+      "body": [],
+      "options": [
+        {"key": "1", "label": "Yes, leave Visum Mode", "action": "mode.exit", "aliases": ["yes", "y", "leave", "exit"]},
+        {"key": "2", "label": "No, stay in Visum Mode", "next": "home", "aliases": ["no", "n", "stay"]}
+      ],
+      "invalid": "protocol.invalid"
+    }
+  }
+}
