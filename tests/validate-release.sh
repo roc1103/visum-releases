@@ -179,6 +179,13 @@ grep -q 'without displaying a runnable Confector command or the internal bundle 
     fail "blocked Confector responses can expose internal execution details"
 }
 grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "Roo Code is not marked legacy"
+grep -q 'It is not a current supported target' "$visum_repository/README.md" || fail "Roo Code is not explicitly excluded from current support"
+visum_ready_count="$(grep -c '^\*\*Ready now:\*\*' "$visum_repository/README.md")"
+[ "$visum_ready_count" -eq 11 ] || fail "README must contain one Ready now statement for each of the eleven current hosts"
+visum_surface_count="$(grep -c '^\*\*Works in:\*\*' "$visum_repository/README.md")"
+[ "$visum_surface_count" -eq 11 ] || fail "README must state app/CLI surface support for each current host"
+visum_check_count="$(grep -c '^\*\*Check it worked:\*\*' "$visum_repository/README.md")"
+[ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
 if grep -q 'Existing compatible installations remain supported' "$visum_repository/README.md"; then
     fail "obsolete Gemini individual-account claim remains"
 fi
