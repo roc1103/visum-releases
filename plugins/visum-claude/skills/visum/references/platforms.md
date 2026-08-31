@@ -46,7 +46,7 @@ These `/plugin` commands are not chat commands and are not available in Claude C
 Claude Code's hosted project sessions receive repository configuration, not a developer's local user-level plugin installation. Install the canonical Visum skill into the repository and commit it:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.8/install-claude-code-app.sh | sh -s -- --project "$PWD"
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --project "$PWD"
 git add .claude/skills/visum
 git commit -m "Add Visum skill for Claude Code"
 ```

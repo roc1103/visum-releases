@@ -127,6 +127,16 @@ grep -q "Visum-CLI-$visum_expected_cli_version.zip" \
 }
 pass "AI Skill version is independent and pins the existing public CLI $visum_expected_cli_version"
 
+visum_claude_installer_version="$(sed -n 's/^visum_skill_version="\([^"]*\)"$/\1/p' "$visum_repository/install-claude-code-app.sh")"
+visum_claude_installer_sha="$(sed -n 's/^visum_archive_sha256="\([0-9a-f]*\)"$/\1/p' "$visum_repository/install-claude-code-app.sh")"
+[ "$visum_claude_installer_version" = "$visum_expected_version" ] || {
+    fail "Claude app installer version is $visum_claude_installer_version; expected $visum_expected_version"
+}
+printf '%s' "$visum_claude_installer_sha" | grep -Eq '^[0-9a-f]{64}$' || {
+    fail "Claude app installer archive checksum is invalid"
+}
+pass "Claude app installer pins the current integration version and a complete archive checksum"
+
 grep -q '^name: visum$' "$visum_repository/skills/visum/SKILL.md" || fail "skill name is not visum"
 grep -q '^description: .' "$visum_repository/skills/visum/SKILL.md" || fail "skill description is missing"
 grep -q '^license: Apache-2\.0$' "$visum_repository/skills/visum/SKILL.md" || fail "skill SPDX licence metadata is missing"

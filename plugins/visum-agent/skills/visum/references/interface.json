@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "interfaceVersion": "0.1.8",
+  "interfaceVersion": "0.1.9",
   "entryState": "home",
   "protocol": {
     "enter": "Visum Mode active.",
