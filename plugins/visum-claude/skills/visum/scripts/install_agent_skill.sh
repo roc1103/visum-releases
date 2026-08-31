@@ -9,7 +9,7 @@ visum_remove="no"
 visum_install_home="${VISUM_SKILL_INSTALL_HOME:-$HOME}"
 
 usage() {
-    printf '%s\n' "Usage: install_agent_skill.sh --target claude|codex|cursor|antigravity|copilot|gemini|windsurf|cline|kiro|opencode|all [--project /path/to/repository] [--replace|--remove]"
+    printf '%s\n' "Usage: install_agent_skill.sh --target claude|codex|cursor|antigravity|copilot|gemini|windsurf|devin|cline|kiro|opencode|all [--project /path/to/repository] [--replace|--remove]"
     printf '%s\n' "Legacy only: --target roo"
 }
 
@@ -46,7 +46,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 case "$visum_target" in
-    claude|codex|cursor|antigravity|copilot|gemini|windsurf|cline|kiro|roo|opencode|all) ;;
+    claude|codex|cursor|antigravity|copilot|gemini|windsurf|devin|cline|kiro|roo|opencode|all) ;;
     *) usage >&2; exit 2 ;;
 esac
 
@@ -60,13 +60,13 @@ fi
     exit 3
 }
 
-if [ "$visum_target" = "copilot" ] || [ "$visum_target" = "all" ]; then
+if [ "$visum_target" = "copilot" ] || [ "$visum_target" = "devin" ] || [ "$visum_target" = "all" ]; then
     [ -n "$visum_project" ] || {
-        printf '%s\n' "GitHub Copilot installation requires --project /path/to/repository." >&2
+        printf '%s\n' "$visum_target installation requires --project /path/to/repository." >&2
         exit 4
     }
     [ -d "$visum_project" ] || {
-        printf '%s\n' "Copilot repository directory not found: $visum_project" >&2
+        printf '%s\n' "Repository directory not found: $visum_project" >&2
         exit 4
     }
     visum_project="$(CDPATH= cd -- "$visum_project" && pwd)"
@@ -95,6 +95,7 @@ destination_for() {
         copilot) printf '%s\n' "$visum_project/.github/skills/visum" ;;
         gemini) printf '%s\n' "$visum_install_home/.gemini/skills/visum" ;;
         windsurf) printf '%s\n' "$visum_install_home/.codeium/windsurf/skills/visum" ;;
+        devin) printf '%s\n' "$visum_project/.agents/skills/visum" ;;
         cline) printf '%s\n' "$visum_install_home/.cline/skills/visum" ;;
         kiro) printf '%s\n' "$visum_install_home/.kiro/skills/visum" ;;
         roo) printf '%s\n' "$visum_install_home/.roo/skills/visum" ;;
@@ -153,7 +154,7 @@ remove_one() {
 
 if [ "$visum_remove" = "yes" ]; then
     if [ "$visum_target" = "all" ]; then
-        for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
+        for visum_agent in claude codex cursor antigravity copilot gemini windsurf devin cline kiro opencode; do
             remove_one "$visum_agent"
         done
     else
@@ -163,10 +164,10 @@ if [ "$visum_remove" = "yes" ]; then
 fi
 
 if [ "$visum_target" = "all" ]; then
-    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
+    for visum_agent in claude codex cursor antigravity copilot gemini windsurf devin cline kiro opencode; do
         check_destination "$visum_agent"
     done
-    for visum_agent in claude codex cursor antigravity copilot gemini windsurf cline kiro opencode; do
+    for visum_agent in claude codex cursor antigravity copilot gemini windsurf devin cline kiro opencode; do
         install_one "$visum_agent"
     done
 else

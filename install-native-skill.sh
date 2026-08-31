@@ -6,9 +6,9 @@ visum_target="${1:-}"
 shift || true
 
 case "$visum_target" in
-    claude|windsurf|cline|roo|opencode) ;;
+    claude|codex|cursor|antigravity|copilot|gemini|windsurf|devin|cline|kiro|opencode|all|roo) ;;
     *)
-        printf '%s\n' "Usage: ./install-native-skill.sh claude|windsurf|cline|opencode [--project /path/to/repository] [--replace|--remove]" >&2
+        printf '%s\n' "Usage: ./install-native-skill.sh claude|codex|cursor|antigravity|copilot|gemini|windsurf|devin|cline|kiro|opencode|all [--project /path/to/repository] [--replace|--remove]" >&2
         printf '%s\n' "Legacy only: ./install-native-skill.sh roo [--replace|--remove]" >&2
         exit 64
         ;;

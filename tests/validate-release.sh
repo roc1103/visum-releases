@@ -221,6 +221,7 @@ for visum_installed_skill in \
     project/.github/skills/visum \
     home/.gemini/skills/visum \
     home/.codeium/windsurf/skills/visum \
+    project/.agents/skills/visum \
     home/.cline/skills/visum \
     home/.kiro/skills/visum \
     home/.config/opencode/skills/visum
@@ -236,7 +237,7 @@ do
 done
 
 [ ! -e "$visum_test_root/home/.roo/skills/visum" ] || fail "legacy Roo installed by current all-target mode"
-pass "all ten current native skill destinations stage byte-for-byte; legacy Roo is excluded"
+pass "all eleven current native skill destinations stage byte-for-byte; legacy Roo is excluded"
 
 [ -s "$visum_test_root/home/.claude/skills/visum/SKILL.md" ] || {
     fail "all-target installation no longer uses Claude user scope"
@@ -244,7 +245,7 @@ pass "all ten current native skill destinations stage byte-for-byte; legacy Roo 
 [ ! -e "$visum_test_root/project/.claude/skills/visum" ] || {
     fail "all-target installation unexpectedly changed Claude to project scope"
 }
-pass "all-target installation preserves Claude user scope and Copilot-only project semantics"
+pass "all-target installation preserves Claude user scope and repository-local Copilot and Devin semantics"
 
 if VISUM_SKILL_INSTALL_HOME="$visum_test_root/home" \
     "$visum_repository/skills/visum/scripts/install_agent_skill.sh" \
@@ -287,6 +288,7 @@ for visum_removed_skill in \
     project/.github/skills/visum \
     home/.gemini/skills/visum \
     home/.codeium/windsurf/skills/visum \
+    project/.agents/skills/visum \
     home/.cline/skills/visum \
     home/.kiro/skills/visum \
     home/.config/opencode/skills/visum
@@ -301,7 +303,7 @@ VISUM_SKILL_INSTALL_HOME="$visum_test_root/legacy-home" \
     --target roo \
     --remove >/dev/null
 [ ! -e "$visum_test_root/legacy-home/.roo/skills/visum" ] || fail "legacy Roo removal failed"
-pass "all ten current targets and explicit legacy Roo remove only their exact Visum skill directory"
+pass "all eleven current targets and explicit legacy Roo remove only their exact Visum skill directory"
 
 VISUM_SKILL_INSTALL_HOME="$visum_test_root/claude-project-home" \
     "$visum_repository/skills/visum/scripts/install_claude_code_app.sh" \
