@@ -186,6 +186,13 @@ visum_surface_count="$(grep -c '^\*\*Works in:\*\*' "$visum_repository/README.md
 [ "$visum_surface_count" -eq 11 ] || fail "README must state app/CLI surface support for each current host"
 visum_check_count="$(grep -c '^\*\*Check it worked:\*\*' "$visum_repository/README.md")"
 [ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
+grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
+grep -q '^| Host | Desktop or IDE app | Terminal CLI or TUI | Cloud or web agent | Recommended direct route | Public catalogue |$' \
+    "$visum_repository/README.md" || fail "README must expose app, CLI, cloud, install and catalogue status separately"
+grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/README.md" \
+    || fail "README must distinguish shell commands from agent-prompt commands"
+grep -q '^### Verification status right now$' "$visum_repository/README.md" \
+    || fail "README must distinguish package validation from live-host verification"
 if grep -q 'Existing compatible installations remain supported' "$visum_repository/README.md"; then
     fail "obsolete Gemini individual-account claim remains"
 fi

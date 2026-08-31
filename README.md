@@ -10,23 +10,33 @@ The host AI conducts the conversation. The separate Visum CLI and Visum Engine p
 
 Installing this repository does **not** install Visum Developer, Visum Player, the Visum CLI, Visum Engine or the official base models. On a supported Mac, Visum Mode can guide the user through installing the Visum CLI before the first local operation. A cloud-hosted agent can discuss Visum and edit compatible repository files, but it cannot directly capture or control the user's Mac unless that host is connected to a local Mac session.
 
-## Choose your agent and surface
+For actual capture, training, inference or Confector execution, the current Visum runtime requires Apple Silicon and macOS 14 or later. The conversational skill can still be installed on other systems, but it must report the local-runtime limitation instead of pretending an operation ran.
 
-“Works” and “listed in a public marketplace” are not the same thing. Every row below has a direct installation route today. The last column says whether users can also discover Visum by searching the host company's public catalogue.
+## Start here
 
-| Host | Where Visum works | Install it now | Public catalogue status |
-| --- | --- | --- | --- |
-| [Claude Code](#claude-code) | Desktop local/SSH Code sessions and terminal CLI; repository skill for cloud Code sessions | Claude marketplace plugin in CLI, or the personal/project skill installer | Anthropic review pending |
-| [OpenAI Codex](#openai-codex) | ChatGPT desktop Codex and Codex CLI on the same Mac | Visum Git marketplace | Not submitted to OpenAI's universal directory |
-| [Cursor](#cursor) | Cursor desktop and local Cursor CLI; repository skill for Cloud Agents and remote workers | Native global or project skill | Cursor Marketplace review pending |
-| [Google Antigravity](#google-antigravity) | Antigravity 2.0 desktop and `agy` CLI | Desktop skill or the separate `agy` plugin wrapper | Direct installation; no listing required |
-| [GitHub Copilot](#github-copilot) | Copilot app, Copilot CLI and repository-backed cloud agent | Visum Git marketplace, or repository skill | Awesome Copilot listing declined; direct install remains available |
-| [Google Gemini CLI](#google-gemini-cli) | Gemini CLI | Git extension with auto-update | Direct Git distribution |
-| [Windsurf / Cascade](#windsurf--cascade) | Windsurf/Devin Desktop Cascade | Native global skill | Direct skill distribution |
-| [Devin](#devin) | Devin cloud, Desktop/Local and CLI when the connected repository contains the skill | Repository skill | Devin plugins are closed beta; no public plugin listing claimed |
-| [Cline](#cline) | Cline IDE extensions and Cline CLI/TUI on the same machine | Native global skill | Direct skill distribution |
-| [Kiro](#kiro) | Kiro IDE and CLI; repository skills also work in Kiro web | Native global or project skill; the repository can also be imported as a Power | Kiro registry review pending |
-| [OpenCode](#opencode) | OpenCode CLI and local clients using the standard configuration | Native global skill | Direct skill distribution |
+Choose the row for the AI product you actually use, then follow only that product's section. Do not mix commands from different sections.
+
+The guide uses three command locations:
+
+- **Terminal** means the normal macOS Terminal app, before launching an AI agent.
+- **Agent prompt** means the interactive prompt inside the named AI CLI or app. Slash commands such as `/plugin` belong there only when the section explicitly says so.
+- **App UI** means buttons or menus in the desktop or IDE application.
+
+“Direct install ready” and “listed in a public marketplace” are different statuses. Every supported host below has a direct route now. A pending public listing only affects whether someone can discover Visum by searching that company's catalogue.
+
+| Host | Desktop or IDE app | Terminal CLI or TUI | Cloud or web agent | Recommended direct route | Public catalogue |
+| --- | --- | --- | --- | --- | --- |
+| [Claude Code](#claude-code) | Yes: local and SSH Code sessions | Yes | Yes: repository skill | Plugin in Claude Code CLI; personal skill for Desktop | Anthropic review pending |
+| [OpenAI Codex](#openai-codex) | Yes: Codex in the ChatGPT desktop app | Yes | Not claimed here | Visum Git marketplace | Not submitted to OpenAI's universal directory |
+| [Cursor](#cursor) | Yes | Yes, on the same machine | Yes: repository skill | Native global or project skill | Cursor Marketplace review pending |
+| [Google Antigravity](#google-antigravity) | Yes: Antigravity 2.0 | Yes: `agy` | Not claimed here | Install separately for app and CLI | Direct installation; no listing required |
+| [GitHub Copilot](#github-copilot) | Yes: GitHub Copilot app | Yes | Yes: repository configuration | Visum Git marketplace for CLI; repository skill/configuration for app or cloud | Awesome Copilot listing declined; direct install remains available |
+| [Google Gemini CLI](#google-gemini-cli) | No desktop-app route claimed | Yes | Not claimed here | Git extension | Direct Git distribution |
+| [Windsurf / Cascade](#windsurf--cascade) | Yes: Cascade in Windsurf/Devin Desktop | No separate Windsurf CLI route claimed | Not through this global install | Native global skill | Direct skill distribution |
+| [Devin](#devin) | Yes: Devin Desktop/Local | Yes | Yes | Repository skill | Devin plugins are closed beta; no public listing claimed |
+| [Cline](#cline) | Yes: Cline IDE extensions | Yes | Not claimed here | Native global skill | Direct skill distribution |
+| [Kiro](#kiro) | Yes: Kiro IDE | Yes | Yes: workspace skill | Native global or project skill; optional Power | Kiro registry review pending |
+| [OpenCode](#opencode) | Yes: local clients using standard OpenCode configuration | Yes | Not claimed by this global install | Native global skill | Direct skill distribution |
 
 ### What “ready now” means
 
@@ -37,6 +47,15 @@ Installing this repository does **not** install Visum Developer, Visum Player, t
 - External review is still unfinished for the Claude, Cursor and Kiro public listings. The optional OpenAI universal-directory route was not submitted, and the separate Awesome Copilot listing was declined. None of those catalogue states disables the direct routes documented below.
 
 Marketplace status was last checked on 31 August 2026.
+
+### Verification status right now
+
+- **11 of 11** integrations have a direct install package or native-skill route and pass isolated install, behaviour, update-check and removal tests.
+- **Codex and Cursor** have also been exercised in the actual locally installed host on this Mac.
+- The other nine have validated package structure and documented installation routes, but their unavailable third-party host UI was not pretended to have been live-tested here.
+- Claude, Cursor and Kiro public-catalogue reviews remain pending. GitHub declined the separate Awesome Copilot catalogue submission, while its independent Git marketplace remains installable. OpenAI's optional universal-directory submission has not been made because its publisher-verification route requires a payment method.
+
+This distinction matters: the integration files are ready for direct installation, but the entire eleven-host distribution programme is not finished until the remaining host tests and external reviews are resolved.
 
 ## What users install
 
@@ -71,9 +90,11 @@ Keep that Terminal in the `visum-releases` folder while running the agent-specif
 
 **Works in:** local and SSH Code sessions in Claude Desktop, the interactive Claude Code terminal client, and cloud Code sessions whose repository contains the Visum skill.
 
+**Choose one route:** use Option A for the terminal client, Option B for local Claude Desktop Code sessions, or Option C for cloud Code sessions. Installing one route does not automatically install the others.
+
 **Important:** `/plugin` commands are Claude Code commands. Type them inside an interactive Claude Code session, not in a normal shell and not in an ordinary Claude chat that is not a Code session.
 
-### Install the plugin in Claude Code CLI
+### Option A — Claude Code CLI plugin
 
 Run these inside an interactive Claude Code terminal session:
 
@@ -87,9 +108,9 @@ Start with `/visum:visum` or ask Claude to enter Visum Mode.
 
 **Check it worked:** run `/plugin list` and confirm `visum@visum` is enabled. If the install summary asks for a reload, run `/reload-plugins`; if Claude requests confirmation because the prompt cache will be refreshed, run `/reload-plugins --force`.
 
-### Install for the Claude Desktop app without `/plugin`
+### Option B — Claude Desktop local Code sessions
 
-For all local desktop projects, install the personal skill from Terminal:
+In a normal macOS **Terminal**, install the personal skill for all local Claude Desktop projects:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --user
@@ -101,9 +122,9 @@ Restart the local Claude Code session. Type `/` or use **+ → Slash commands**,
 
 Claude Desktop now also has **+ → Plugins → Add plugin** for plugins from configured marketplaces. Registering this independent marketplace still requires the terminal or a managed/project setting until Visum appears in Anthropic's official directory.
 
-### Install for Claude cloud sessions
+### Option C — Claude cloud Code sessions
 
-From the repository that Claude will open:
+In a normal **Terminal**, from the repository that Claude will open:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --project "$PWD"
@@ -117,7 +138,7 @@ Push that commit. Claude will discover the skill when it opens the repository. C
 
 ### Update, remove or troubleshoot
 
-- Plugin: run `/plugin marketplace update visum`, then `/reload-plugins`. Third-party marketplace auto-update is off by default unless the user enables it in the marketplace settings.
+- Plugin: open `/plugin` → **Marketplaces** → `visum` and enable auto-update. To refresh immediately, run `/plugin marketplace update visum`; load an updated plugin after the notification with `/reload-plugins`, or start a new session. Third-party marketplace auto-update is off by default.
 - Personal skill: rerun the `--user` installer with `--replace` after a new integration release.
 - Project skill: rerun the `--project` installer with `--replace`, then commit the change.
 - Remove the plugin: `/plugin uninstall visum@visum`.
@@ -133,7 +154,9 @@ Official references: [Claude Desktop skills and plugins](https://code.claude.com
 
 **Works in:** Codex inside the ChatGPT desktop app and Codex CLI on the same Mac. OpenAI documents plugins for the desktop app and CLI; the IDE extension is not a plugin surface.
 
-### Install
+**One installation serves both:** the marketplace and plugin are stored in the local Codex configuration used by the desktop app and CLI on that Mac.
+
+### Install for the desktop app and CLI — Terminal
 
 Run these in a normal macOS Terminal, not in the Codex chat box:
 
@@ -142,18 +165,22 @@ codex plugin marketplace add roc1103/visum-releases
 codex plugin add visum@visum
 ```
 
-Start a new Codex session. Mention `$visum` or ask Codex to enter Visum Mode. The same local Codex configuration is available to the desktop app and CLI on that Mac.
+Close any existing Codex task and start a new desktop task or CLI session. Mention `$visum` or ask Codex to enter Visum Mode.
 
 **Check it worked:** run `codex plugin list` in Terminal and confirm `visum@visum` is installed and enabled. In the desktop app, start a new task and mention `$visum`.
 
 ### Update, remove or troubleshoot
 
 ```sh
+# Update the marketplace snapshot and installed plugin
 codex plugin marketplace upgrade visum
+codex plugin add visum@visum
+
+# Remove the installed plugin
 codex plugin remove visum@visum
 ```
 
-Use the first command to refresh the Visum marketplace and the installed plugin source. Use the second only to remove Visum. In Codex CLI, `/plugins` opens the plugin browser. If the desktop app was already open during installation or update, start a new task.
+Run the two update commands together; run the remove command only when uninstalling. In Codex CLI, `/plugins` opens the plugin browser. If the desktop app was already open during installation or update, start a new task.
 
 Official reference: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.com/docs/plugins).
 
@@ -163,7 +190,9 @@ Official reference: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.
 
 **Works in:** Cursor desktop and Cursor CLI on the same local machine. For Cursor Cloud Agents, remote SSH sessions and self-hosted workers, commit Visum as a project skill because Cursor does not copy local global skills to remote machines.
 
-### Install now
+**Choose one route:** use the global skill for the local desktop app and local CLI; use the project skill for cloud or remote agents.
+
+### Install for Cursor desktop and local CLI — Terminal
 
 Until Cursor completes marketplace review, install the native skill from a checkout:
 
@@ -175,7 +204,7 @@ Restart Cursor or run **Developer: Reload Window**. Open **Customize → Skills*
 
 **Check it worked:** in Cursor desktop, open **Customize → Skills** and confirm `visum` appears. In Cursor CLI, start a new session, type `/`, and confirm `visum` is listed.
 
-### Install for Cursor Cloud Agents or remote workers
+### Install for Cursor Cloud Agents or remote workers — Terminal in the target repository
 
 From the repository Cursor will open, copy the canonical skill into the project and commit it:
 
@@ -189,9 +218,9 @@ git commit -m "Add Visum skill"
 
 Replace `/absolute/path/to/visum-releases` with the checkout created in the one-time setup. Push the commit before starting the remote agent.
 
-### Marketplace route if a public listing is approved later
+### Marketplace route after public approval
 
-Once Visum is listed, install it from **Customize → Plugins**. Cursor supports Agent Plugins in its desktop, web and CLI surfaces. For local development testing, Cursor also supports adding this Git marketplace with:
+Once Visum is publicly listed, install it from **Customize → Plugins**. Cursor supports Agent Plugins in its desktop, web and CLI surfaces. The command below is a local development/testing route, not the public installation recommendation:
 
 ```sh
 cursor-agent plugin marketplace add https://github.com/roc1103/visum-releases
@@ -220,9 +249,11 @@ Official references: [Cursor Agent Skills and global paths](https://cursor.com/d
 
 **Works in:** Antigravity 2.0 desktop and Antigravity CLI (`agy`). Install separately in each surface you use: the desktop app reads a global Agent Skill, while `agy` reads its own plugin package.
 
+**Choose one or both:** the CLI plugin does not install the desktop skill, and the desktop skill does not install the CLI plugin.
+
 **Important:** do not point `agy` at this repository's root `plugin.json`. The root manifest is the portable Agent Plugin used by compatible hosts; `agy` requires the Antigravity-specific wrapper under `plugins/visum-antigravity`.
 
-### Antigravity CLI
+### Antigravity CLI — Terminal
 
 ```sh
 git clone --depth 1 https://github.com/roc1103/visum-releases.git
@@ -249,7 +280,7 @@ agy plugin uninstall visum
 
 The official CLI documentation does not currently list a separate update command, so the explicit pull, uninstall and reinstall sequence above is the documented-safe refresh route.
 
-### Antigravity 2.0 desktop
+### Antigravity 2.0 desktop — Terminal, then app
 
 From a repository checkout:
 
@@ -280,7 +311,9 @@ Official references: [Antigravity plugins and CLI commands](https://www.antigrav
 
 **Works in:** GitHub Copilot CLI, the GitHub Copilot app, and the Copilot cloud agent when the repository carries the Visum configuration.
 
-### Install the plugin for Copilot CLI
+**Choose a route:** install the marketplace plugin for Copilot CLI, use the app's plugin UI for the Copilot app, or commit a repository skill for a cloud agent.
+
+### Install for Copilot CLI — Terminal
 
 ```sh
 copilot plugin marketplace add roc1103/visum-releases
@@ -291,17 +324,24 @@ Ask Copilot to enter Visum Mode. In an interactive Copilot CLI session, the equi
 
 **Check it worked:** run `copilot plugin list` and confirm `visum` is installed. Start a new Copilot session and ask it to enter Visum Mode.
 
-### Use the Copilot app or a repository-scoped skill
+### Install in the GitHub Copilot app — App UI
 
-The Copilot app exposes plugins under **Customize → Plugins**. If the independent Git marketplace is not visible in that client, install the repository skill instead:
+1. Open **Customize → Plugins**.
+2. Open the marketplace menu and choose to add a custom marketplace.
+3. Enter `https://github.com/roc1103/visum-releases`.
+4. Find `visum`, choose **Install**, then start a new session and ask Copilot to enter Visum Mode.
+
+**Check it worked:** return to **Customize → Plugins** and confirm `visum` is installed and enabled.
+
+### Install for Copilot cloud agent — Terminal in the target repository
+
+Install the repository skill:
 
 ```sh
 ./install-native-skill.sh copilot --project /absolute/path/to/repository
 ```
 
-Commit `.github/skills/visum` so it follows the repository.
-
-**Check it worked:** open the repository in a new Copilot app or cloud-agent session and ask Copilot to list its available skills or enter Visum Mode.
+Commit and push `.github/skills/visum`. Open the pushed branch in a new cloud-agent session and ask Copilot to list its available skills or enter Visum Mode.
 
 ### Update, remove or troubleshoot
 
@@ -328,7 +368,7 @@ The independent marketplace above passed GitHub's automated manifest, lint and i
 
 **Important:** run `gemini extensions ...` management commands in a normal shell, not inside Gemini's interactive prompt. Restart Gemini after installing or updating so the new extension files are loaded.
 
-### Install
+### Install — Terminal
 
 ```sh
 gemini extensions install https://github.com/roc1103/visum-releases --ref main --auto-update
@@ -358,7 +398,7 @@ Official reference: [Gemini CLI extension commands](https://github.com/google-ge
 
 **Works in:** the Cascade panel in Windsurf/Devin Desktop. No separate Windsurf CLI installation is claimed here; Devin's repository-skill route is documented in the next section.
 
-### Install
+### Install for the desktop app — Terminal, then app
 
 ```sh
 ./install-native-skill.sh windsurf
@@ -387,7 +427,7 @@ Official reference: [Cascade Skills, global paths and `@` invocation](https://do
 
 **Works in:** Devin cloud sessions, Devin Desktop/Local, and Devin CLI when the connected repository contains the skill. Devin discovers repository skills; Visum does not claim a general user-global Devin install.
 
-### Install into a repository
+### Install into a repository — Terminal
 
 ```sh
 ./install-native-skill.sh devin --project /absolute/path/to/repository
@@ -418,7 +458,7 @@ Official references: [Devin repository skills and invocation](https://docs.devin
 
 **Works in:** Cline IDE extensions and Cline CLI/TUI on the same machine. Both discover the global `~/.cline/skills/visum` installation used here.
 
-### Install
+### Install for the IDE and CLI — Terminal
 
 ```sh
 ./install-native-skill.sh cline
@@ -447,7 +487,18 @@ Official references: [Cline Skills](https://docs.cline.bot/customization/skills)
 
 **Works in:** Kiro IDE and Kiro CLI with a local global or workspace skill. Kiro web discovers workspace skills committed under `.kiro/skills/`; local `~/.kiro/skills/` content is not uploaded automatically to cloud sessions.
 
-### Install for Kiro IDE and CLI on this Mac
+**Choose one route:** use Option A for a no-Terminal IDE import, Option B for a local global installation shared by Kiro IDE and CLI, or Option C for a repository that must also work in Kiro web.
+
+### Option A — Import in Kiro IDE
+
+1. Open **Agent Steering & Skills** in the Kiro panel.
+2. Choose **+ → Import a skill → GitHub**.
+3. Enter `https://github.com/roc1103/visum-releases/tree/main/skills/visum`.
+4. Import it, start a new session, type `/`, and choose `visum`.
+
+**Check it worked:** `visum` appears in **Agent Steering & Skills** and in the `/` command list.
+
+### Option B — Install for Kiro IDE and CLI on this Mac — Terminal
 
 From the `visum-releases` checkout created in the one-time setup:
 
@@ -459,7 +510,7 @@ Start a new Kiro IDE or Kiro CLI session. Type `/visum` or ask Kiro to enter Vis
 
 **Check it worked:** in Kiro IDE, open **Agent Steering & Skills** and confirm `visum` appears. In Kiro CLI, run `/context show` or type `/` and confirm `visum` is listed.
 
-### Install for a Kiro web or shared repository session
+### Option C — Install for Kiro web or a shared repository — Terminal
 
 From the repository Kiro will open:
 
@@ -473,9 +524,9 @@ git commit -m "Add Visum skill"
 
 Replace `/absolute/path/to/visum-releases` with the checkout created in the one-time setup. Push the commit, then open that branch in Kiro web and invoke `/visum`.
 
-### Optional custom Power route
+### Optional Power route
 
-The root of this repository is also a valid Agent Plugin that Kiro can import as a Power:
+Use this only if you specifically want Kiro to manage Visum as a Power. The Agent Skill options above are simpler for Visum Mode. The repository root is also a valid Agent Plugin:
 
 1. Open **Powers → Add Custom Power**.
 2. Choose **Import power from GitHub**.
@@ -507,7 +558,7 @@ Official references: [Kiro Agent Skills and surface support](https://kiro.dev/do
 
 **Works in:** OpenCode CLI and local OpenCode clients that use the standard configuration. Both discover the `~/.config/opencode/skills/visum` path used by this installer.
 
-### Install
+### Install — Terminal
 
 ```sh
 ./install-native-skill.sh opencode
