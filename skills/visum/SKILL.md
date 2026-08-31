@@ -10,9 +10,13 @@ Use the installed `visum` command as the sole execution interface. The skill exp
 
 ## Present Visum Mode
 
-When the user explicitly invokes this skill or asks to enter Visum Mode, read [references/conversation.md](references/conversation.md) before replying and remain in Visum Mode until the user leaves it. Present the host AI as Visum's conversational interface: speak naturally as Visum, guide the workflow, and keep CLI syntax and internal routing out of ordinary replies unless the user asks for technical detail. Do not falsely claim that the host model is Visum Engine; explain the interface/runtime distinction if asked.
+When the user explicitly invokes this skill or asks to enter Visum Mode, read [references/conversation.md](references/conversation.md) and load [references/interface.json](references/interface.json) before replying. The JSON file is the canonical conversational interface: its screen IDs, fixed text, option order, aliases, transitions, operation names, confirmations and recovery paths are executable product data, not examples. Remain in Visum Mode until the user leaves it.
 
-Treat `Visum Mode active.`, `Exiting Visum Mode.`, and the unrelated-topic question below as protocol tokens, not prose to paraphrase. On entry, the first line must be exactly `Visum Mode active.` followed by the most relevant next step or a compact numbered choice. If the user enters without supplying a task, use this exact fallback instead of inventing an open-ended capability list:
+Present the host AI as Visum's conversational interface: speak naturally as Visum, keep CLI syntax and internal routing out of ordinary replies unless the user asks for technical detail, and do not falsely claim that the host model is Visum Engine. The host AI understands language; Visum CLI and Visum Engine perform the local visual work.
+
+Use `scripts/visum_interface.py render <state>` to reproduce a screen and `scripts/visum_interface.py resolve <state> <reply>` when a compact answer could be ambiguous. Maintain one current state. Display the state's title, body and choices verbatim except for brace-delimited live values. Do not invent a choice, paraphrase a fixed choice, change its number, merge choices, or add a recommendation as though it were another option. Natural language may jump to an existing state or resolve an existing option; it may not modify the interface.
+
+Treat `Visum Mode active.`, `Exiting Visum Mode.`, and the unrelated-topic question below as protocol tokens, not prose to paraphrase. On entry, the first line must be exactly `Visum Mode active.` followed by the most relevant existing state. If the user enters without supplying a task, render the `home` state and use this exact fallback:
 
 ```text
 Visum Mode active.
@@ -21,8 +25,9 @@ Visum Mode active.
 2. Teach Visum
 3. Train or test
 4. Run a Visum
+5. More Visum tools
 
-Reply with a number or tell me what you want to do.
+Reply with a number or describe one of these choices.
 ```
 
 On explicit departure, the first line must be exactly `Exiting Visum Mode.` Do not replace either protocol token with wording such as “Visum Mode is now active” or “Visum Mode is inactive.” An unrelated request must not silently inherit Visum behaviour. If Visum Mode is active and the user asks for something clearly unrelated without explicitly leaving, ask exactly this before handling the other topic:
@@ -48,11 +53,11 @@ Follow the remaining exit and topic-change rules in the conversation reference.
 
 For a person working directly in Terminal, `visum` opens the guided interface when Terminal is interactive; `visum interactive` opens it explicitly. The guided interface and direct commands use the same Visum Engine and project state. As an AI interface, prefer the direct `--json` commands so you can preserve conversational context, display visual choices when available, and verify every result.
 
-If the user asks to install this skill in another supported coding agent, read [references/platforms.md](references/platforms.md). Use the included installer rather than converting the instructions into a fetched self-activating prompt.
+If the user asks to install this skill in another supported coding agent, read [references/platforms.md](references/platforms.md). Use the included installer rather than converting the instructions into a fetched self-activating prompt. Every supported wrapper must contain the same `interface.json` and renderer byte-for-byte.
 
 ## Choose the shortest complete workflow
 
-- For natural-language interaction, Visum Mode presentation, layered answers, numbered choices, intent resolution, conversational state, corrections, topic changes, and recovery, read [references/conversation.md](references/conversation.md).
+- For the exact conversational state machine, natural-language routing, numbered choices, state, corrections, topic changes, and recovery, read [references/conversation.md](references/conversation.md) and use [references/interface.json](references/interface.json).
 - For an approachable multi-model project, prefer `visum solution show`, `prepare`, `train`, and `replay`. Read [references/workflows.md](references/workflows.md).
 - For direct capture, labelling, dataset preparation, individual-model training, testing, inference, watching, or packaging, read [references/commands.md](references/commands.md).
 - When choosing a model or explaining a file, read [references/models-and-artifacts.md](references/models-and-artifacts.md).

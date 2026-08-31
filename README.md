@@ -33,7 +33,7 @@ Native form: a project skill committed at `.claude/skills/visum` in the reposito
 From the repository directory in Terminal, install the verified project skill:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.7/install-claude-code-app.sh | sh -s -- --project "$PWD"
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.8/install-claude-code-app.sh | sh -s -- --project "$PWD"
 ```
 
 Then commit `.claude/skills/visum` to that repository. New Claude Code web/desktop cloud sessions clone the skill with the project and can enter Visum Mode when asked. A local Claude Code installation may instead use `--user` to install at `~/.claude/skills/visum`.

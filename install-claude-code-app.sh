@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-visum_skill_version="0.1.7"
+visum_skill_version="0.1.8"
 visum_archive_sha256="614fee9d4cfb8180fa2e8622c017b4723b16a63d7b486364170fa85b2fcc6d78"
 visum_archive=""
 visum_scope=""

@@ -109,6 +109,14 @@ do
 done
 pass "all shell scripts pass syntax validation"
 
+python3 "$visum_repository/skills/visum/scripts/visum_interface.py" validate >/dev/null || {
+    fail "deterministic conversational interface validation failed"
+}
+python3 "$visum_repository/tests/test-interface.py" >/dev/null || {
+    fail "deterministic conversational interface behavioural tests failed"
+}
+pass "deterministic conversational interface passes structural and behavioural tests"
+
 grep -q "visum_release_version=\"$visum_expected_cli_version\"" \
     "$visum_repository/skills/visum/scripts/install_cli.sh" || {
     fail "AI Skill installer does not pin public CLI $visum_expected_cli_version"
