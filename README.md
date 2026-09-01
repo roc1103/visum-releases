@@ -51,8 +51,9 @@ Marketplace status was last checked on 1 September 2026.
 ### Verification status right now
 
 - **11 of 11** integrations have a direct install package or native-skill route and pass isolated install, behaviour, update-check and removal tests.
-- **Codex and Cursor** have also been exercised in the actual locally installed host on this Mac.
-- The other nine have validated package structure and documented installation routes, but their unavailable third-party host UI was not pretended to have been live-tested here.
+- **Codex and Cursor** have also been exercised successfully in the actual locally installed host on this Mac.
+- **GitHub Copilot CLI** is installed locally and detects `visum@visum` 0.1.9, but this account's Copilot policy denies an AI session before Visum Mode can start. That is recorded as an attempted host check, not a Visum pass or failure.
+- The other eight have validated package structure and documented installation routes, but their unavailable third-party host UI was not pretended to have been live-tested here.
 - Claude, Cursor and Kiro public-catalogue reviews remain pending. GitHub declined the separate Awesome Copilot catalogue submission, while its independent Git marketplace remains installable. OpenAI's optional universal-directory submission has not been made because its publisher-verification route requires a payment method.
 
 This distinction matters: the integration files are ready for direct installation, but the entire eleven-host distribution programme is not finished until the remaining host tests and external reviews are resolved.
