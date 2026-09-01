@@ -4,84 +4,55 @@ This repository teaches supported AI coding agents how to operate Visum through 
 
 The integration is available for eleven current hosts. Some hosts install a plugin, some install an Agent Skill, and Gemini CLI installs an extension. Those are different packaging routes for the same Visum behaviour.
 
-## What this does — and what it does not install
+## What this installs
 
-The host AI conducts the conversation. The separate Visum CLI and Visum Engine perform capture, teaching, training, testing, inference and explicitly authorised Confector actions.
+This repository installs the **Visum AI integration**: the guided conversation, numbered choices and commands that let an AI coding agent operate Visum correctly.
 
-Installing this repository does **not** install Visum Developer, Visum Player, the Visum CLI, Visum Engine or the official base models. On a supported Mac, Visum Mode can guide the user through installing the Visum CLI before the first local operation. A cloud-hosted agent can discuss Visum and edit compatible repository files, but it cannot directly capture or control the user's Mac unless that host is connected to a local Mac session.
+It does **not** install Visum Developer, Visum Player, Visum CLI, Visum Engine or the official base models. When a local operation is requested, Visum Mode checks for the separate Visum CLI and offers its normal installer if it is missing.
 
-For actual capture, training, inference or Confector execution, the current Visum runtime requires Apple Silicon and macOS 14 or later. The conversational skill can still be installed on other systems, but it must report the local-runtime limitation instead of pretending an operation ran.
+There are therefore two layers:
+
+1. the AI app or terminal agent provides the conversation; and
+2. Visum CLI and Visum Engine perform capture, teaching, training, testing, inference and authorised Confector actions on the Mac.
+
+The current runtime layer requires Apple Silicon and macOS 14 or later. You can still install the conversational integration in a cloud agent or on another operating system, but it cannot see or control your Mac from there.
 
 ## Start here
 
-Choose the row for the AI product you actually use, then follow only that product's section. Do not mix commands from different sections. If a product has both an app and a CLI, the table says whether one installation covers both.
-
-Every product section follows the same order:
-
-1. the exact app, CLI or cloud surface that can use Visum;
-2. the recommended installation route for most people;
-3. exactly where to paste each command;
-4. how to start Visum Mode;
-5. how to prove the installation worked; and
-6. how to update or remove it.
-
-The guide uses three command locations:
+Find the product and surface you actually use. Follow only that linked section; commands for one agent are not interchangeable with another agent's commands.
 
 - **Terminal** means the normal macOS Terminal app, before launching an AI agent.
-- **Agent prompt** means the interactive prompt inside the named AI CLI or app. Slash commands such as `/plugin` belong there only when the section explicitly says so.
-- **App UI** means buttons or menus in the desktop or IDE application.
-
-“Direct install ready” and “listed in a public marketplace” are different statuses. Every supported host below has a direct route now. A pending public listing only affects whether someone can discover Visum by searching that company's catalogue.
-
-**If you only want the quickest answer:** find your product below, use the bold **Recommended** route, restart that product, then invoke Visum exactly as shown. The other routes are for cloud sessions, remote computers or advanced team setups.
+- **Agent prompt** means the chat or command prompt inside the named AI app or terminal agent.
+- **App UI** means buttons and menus—no Terminal is needed for that route.
 
 | Host | Desktop app or IDE | Terminal agent | Cloud or web | Easiest working route today | Public catalogue |
 | --- | --- | --- | --- | --- | --- |
-| [Claude](#claude-code) | Cowork and local Code: yes. Ordinary Chat: not yet through Visum's pending listing | Yes | Repository skill: yes; no local Mac control | Add the Visum marketplace in Claude Desktop or Claude Code CLI | Anthropic review pending |
-| [OpenAI Codex](#openai-codex) | Yes | Yes | Repository skill: yes; no local Mac control | Install the Visum Git-marketplace plugin once for the app and CLI | Not submitted to OpenAI's universal directory |
-| [Cursor](#cursor) | Yes | Yes, on the same machine | Repository skill: yes; no local Mac control | Install one global native skill for the local app and CLI | Cursor Marketplace review pending |
-| [Google Antigravity](#google-antigravity) | Yes: Antigravity 2.0 | Yes: `agy` | No supported route claimed | Install the app skill and CLI plugin separately if you use both | Direct installation; no listing required |
-| [GitHub Copilot](#github-copilot) | Yes | Yes | Repository configuration: yes; no local Mac control | Add the Visum marketplace in the app or CLI | Awesome Copilot listing declined; direct install remains available |
-| [Google Gemini CLI](#google-gemini-cli) | No desktop-app route claimed | Yes | Not claimed here | Git extension | Direct Git distribution |
-| [Windsurf / Cascade](#windsurf--cascade) | Yes: Cascade in Windsurf / Devin Desktop | No separate route claimed | No supported route claimed | Install one global native skill | Direct skill distribution |
-| [Devin](#devin) | Yes: Devin Desktop / Local | Yes | Yes | Commit the Visum skill to the repository Devin uses | Devin plugins remain closed beta; no public listing claimed |
-| [Cline](#cline) | Yes: Cline IDE extensions | Yes: CLI / TUI | No supported route claimed | Install one global native skill for the IDE and CLI | Direct skill distribution |
-| [Kiro](#kiro) | Yes: Kiro IDE | Yes | Workspace skill: yes; no local Mac control | Import the skill in Kiro IDE, or install it globally for IDE and CLI | Kiro registry review pending |
-| [OpenCode](#opencode) | Yes: local TUI, web and IDE clients using the same home directory | Yes | A global install does not travel to another host | Install one global native skill | Direct skill distribution |
-
-### What “ready now” means
-
-- The package or skill can be installed directly without waiting for a marketplace review.
-- The same canonical Visum behaviour is supplied to every host.
-- Local Visum operations still require the separate macOS Visum CLI and Engine.
-- A cloud agent can use the guided workflow and repository files, but it cannot capture or control a user's Mac unless the host is connected to that Mac.
-- External review is still unfinished for the Claude, Cursor and Kiro public listings. The optional OpenAI universal-directory route was not submitted, and the separate Awesome Copilot listing was declined. None of those catalogue states disables the direct routes documented below.
+| [Claude](#claude-code) | Cowork and local Code: yes. Ordinary Chat: only after directory approval | Yes | Repository skill: yes; no local Mac control | App: add the Git marketplace. CLI: install the same plugin | Anthropic review pending |
+| [OpenAI Codex](#openai-codex) | Yes | Yes | Repository skill: yes; no local Mac control | Install the Git-marketplace plugin once for the app and CLI | Universal-directory submission not completed |
+| [Cursor](#cursor) | Yes | Yes, on the same computer | Project skill: yes; no local Mac control | Install one global skill for both local surfaces | Cursor Marketplace review pending |
+| [Google Antigravity](#google-antigravity) | Yes: Antigravity 2.0 | Yes: `agy` | Not claimed | Install the desktop skill and CLI plugin separately | Direct installation |
+| [GitHub Copilot](#github-copilot) | Yes | Yes | Repository plugin/skill: yes; no local Mac control | Add the Visum Git marketplace in the app or CLI | Direct marketplace works; separate listing declined |
+| [Google Gemini CLI](#google-gemini-cli) | No | Yes | No | Install the Git extension | Direct Git distribution |
+| [Windsurf / Cascade](#windsurf--cascade) | Yes | No separate CLI route | Project skill can travel with a repository | Install one global skill | Direct skill distribution |
+| [Devin](#devin) | Devin Local/Desktop: yes | Yes | Repository skill: yes; no local Mac control in cloud | Commit one skill to the repository Devin opens | Direct repository distribution |
+| [Cline](#cline) | Yes | Yes | Project skill can travel with a repository | Install one global skill for IDE and CLI | Direct skill distribution |
+| [Kiro](#kiro) | Yes | Yes | Workspace skill: yes; no local Mac control | IDE import is simplest; global skill covers local IDE and CLI | Kiro registry review pending |
+| [OpenCode](#opencode) | Local clients: yes | Yes | Install separately on another host | Install one global skill | Direct skill distribution |
 
 Marketplace status and every linked host instruction were last checked against official documentation on 1 September 2026.
 
 ### Verification status right now
 
-- **11 of 11** integrations have a direct install package or native-skill route and pass isolated install, behaviour, update-check and removal tests.
-- **Codex and Cursor** have also been exercised successfully in the actual locally installed host on this Mac.
-- **GitHub Copilot CLI** is installed locally and detects `visum@visum` 0.1.9, but this account's Copilot policy denies an AI session before Visum Mode can start. That is recorded as an attempted host check, not a Visum pass or failure.
-- The other eight have validated package structure and documented installation routes, but their unavailable third-party host UI was not pretended to have been live-tested here.
-- Claude, Cursor and Kiro public-catalogue reviews remain pending. GitHub declined the separate Awesome Copilot catalogue submission, while its independent Git marketplace remains installable. OpenAI's optional universal-directory submission has not been made because its publisher-verification route requires a payment method.
+- **Direct installation:** ready for 11 of 11 current hosts.
+- **Lifecycle harness:** all 11 pass isolated installation, deterministic Visum Mode behaviour, update checking and removal tests.
+- **Live host test:** Codex and Cursor pass in the real installed products on this Mac.
+- **Partial live host test:** GitHub Copilot CLI installs and detects `visum@visum` 0.1.9, but this account's Copilot policy blocks the model session before Visum Mode starts.
+- **Not yet live-tested here:** the remaining eight packages have passed the lifecycle harness, not a real session in every third-party app.
+- **Public catalogue:** Claude, Cursor and Kiro remain under external review. Visum is not currently searchable in those public catalogues. OpenAI's optional universal-directory submission is incomplete. GitHub declined the separate Awesome Copilot listing, but GitHub's independent Visum marketplace remains installable.
 
-This distinction matters: the integration files are ready for direct installation, but the entire eleven-host distribution programme is not finished until the remaining host tests and external reviews are resolved.
+So the short answer is: **all eleven have a working direct-install route, but all eleven are not yet publicly listed and live-tested.**
 
-### Is every integration finished?
-
-**No—not in the strongest “publicly listed and live-tested in every host” sense.** The accurate state is:
-
-- **Ready to install directly: 11 of 11.** Every supported host has a package or standards-based skill route available from this public repository.
-- **Actually exercised in an installed host on this Mac: Codex and Cursor.** GitHub Copilot also parsed and installed the plugin, but this account's Copilot policy stopped the model session before Visum Mode could be exercised.
-- **Package and isolated lifecycle validation only: the other eight.** Their manifests, destinations, deterministic Visum interface, update check and removal flow pass the release harness, but an unavailable third-party app was not counted as a live host pass.
-- **External reviews still open: Claude, Cursor and Kiro.** Their direct routes work independently of those catalogue reviews.
-- **Optional catalogue routes not complete:** OpenAI's universal directory was not submitted because publisher verification requires a payment method; GitHub declined the separate Awesome Copilot listing. The direct Codex and Copilot Git marketplaces still work.
-
-Therefore, people can install Visum on all eleven hosts now, but more host testing and external marketplace decisions remain before RO Company can truthfully call every integration fully distributed and independently verified.
-
-## What users install
+## Package names used below
 
 - A **plugin** is a host-specific package containing the Visum skill. Claude Code, Codex, Antigravity CLI and GitHub Copilot have plugin routes.
 - An **Agent Skill** is the `SKILL.md` behaviour plus its references and scripts. Cursor, Antigravity desktop, Windsurf, Devin, Cline and OpenCode can load it directly.
@@ -90,9 +61,11 @@ Therefore, people can install Visum on all eleven hosts now, but more host testi
 
 All routes load the same Visum Mode behaviour. They do not replace the local Visum CLI or Engine.
 
-## One-time setup for native-skill installs
+## Why some sections use Git and others do not
 
-Sections that use `./install-native-skill.sh` require a local checkout. Each affected section includes a complete copy-and-paste block, so a reader arriving from a website badge does not need to find this section first. The common setup is:
+Claude, Codex and GitHub Copilot can add this repository as a plugin marketplace. Gemini CLI can install it as an extension. Other products currently use the standard skill files directly, so their installer first downloads this public repository with Git.
+
+Every section includes a complete copy-and-paste block. You do not need to run the common commands below separately; they are shown only to explain what the longer blocks do.
 
 ```sh
 git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
@@ -112,6 +85,8 @@ Keep that Terminal in the `visum-releases` folder while running the agent-specif
 
 **Ready now:** Yes, by direct install in Cowork, local Code and Claude Code CLI. Anthropic's public-directory review is still pending. Claude plugins require a paid Claude plan, but Visum does not charge a separate integration fee.
 
+**App or CLI?** Both. The Claude Desktop plugin browser covers Cowork and local Code. Claude Code CLI uses the same marketplace package. Ordinary Claude Chat needs the pending public-directory listing and is not the direct route today.
+
 | Surface | Works now? | What to install |
 | --- | --- | --- |
 | Claude Desktop or web, ordinary **Chat** | Not through the pending direct route yet | The same plugin will work here after Anthropic publishes it in the public directory |
@@ -121,7 +96,7 @@ Keep that Terminal in the `visum-releases` folder while running the agent-specif
 | Claude Desktop SSH session | Yes | Install the plugin or skill on the SSH host |
 | Claude remote/cloud Code session | Guided behaviour only | Commit a repository skill; plugins are unavailable in remote sessions |
 
-**Recommended:** use Option A if you use the Claude desktop app. Use Option B if you mainly use Claude Code in Terminal. Use Option D only for a remote/cloud Code session. Ordinary Chat on the web or desktop will gain the public-directory route if Anthropic approves Visum; until then, use Cowork or Code.
+**Recommended:** app users should use Option A. Terminal users should use Option B. Remote/cloud Code users should use Option D. Do not paste plugin commands into ordinary Claude Chat.
 
 **Where commands go:** Option A is entirely inside Claude Desktop. Option B's `claude plugin ...` commands go in the normal macOS Terminal, before opening a Claude session. Option D's commands go in a Terminal opened at the repository Claude will work on.
 
@@ -197,6 +172,8 @@ Official references: [Claude Desktop skills, plugins and surface limits](https:/
 ## OpenAI Codex
 
 **Ready now:** Yes, through the Visum Git marketplace. It is not yet in OpenAI's universal directory. The Git marketplace is enough for direct installation; the universal directory would add public discovery and one-click catalogue installation.
+
+**App or CLI?** Both. One marketplace-plugin installation on a Mac is visible to the Codex desktop app and Codex CLI. The IDE extension can instead use the standalone skill, while a cloud task needs the skill committed to its repository.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
@@ -293,6 +270,8 @@ Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt
 
 **Ready now:** Yes, through the native skill route. Cursor Marketplace review is still pending.
 
+**App or CLI?** Both. Cursor desktop and Cursor CLI on the same computer read the same global Visum skill. Cloud Agents and remote workers do not receive that local folder, so use the repository route for them.
+
 | Surface | Works now? | What to install |
 | --- | --- | --- |
 | Cursor desktop | Yes | Global native skill |
@@ -363,6 +342,8 @@ Official references: [Cursor Agent Skills and global paths](https://cursor.com/d
 ## Google Antigravity
 
 **Ready now:** Yes, but the CLI and desktop use different packages and directories.
+
+**App or CLI?** Both are supported, but one installation does not cover the other. Install the desktop skill for Antigravity 2.0, the plugin wrapper for `agy`, or both if you use both products.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
@@ -450,6 +431,8 @@ Official references: [Antigravity plugins and CLI commands](https://antigravity.
 
 **Ready now:** Yes, through the Visum Git marketplace. The separate Awesome Copilot listing was declined, but this does not disable direct installation.
 
+**App or CLI?** Both. The GitHub Copilot app and Copilot CLI can use the same custom marketplace. A cloud agent needs repository configuration because it cannot inherit a plugin installed only on your Mac.
+
 | Surface | Works now? | What to install |
 | --- | --- | --- |
 | GitHub Copilot app | Yes | Visum custom-marketplace plugin |
@@ -523,6 +506,8 @@ The independent marketplace above passed GitHub's automated manifest, lint and i
 
 **Ready now:** Yes, as a Git extension.
 
+**App or CLI?** CLI only. This section is for the `gemini` terminal program; it does not install Visum into the Gemini website, mobile app or another Google AI surface.
+
 | Surface | Works now? | What to install |
 | --- | --- | --- |
 | Gemini CLI | Yes | Gemini extension from GitHub |
@@ -567,13 +552,15 @@ Official reference: [Gemini CLI extension commands](https://github.com/google-ge
 
 **Ready now:** Yes, as a native global skill.
 
+**App or CLI?** Windsurf desktop only in this section. It installs a Cascade skill for all local Windsurf workspaces. Devin is a separate product with separate instructions in the next section.
+
 | Surface | Works now? | What to install |
 | --- | --- | --- |
-| Cascade in Windsurf/Devin Desktop | Yes | Global native skill |
+| Cascade in Windsurf | Yes | Global native skill |
 | Separate Windsurf CLI | No route claimed | — |
 | Cloud session | No global-skill route claimed | Use the separate Devin repository route where applicable |
 
-**Recommended:** use the global skill below for Cascade in Windsurf / Devin Desktop. It is installed once for the current computer and becomes available in all local workspaces.
+**Recommended:** use the global skill below for Cascade in Windsurf. It is installed once for the current computer and becomes available in all local Windsurf workspaces.
 
 **Where commands go:** installation, update and removal commands go in a normal Terminal. `@visum` goes in the Cascade chat box after the app reloads.
 
@@ -609,20 +596,22 @@ To remove:
 "$HOME/visum-releases/install-native-skill.sh" windsurf --remove
 ```
 
-Windsurf's official Skills URL currently redirects to Devin Desktop's Cascade documentation. That official page still documents the global `~/.codeium/windsurf/skills/` path, Cascade's Skills UI and explicit `@skill-name` invocation used above.
+Windsurf documents the global `~/.codeium/windsurf/skills/` path, Cascade's Skills UI and explicit `@skill-name` invocation used above.
 
 Official reference: [Cascade Skills, global paths and `@` invocation](https://docs.windsurf.com/windsurf/cascade/skills).
 
 ## Devin
 
-**Ready now:** Yes, as a repository skill. This route does not require access to Devin's separate plugin system, which remains in closed beta.
+**Ready now:** Yes, as a repository skill. This route does not require a Devin marketplace or a separate plugin installation.
+
+**App, CLI or cloud?** All three can discover the same committed repository skill. Devin Local/Desktop can use the Visum runtime when it is actually running on the supported Mac; Devin cloud can follow Visum Mode and edit repository files but cannot reach the Mac's screen or local Engine.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
 | Devin cloud | Yes, guided behaviour only | Commit the repository skill |
 | Devin Desktop/Local | Yes | Commit the repository skill; local Visum requires macOS |
 | Devin CLI | Yes | Commit the repository skill |
-| Devin public plugin marketplace | No | Devin plugins are still closed beta |
+| Public marketplace | Not required | The repository skill is the supported route |
 
 **Recommended:** use the repository skill below. It is the public, no-beta-access route and works wherever Devin opens that committed repository.
 
@@ -662,13 +651,15 @@ To remove:
 "$HOME/visum-releases/install-native-skill.sh" devin --project /absolute/path/to/repository --remove
 ```
 
-Commit the resulting repository change. Devin's separate plugin ecosystem is currently closed beta, so Visum does not claim a public Devin marketplace listing.
+Commit the resulting repository change. Visum does not claim a Devin marketplace listing; the documented repository-skill route is sufficient.
 
-Official references: [Devin repository skills and invocation](https://docs.devin.ai/product-guides/skills), [Devin plugin ecosystem status](https://docs.devin.ai/product-guides/plugin-ecosystem).
+Official reference: [Devin repository skills and `@skills:` invocation](https://docs.devin.ai/product-guides/skills).
 
 ## Cline
 
 **Ready now:** Yes, as a native global skill.
+
+**App or CLI?** Both. Cline's IDE extensions and Cline CLI/TUI share the same global configuration on a computer, including the global Visum skill.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
@@ -692,7 +683,7 @@ cd "$HOME/visum-releases"
 ./install-native-skill.sh cline
 ```
 
-Restart Cline. In the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled; discovered skills are enabled by default, but each has an on/off toggle. Type `/visum` or ask Cline to enter Visum Mode. The same global skill is available in Cline CLI/TUI on that computer.
+Restart Cline. In the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled; discovered skills are enabled by default, and the toggle lets you disable or re-enable one. Type `/visum` or ask Cline to enter Visum Mode. The same global skill is available in Cline CLI/TUI on that computer.
 
 **Check it worked:** in the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled. In the CLI/TUI, start a new session and ask Cline to list skills or enter Visum Mode.
 
@@ -717,6 +708,8 @@ Official references: [Cline Skills](https://docs.cline.bot/customization/skills)
 ## Kiro
 
 **Ready now:** Yes, as an Agent Skill or a custom Power. Kiro's public-registry review remains pending.
+
+**App, CLI or cloud?** All are supported, but the storage scope matters. A global skill covers local Kiro IDE and CLI. A committed workspace skill also works in Kiro web and mobile. A custom Power is optional and is not required for Visum Mode.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
@@ -807,6 +800,8 @@ Official references: [Kiro Agent Skills and surface support](https://kiro.dev/do
 ## OpenCode
 
 **Ready now:** Yes, as a native global skill.
+
+**App or CLI?** Both local forms. OpenCode CLI/TUI and local web or IDE clients that use the same home directory see the same global skill. A hosted session or another computer needs its own installation or a committed project skill.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |

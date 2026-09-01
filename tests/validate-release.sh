@@ -3,7 +3,7 @@ set -eu
 
 visum_repository="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 visum_expected_version="$(tr -d '\n' < "$visum_repository/skills/visum/VERSION")"
-visum_expected_cli_version="0.1.2"
+visum_expected_cli_version="$(sed -n 's/^visum_release_version="\([^"]*\)"$/\1/p' "$visum_repository/skills/visum/scripts/install_cli.sh")"
 visum_expected_license="Apache-2.0"
 
 fail() {
@@ -16,6 +16,8 @@ pass() {
 }
 
 command -v jq >/dev/null 2>&1 || fail "jq is required"
+printf '%s\n' "$visum_expected_cli_version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' \
+    || fail "AI Skill CLI pin is not a semantic version"
 
 for visum_json in \
     plugin.json \
@@ -136,6 +138,13 @@ grep -q "Visum-CLI-$visum_expected_cli_version.zip" \
 }
 pass "AI Skill version is independent and pins the existing public CLI $visum_expected_cli_version"
 
+grep -q "/v$visum_expected_version/install-claude-code-app.sh" "$visum_repository/README.md" \
+    || fail "README Claude app installer does not use integration $visum_expected_version"
+grep -q "/v$visum_expected_version/install-claude-code-app.sh" \
+    "$visum_repository/skills/visum/references/platforms.md" \
+    || fail "packaged Claude app instructions do not use integration $visum_expected_version"
+pass "Claude app commands use the current integration tag"
+
 visum_claude_installer_version="$(sed -n 's/^visum_skill_version="\([^"]*\)"$/\1/p' "$visum_repository/install-claude-code-app.sh")"
 visum_claude_installer_sha="$(sed -n 's/^visum_archive_sha256="\([0-9a-f]*\)"$/\1/p' "$visum_repository/install-claude-code-app.sh")"
 [ "$visum_claude_installer_version" = "$visum_expected_version" ] || {
@@ -193,6 +202,13 @@ grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_reposi
     || fail "README must distinguish shell commands from agent-prompt commands"
 grep -q '^| Claude Desktop or web, ordinary \*\*Chat\*\* | Not through the pending direct route yet |' \
     "$visum_repository/README.md" || fail "README must state Claude Chat's pending public-directory route without claiming it is unsupported"
+grep -q '^\*\*App or CLI?\*\* Both\.' "$visum_repository/README.md" \
+    || fail "README must give an immediate app/CLI answer for multi-surface hosts"
+grep -q 'discovered skills are enabled by default' "$visum_repository/README.md" \
+    || fail "README must explain Cline skill enablement"
+if grep -q 'Cascade in Windsurf/Devin Desktop' "$visum_repository/README.md"; then
+    fail "README must not conflate Windsurf and Devin Desktop"
+fi
 grep -q '^copilot plugin update visum$' "$visum_repository/README.md" \
     || fail "README must use Copilot's documented unqualified plugin name for update"
 if grep -q '^copilot plugin update visum@visum$' "$visum_repository/README.md"; then
