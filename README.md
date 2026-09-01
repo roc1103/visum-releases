@@ -26,14 +26,14 @@ The guide uses three command locations:
 
 | Host | App / IDE | CLI / TUI | Cloud / web | Recommended route today | Public catalogue |
 | --- | --- | --- | --- | --- | --- |
-| [Claude Code](#claude-code) | Yes: Claude Desktop **Code** tab | Yes | Yes: repository skill | Plugin for CLI/local Code; repository skill for cloud | Anthropic review pending |
-| [OpenAI Codex](#openai-codex) | Yes: Codex in the ChatGPT desktop app | Yes | Not claimed here | Visum Git marketplace | Not submitted to OpenAI's universal directory |
+| [Claude Code](#claude-code) | Yes: Claude Desktop **Code** and **Cowork** | Yes | Yes: repository skill for remote Code | Plugin for local app/CLI; repository skill for remote Code | Anthropic review pending |
+| [OpenAI Codex](#openai-codex) | Yes: Codex desktop app | Yes | Yes: repository skill | Git marketplace plugin; native skill for IDE/cloud | Not submitted to OpenAI's universal directory |
 | [Cursor](#cursor) | Yes | Yes, on the same machine | Yes: repository skill | Native global or project skill | Cursor Marketplace review pending |
 | [Google Antigravity](#google-antigravity) | Yes: Antigravity 2.0 | Yes: `agy` | Not claimed here | Install separately for app and CLI | Direct installation; no listing required |
 | [GitHub Copilot](#github-copilot) | Yes: GitHub Copilot app | Yes | Yes: repository configuration | Visum Git marketplace for CLI; repository skill/configuration for app or cloud | Awesome Copilot listing declined; direct install remains available |
 | [Google Gemini CLI](#google-gemini-cli) | No desktop-app route claimed | Yes | Not claimed here | Git extension | Direct Git distribution |
 | [Windsurf / Cascade](#windsurf--cascade) | Yes: Cascade in Windsurf/Devin Desktop | No separate route claimed | No separate route claimed | Native global skill | Direct skill distribution |
-| [Devin](#devin) | Yes: Devin Desktop/Local | Yes | Yes | Repository skill | Devin plugins are closed beta; no public listing claimed |
+| [Devin](#devin) | Yes: Devin Desktop/Local | Yes | Yes | Repository skill | Devin plugins remain closed beta; no public listing claimed |
 | [Cline](#cline) | Yes: Cline IDE extensions | Yes | Not claimed here | Native global skill | Direct skill distribution |
 | [Kiro](#kiro) | Yes: Kiro IDE | Yes | Yes: workspace skill | Native global or project skill; optional Power | Kiro registry review pending |
 | [OpenCode](#opencode) | Yes: local clients using standard OpenCode configuration | Yes | Not claimed by this global install | Native global skill | Direct skill distribution |
@@ -69,18 +69,18 @@ All routes load the same Visum Mode behaviour. They do not replace the local Vis
 
 ## One-time setup for native-skill installs
 
-Sections that use `./install-native-skill.sh` require a local checkout. Run this once in Terminal:
+Sections that use `./install-native-skill.sh` require a local checkout. Each affected section includes a complete copy-and-paste block, so a reader arriving from a website badge does not need to find this section first. The common setup is:
 
 ```sh
-git clone --depth 1 https://github.com/roc1103/visum-releases.git
-cd visum-releases
+git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+cd "$HOME/visum-releases"
 ```
 
 If the `visum-releases` folder already exists, update it instead:
 
 ```sh
-git -C visum-releases pull --ff-only
-cd visum-releases
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
 ```
 
 Keep that Terminal in the `visum-releases` folder while running the agent-specific command. The installer refuses to overwrite an existing Visum skill unless `--replace` is supplied. When replacement is authorised, it retains the previous copy and prints its backup location.
@@ -91,33 +91,43 @@ Keep that Terminal in the `visum-releases` folder while running the agent-specif
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
-| Claude Desktop, **Code** tab, local session | Yes | Claude plugin or personal skill |
-| Claude Code CLI | Yes | Claude plugin |
-| Claude Desktop SSH session | Yes | Install on the remote host |
-| Claude cloud Code session | Yes, guided behaviour only | Commit the repository skill |
-| Ordinary Claude Chat/Cowork conversation | Not covered by this direct route | Wait for the public Anthropic listing |
+| Claude Desktop, **Cowork** | Yes | Claude plugin through **Customize → Plugins** |
+| Claude Desktop, local **Code** session | Yes | Claude plugin or personal skill |
+| Claude Code CLI | Yes | The same Claude plugin |
+| Claude Desktop SSH session | Yes | Install the plugin or skill on the SSH host |
+| Claude remote/cloud Code session | Guided behaviour only | Commit a repository skill; plugins are unavailable in remote sessions |
+| Ordinary Claude Chat | No | Use Cowork or Code instead |
 
-**Choose one route:** use Option A for Claude Code CLI and local Code-tab sessions, Option B if you only want a local personal skill, or Option C for cloud Code sessions. Installing one route does not automatically install the others.
+**Choose one route:** Option A is the easiest route inside the Claude desktop app. Option B installs the same plugin from a normal Terminal and serves Claude Code CLI plus local Desktop Code sessions. Option C is a standalone local skill and does not use the plugin manager. Option D is for remote/cloud Code sessions.
 
-**Important:** `/plugin` commands are Claude Code commands. Type them inside an interactive Claude Code session, not in a normal shell and not in an ordinary Claude chat that is not a Code session.
+### Option A — Claude Desktop app, no Terminal required
 
-### Option A — Plugin for Claude Code CLI and local Claude Desktop Code sessions
+1. Open Claude Desktop and select **Customize → Plugins**.
+2. Choose **Add marketplace**.
+3. Enter `roc1103/visum-releases` and add it.
+4. Find **Visum**, choose **Install**, then start a new Cowork or local Code session.
+5. Type `/visum:visum` or ask Claude to enter Visum Mode.
 
-1. Open a normal Terminal and start the interactive Claude Code CLI with `claude`.
-2. At Claude's prompt, run these three slash commands. Do not paste them into the normal shell:
+In a local Code session, the equivalent controls are under **+ → Plugins**. Plugins are not available in Claude's remote Code sessions.
 
-```text
-/plugin marketplace add roc1103/visum-releases
-/plugin install visum@visum
-/reload-plugins
+**Check it worked:** return to **Customize → Plugins** or **+ → Plugins → Manage plugins** and confirm `visum` is installed and enabled. Then start a new session and type `/visum:visum`.
+
+### Option B — Claude Code CLI and local Desktop Code, using Terminal
+
+Run these commands in a normal Terminal. They are non-interactive CLI commands, so do **not** first launch `claude`:
+
+```sh
+claude plugin marketplace add roc1103/visum-releases
+claude plugin install visum@visum
 ```
 
-3. In a new CLI session, start with `/visum:visum` or ask Claude to enter Visum Mode.
-4. In Claude Desktop, open a **local Code** session, select **+ → Plugins → Add plugin**, choose the configured `visum` marketplace, and install `visum`. Start a new Code session afterward.
+Start a new Claude Code CLI or local Desktop Code session. Type `/visum:visum` or ask Claude to enter Visum Mode. Claude Desktop and Claude Code CLI share local configuration, so this is one installation per user account on that computer.
 
-**Check it worked:** in the CLI, run `/plugin list` and confirm `visum@visum` is enabled. In Desktop, open **+ → Plugins → Manage plugins** and confirm Visum is enabled. If the CLI asks for a reload, run `/reload-plugins`; if it requests confirmation because the prompt cache will be refreshed, run `/reload-plugins --force`.
+**Check it worked:** run `claude plugin list` in Terminal and confirm `visum@visum` is enabled. In Desktop, open **+ → Plugins → Manage plugins** and confirm Visum is enabled.
 
-### Option B — Personal skill for local Claude Desktop Code sessions
+If an older Claude Code build does not recognise the non-interactive `claude plugin` command, update Claude Code. Its interactive equivalent is to launch `claude` and enter `/plugin marketplace add roc1103/visum-releases`, then `/plugin install visum@visum` at Claude's prompt.
+
+### Option C — Standalone personal skill for local Desktop Code
 
 In a normal macOS **Terminal**, install the personal skill for all local Claude Desktop projects:
 
@@ -125,13 +135,13 @@ In a normal macOS **Terminal**, install the personal skill for all local Claude 
 curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --user
 ```
 
-Restart the local Code session. Type `/` or use **+ → Slash commands**, then choose `visum`; asking Claude to enter Visum Mode also works. This route does not require the `/plugin` command.
+Restart the local Code session. Type `/` or use **+ → Slash commands**, then choose `visum`; asking Claude to enter Visum Mode also works. This route does not require a marketplace or plugin command, but it does not add Visum to Cowork.
 
 **Check it worked:** open **+ → Slash commands** and confirm `visum` appears. This personal skill is available to local projects for that macOS user; it is not automatically copied into cloud sessions.
 
 For an SSH Code session, run the same installer on the remote Mac or Linux host. Claude Desktop reads `~/.claude/skills/` from the SSH host, not from your local Mac.
 
-### Option C — Claude cloud Code sessions
+### Option D — Claude remote/cloud Code sessions
 
 In a normal **Terminal**, from the repository that Claude will open:
 
@@ -153,9 +163,9 @@ Push that commit. Claude will discover the skill when it opens the repository. C
 - Remove the plugin: `/plugin uninstall visum@visum`.
 - Remove the personal skill by rerunning the `--user` installer with `--remove`.
 - Remove a project skill by rerunning the `--project` installer with `--remove`, then commit the deletion.
-- If `/plugin` is unknown, update Claude Code. In the desktop app, use the local-skill route above rather than typing `/plugin` into an ordinary chat.
+- If `/plugin` is unknown, update Claude Code or use the normal-Terminal commands in Option B. Do not type Claude Code plugin commands into ordinary Claude Chat.
 
-Official references: [Claude Desktop skills, plugins and surface limits](https://code.claude.com/docs/en/desktop), [Claude marketplace installation and updates](https://code.claude.com/docs/en/discover-plugins).
+Official references: [Claude Desktop skills, plugins and surface limits](https://code.claude.com/docs/en/desktop), [Claude marketplace installation and updates](https://code.claude.com/docs/en/discover-plugins), [Claude marketplace distribution](https://code.claude.com/docs/en/plugin-marketplaces).
 
 ## OpenAI Codex
 
@@ -163,14 +173,23 @@ Official references: [Claude Desktop skills, plugins and surface limits](https:/
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
-| Codex in the ChatGPT desktop app | Yes | Visum Git marketplace plugin |
+| Codex desktop app | Yes | Visum Git marketplace plugin |
 | Codex CLI | Yes | The same local plugin installation |
-| Codex IDE extension | No plugin support | Use the app or CLI instead |
-| Codex cloud | Not claimed by this guide | — |
+| Codex IDE extension | Yes | Standalone global Agent Skill |
+| Codex cloud task | Guided behaviour only | Commit a repository Agent Skill |
 
-**One installation serves both:** the marketplace and plugin are stored in the local Codex configuration used by the desktop app and CLI on that Mac.
+**Choose a route:** Option A uses the Codex desktop app's plugin browser. Option B installs the same plugin from Terminal for the desktop app and CLI. Option C installs the standalone Agent Skill for the IDE extension. Option D is for cloud tasks.
 
-### Install for both the desktop app and CLI — normal Terminal
+### Option A — Codex desktop app
+
+1. Start a new Codex task and enter `/plugins`.
+2. Choose **Add Marketplace** and enter `roc1103/visum-releases`.
+3. Find **Visum**, choose **Install**, then start a new task.
+4. Mention `$visum` or ask Codex to enter Visum Mode.
+
+**Check it worked:** open `/plugins` again and confirm `visum@visum` is installed and enabled.
+
+### Option B — Codex desktop app and CLI, using Terminal
 
 Run these in a normal macOS Terminal, not in the Codex chat box:
 
@@ -183,20 +202,58 @@ Close any existing Codex task and start a new desktop task or CLI session. Menti
 
 **Check it worked:** run `codex plugin list` in Terminal and confirm `visum@visum` is installed and enabled. In the desktop app, start a new task and mention `$visum`.
 
-### Update, remove or troubleshoot
+### Option C — Codex IDE extension, using Terminal
+
+Copy this complete block into a normal Terminal:
 
 ```sh
-# Update the marketplace snapshot and installed plugin
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
+./install-native-skill.sh codex
+```
+
+Restart the IDE extension and mention `$visum` or ask Codex to enter Visum Mode. This route installs the skill at `~/.agents/skills/visum`; it does not install a marketplace plugin.
+
+**Check it worked:** confirm `~/.agents/skills/visum/SKILL.md` exists, start a new IDE task and mention `$visum`.
+
+### Option D — Codex cloud tasks
+
+From the repository Codex cloud will open, copy the canonical skill and commit it:
+
+```sh
+mkdir -p .agents/skills
+test ! -e .agents/skills/visum || { echo "Visum skill already exists; inspect it before replacing it."; exit 1; }
+cp -R "$HOME/visum-releases/skills/visum" .agents/skills/visum
+git add .agents/skills/visum
+git commit -m "Add Visum skill"
+```
+
+Push the commit before starting the cloud task. The cloud agent can follow Visum Mode and edit repository artifacts, but it cannot reach the Visum Engine on the user's Mac.
+
+### Update, remove or troubleshoot
+
+To update:
+
+```sh
 codex plugin marketplace upgrade visum
 codex plugin add visum@visum
+```
 
-# Remove the installed plugin
+To remove:
+
+```sh
 codex plugin remove visum@visum
 ```
 
-Run the two update commands together; run the remove command only when uninstalling. In Codex CLI, `/plugins` opens the plugin browser. If the desktop app was already open during installation or update, start a new task.
+In Codex CLI, `/plugins` opens the plugin browser. If the desktop app was already open during installation or update, start a new task.
 
-Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.com/docs/plugins), [OpenAI Git and local marketplace packaging](https://developers.openai.com/plugins/build/plugins).
+For the standalone IDE skill, update the checkout and rerun `./install-native-skill.sh codex --replace`; remove it with `./install-native-skill.sh codex --remove`. For a cloud repository skill, replace or delete `.agents/skills/visum` and commit the change.
+
+Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.com/docs/build-plugins), [OpenAI Agent Skills and supported Codex surfaces](https://learn.chatgpt.com/docs/build-skills), [OpenAI plugin skills](https://developers.openai.com/plugins/concepts/skills).
 
 ## Cursor
 
@@ -213,9 +270,15 @@ Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt
 
 ### Install for Cursor desktop and local CLI — Terminal
 
-Until Cursor completes marketplace review, install the native skill from a checkout:
+Until Cursor completes marketplace review, copy this complete block into a normal Terminal:
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh cursor
 ```
 
@@ -235,7 +298,7 @@ git add .cursor/skills/visum
 git commit -m "Add Visum skill"
 ```
 
-Replace `/absolute/path/to/visum-releases` with the checkout created in the one-time setup. Push the commit before starting the remote agent.
+Replace `/absolute/path/to/visum-releases` with `$HOME/visum-releases` when using the standard checkout above, or with the actual checkout location. Push the commit before starting the remote agent. Cursor's global skill on your Mac is not copied automatically to Cloud Agents, SSH hosts or background workers.
 
 ### Marketplace route after public approval
 
@@ -243,16 +306,21 @@ Once Visum is publicly listed, users will be able to install it from **Customize
 
 ### Update, remove or troubleshoot
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh cursor --replace
+To update:
 
-# Remove
-./install-native-skill.sh cursor --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh cursor --replace
 ```
 
-Run only the update pair or the remove command, not both. Reload Cursor afterward. If an organisation disables local plugin imports, use the native skill route or ask its administrator to allow the reviewed marketplace listing.
+To remove:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" cursor --remove
+```
+
+Reload Cursor afterward. If an organisation disables local plugin imports, use the native skill route or ask its administrator to allow the reviewed marketplace listing.
 
 Official references: [Cursor Agent Skills and global paths](https://cursor.com/docs/skills), [Cursor plugins and local testing](https://cursor.com/docs/plugins).
 
@@ -274,20 +342,24 @@ Official references: [Cursor Agent Skills and global paths](https://cursor.com/d
 ### Antigravity CLI — normal Terminal
 
 ```sh
-git clone --depth 1 https://github.com/roc1103/visum-releases.git
-agy plugin install ./visum-releases/plugins/visum-antigravity
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+agy plugin install "$HOME/visum-releases/plugins/visum-antigravity"
 ```
 
-If the repository is already checked out, run `git -C visum-releases pull --ff-only` instead of cloning it again. Restart `agy`, run `/skills` to confirm Visum is present, then type `/visum` or ask Antigravity to enter Visum Mode.
+Restart `agy`, run `/skills` to confirm Visum is present, then type `/visum` or ask Antigravity to enter Visum Mode.
 
 **Check it worked:** run `agy plugin list` in Terminal and confirm `visum` is installed. Then start `agy`, run `/skills`, and confirm the Visum skill appears.
 
 To update it, pull the repository, uninstall the old plugin and install the same wrapper again:
 
 ```sh
-git -C visum-releases pull --ff-only
+git -C "$HOME/visum-releases" pull --ff-only
 agy plugin uninstall visum
-agy plugin install ./visum-releases/plugins/visum-antigravity
+agy plugin install "$HOME/visum-releases/plugins/visum-antigravity"
 ```
 
 To remove it:
@@ -300,9 +372,15 @@ The official CLI documentation does not currently list a separate update command
 
 ### Antigravity 2.0 desktop — normal Terminal, then app
 
-From a repository checkout:
+Copy this complete block into a normal Terminal:
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh antigravity
 ```
 
@@ -310,18 +388,21 @@ Restart Antigravity 2.0 and ask it to enter Visum Mode. This copies Visum to the
 
 **Check it worked:** start a new Antigravity project and ask it to list available skills or enter Visum Mode. The desktop skill and CLI plugin are separate; installing one does not install the other.
 
-Update or remove the desktop skill with:
+To update the desktop skill:
 
 ```sh
-# Update
-git pull --ff-only
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
 ./install-native-skill.sh antigravity --replace
-
-# Remove
-./install-native-skill.sh antigravity --remove
 ```
 
-Official references: [Antigravity plugins and CLI commands](https://www.antigravity.google/docs/cli/plugins/), [Antigravity global skills](https://antigravity.google/docs/skills/).
+To remove it:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" antigravity --remove
+```
+
+Official references: [Antigravity plugins and CLI commands](https://antigravity.google/docs/cli/plugins/), [Antigravity global skills](https://antigravity.google/docs/skills/).
 
 ## GitHub Copilot
 
@@ -357,26 +438,38 @@ Ask Copilot to enter Visum Mode. In an interactive Copilot CLI session, the equi
 
 ### Install for Copilot cloud agent — Terminal in the target repository
 
-Install the repository skill:
+First obtain or update the Visum integration checkout, then install the repository skill:
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh copilot --project /absolute/path/to/repository
 ```
 
 Commit and push `.github/skills/visum`. Open the pushed branch in a new cloud-agent session and ask Copilot to list its available skills or enter Visum Mode.
 
+Replace `/absolute/path/to/repository` with the full path to the project Copilot will open, for example `/Users/me/Documents/MyProject`.
+
 ### Update, remove or troubleshoot
 
+To update:
+
 ```sh
-# Refresh the marketplace, then update the installed plugin
 copilot plugin marketplace update visum
 copilot plugin update visum@visum
+```
 
-# Remove
+To remove:
+
+```sh
 copilot plugin uninstall visum
 ```
 
-The first command refreshes the marketplace catalogue. The second updates the installed plugin. The third removes it. Updating the marketplace alone does not update an installed plugin.
+The first update command refreshes the marketplace catalogue. The second updates the installed plugin. Updating the marketplace alone does not update an installed plugin.
 
 Official references: [About Copilot plugins and supported surfaces](https://docs.github.com/en/copilot/concepts/agents/about-plugins), [customising the Copilot app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app), [installing Copilot CLI plugins](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing).
 
@@ -406,11 +499,15 @@ Restart Gemini CLI, run `/extensions list` to confirm Visum is loaded, then ask 
 
 ### Update or remove
 
-```sh
-# Update
-gemini extensions update visum
+To update immediately:
 
-# Remove
+```sh
+gemini extensions update visum
+```
+
+To remove:
+
+```sh
 gemini extensions uninstall visum
 ```
 
@@ -431,6 +528,12 @@ Official reference: [Gemini CLI extension commands](https://github.com/google-ge
 ### Install for the desktop app — Terminal, then app
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh windsurf
 ```
 
@@ -440,13 +543,18 @@ Reload the app. Open the Cascade customisations menu and confirm Visum appears u
 
 ### Update or remove
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh windsurf --replace
+To update:
 
-# Remove
-./install-native-skill.sh windsurf --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh windsurf --replace
+```
+
+To remove:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" windsurf --remove
 ```
 
 Windsurf's current documentation redirects this feature to Devin Desktop documentation; the global path and `@visum` invocation remain documented there.
@@ -467,22 +575,35 @@ Official reference: [Cascade Skills, global paths and `@` invocation](https://do
 ### Install into a repository — Terminal
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh devin --project /absolute/path/to/repository
 ```
 
 Commit and push `.agents/skills/visum`. Devin discovers it from the connected repository. Start explicitly with `@skills:visum`, or ask Devin to enter Visum Mode. A cloud Devin session can follow the workflow but cannot reach the Visum Engine on your Mac.
 
+Replace `/absolute/path/to/repository` with the full path to the repository Devin will open, for example `/Users/me/Documents/MyProject`.
+
 **Check it worked:** open a new Devin session connected to that repository and use `@skills:visum`. If it is not found, confirm the committed file `.agents/skills/visum/SKILL.md` is present on the branch Devin opened.
 
 ### Update or remove
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh devin --project /absolute/path/to/repository --replace
+To update:
 
-# Remove
-./install-native-skill.sh devin --project /absolute/path/to/repository --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh devin --project /absolute/path/to/repository --replace
+```
+
+To remove:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" devin --project /absolute/path/to/repository --remove
 ```
 
 Commit the resulting repository change. Devin's separate plugin ecosystem is currently closed beta, so Visum does not claim a public Devin marketplace listing.
@@ -502,22 +623,33 @@ Official references: [Devin repository skills and invocation](https://docs.devin
 ### Install for the IDE and CLI — Terminal
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh cline
 ```
 
-Restart Cline. In the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled. Type `/visum` or ask Cline to enter Visum Mode. The same global skill is available in Cline CLI.
+Restart Cline. In the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled; discovered skills are enabled by default, but each has an on/off toggle. Type `/visum` or ask Cline to enter Visum Mode. The same global skill is available in Cline CLI/TUI on that computer.
 
 **Check it worked:** in the IDE, open the Skills tab from the scale icon and confirm `visum` is enabled. In the CLI/TUI, start a new session and ask Cline to list skills or enter Visum Mode.
 
 ### Update or remove
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh cline --replace
+To update:
 
-# Remove
-./install-native-skill.sh cline --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh cline --replace
+```
+
+To remove:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" cline --remove
 ```
 
 Official references: [Cline Skills](https://docs.cline.bot/customization/skills), [shared Cline IDE and CLI configuration](https://docs.cline.bot/getting-started/config).
@@ -547,9 +679,15 @@ Official references: [Cline Skills](https://docs.cline.bot/customization/skills)
 
 ### Option B — Install for Kiro IDE and CLI on this Mac — Terminal
 
-From the `visum-releases` checkout created in the one-time setup:
+Copy this complete block into a normal Terminal:
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh kiro
 ```
 
@@ -569,7 +707,7 @@ git add .kiro/skills/visum
 git commit -m "Add Visum skill"
 ```
 
-Replace `/absolute/path/to/visum-releases` with the checkout created in the one-time setup. Push the commit, then open that branch in Kiro web and invoke `/visum`.
+Replace `/absolute/path/to/visum-releases` with `$HOME/visum-releases` when using the standard checkout above, or with the actual checkout location. Push the commit, then open that branch in Kiro web and invoke `/visum`. A global skill on your Mac does not travel to Kiro web/mobile; only the committed workspace skill does.
 
 ### Optional Power route
 
@@ -580,19 +718,24 @@ Use this only if you specifically want Kiro to manage Visum as a Power. The Agen
 3. Enter `https://github.com/roc1103/visum-releases`.
 4. Choose **Install**.
 
-Kiro CLI 3 can use Powers installed through the IDE. This route is optional; users who only need Visum's guided behaviour can use the simpler Agent Skill route above.
+Kiro CLI 3 detects Powers installed through the IDE, and current Kiro documentation also lists Powers for web. This route is optional; users who only need Visum's guided behaviour can use the simpler Agent Skill route above. Kiro mobile does not currently install Powers, so use a committed workspace skill there.
 
 ### Update or remove
 
 For the local native skill:
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh kiro --replace
+To update the local native skill:
 
-# Remove
-./install-native-skill.sh kiro --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh kiro --replace
+```
+
+To remove it:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" kiro --remove
 ```
 
 For a repository skill, replace or delete `.kiro/skills/visum` and commit the change. For a Power, open **Powers → Visum → Check for updates**, or remove it from the same details screen.
@@ -612,6 +755,12 @@ Official references: [Kiro Agent Skills and surface support](https://kiro.dev/do
 ### Install — Terminal
 
 ```sh
+if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
+  git -C "$HOME/visum-releases" pull --ff-only
+else
+  git clone --depth 1 https://github.com/roc1103/visum-releases.git "$HOME/visum-releases"
+fi
+cd "$HOME/visum-releases"
 ./install-native-skill.sh opencode
 ```
 
@@ -621,13 +770,18 @@ Start a new OpenCode session and ask it to use the Visum skill or enter Visum Mo
 
 ### Update or remove
 
-```sh
-# Update
-git pull --ff-only
-./install-native-skill.sh opencode --replace
+To update:
 
-# Remove
-./install-native-skill.sh opencode --remove
+```sh
+git -C "$HOME/visum-releases" pull --ff-only
+cd "$HOME/visum-releases"
+./install-native-skill.sh opencode --replace
+```
+
+To remove:
+
+```sh
+"$HOME/visum-releases/install-native-skill.sh" opencode --remove
 ```
 
 Official reference: [OpenCode Agent Skills and discovery paths](https://opencode.ai/docs/skills).

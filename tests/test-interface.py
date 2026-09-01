@@ -125,6 +125,45 @@ class InterfaceContractTests(unittest.TestCase):
             with self.subTest(state=state_id):
                 self.assertIn("confirm", self.data["states"][state_id])
 
+    def test_public_install_guide_is_surface_specific_and_self_contained(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        headings = (
+            "Claude Code",
+            "OpenAI Codex",
+            "Cursor",
+            "Google Antigravity",
+            "GitHub Copilot",
+            "Google Gemini CLI",
+            "Windsurf / Cascade",
+            "Devin",
+            "Cline",
+            "Kiro",
+            "OpenCode",
+        )
+        self.assertEqual(readme.count("**Ready now:**"), len(headings))
+        self.assertEqual(
+            readme.count("| Surface | Works now? | What to install |"),
+            len(headings),
+        )
+        self.assertGreaterEqual(readme.count("**Check it worked:**"), len(headings))
+        for index, heading in enumerate(headings):
+            start = readme.index(f"## {heading}")
+            if index + 1 < len(headings):
+                end = readme.index(f"## {headings[index + 1]}", start)
+            else:
+                end = readme.index("## Roo Code (legacy only)", start)
+            section = readme[start:end]
+            with self.subTest(host=heading):
+                self.assertIn("| Surface | Works now? | What to install |", section)
+                self.assertIn("**Check it worked:**", section)
+                self.assertIn("Official reference", section)
+
+        self.assertIn("Claude Desktop, **Cowork**", readme)
+        self.assertIn("Claude remote/cloud Code session", readme)
+        self.assertIn("Codex IDE extension", readme)
+        self.assertIn("discovered skills are enabled by default", readme)
+        self.assertIn("Kiro mobile does not currently install Powers", readme)
+
 
 if __name__ == "__main__":
     unittest.main()
