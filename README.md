@@ -339,7 +339,7 @@ Official references: [Cursor Agent Skills and global paths](https://cursor.com/d
 
 **Important:** do not point `agy` at this repository's root `plugin.json`. The root manifest is the portable Agent Plugin used by compatible hosts; `agy` requires the Antigravity-specific wrapper under `plugins/visum-antigravity`.
 
-### Antigravity CLI — normal Terminal
+### Install for Antigravity CLI — normal Terminal
 
 ```sh
 if git -C "$HOME/visum-releases" rev-parse --git-dir >/dev/null 2>&1; then
@@ -353,6 +353,8 @@ agy plugin install "$HOME/visum-releases/plugins/visum-antigravity"
 Restart `agy`, run `/skills` to confirm Visum is present, then type `/visum` or ask Antigravity to enter Visum Mode.
 
 **Check it worked:** run `agy plugin list` in Terminal and confirm `visum` is installed. Then start `agy`, run `/skills`, and confirm the Visum skill appears.
+
+#### Update or remove the CLI plugin
 
 To update it, pull the repository, uninstall the old plugin and install the same wrapper again:
 
@@ -370,7 +372,7 @@ agy plugin uninstall visum
 
 The official CLI documentation does not currently list a separate update command, so the explicit pull, uninstall and reinstall sequence above is the documented-safe refresh route.
 
-### Antigravity 2.0 desktop — normal Terminal, then app
+### Install for Antigravity 2.0 desktop — normal Terminal, then app
 
 Copy this complete block into a normal Terminal:
 
@@ -387,6 +389,8 @@ cd "$HOME/visum-releases"
 Restart Antigravity 2.0 and ask it to enter Visum Mode. This copies Visum to the documented global desktop skill path, `~/.gemini/config/skills/visum`.
 
 **Check it worked:** start a new Antigravity project and ask it to list available skills or enter Visum Mode. The desktop skill and CLI plugin are separate; installing one does not install the other.
+
+#### Update or remove the desktop skill
 
 To update the desktop skill:
 
