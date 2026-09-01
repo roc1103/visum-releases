@@ -182,12 +182,12 @@ grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "Roo Code
 grep -q 'It is not a current supported target' "$visum_repository/README.md" || fail "Roo Code is not explicitly excluded from current support"
 visum_ready_count="$(grep -c '^\*\*Ready now:\*\*' "$visum_repository/README.md")"
 [ "$visum_ready_count" -eq 11 ] || fail "README must contain one Ready now statement for each of the eleven current hosts"
-visum_surface_count="$(grep -c '^\*\*Works in:\*\*' "$visum_repository/README.md")"
-[ "$visum_surface_count" -eq 11 ] || fail "README must state app/CLI surface support for each current host"
+visum_surface_count="$(grep -c '^| Surface | Works now? | What to install |$' "$visum_repository/README.md")"
+[ "$visum_surface_count" -eq 11 ] || fail "README must give an app/CLI/cloud surface table for each current host"
 visum_check_count="$(grep -c '^\*\*Check it worked:\*\*' "$visum_repository/README.md")"
 [ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
 grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
-grep -q '^| Host | Desktop or IDE app | Terminal CLI or TUI | Cloud or web agent | Recommended direct route | Public catalogue |$' \
+grep -q '^| Host | App / IDE | CLI / TUI | Cloud / web | Recommended route today | Public catalogue |$' \
     "$visum_repository/README.md" || fail "README must expose app, CLI, cloud, install and catalogue status separately"
 grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/README.md" \
     || fail "README must distinguish shell commands from agent-prompt commands"
