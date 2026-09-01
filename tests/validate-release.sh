@@ -187,10 +187,17 @@ visum_surface_count="$(grep -c '^| Surface | Works now? | What to install |$' "$
 visum_check_count="$(grep -c '^\*\*Check it worked:\*\*' "$visum_repository/README.md")"
 [ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
 grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
-grep -q '^| Host | App / IDE | CLI / TUI | Cloud / web | Recommended route today | Public catalogue |$' \
+grep -q '^| Host | Desktop app or IDE | Terminal agent | Cloud or web | Easiest working route today | Public catalogue |$' \
     "$visum_repository/README.md" || fail "README must expose app, CLI, cloud, install and catalogue status separately"
 grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/README.md" \
     || fail "README must distinguish shell commands from agent-prompt commands"
+grep -q '^| Claude Desktop or web, ordinary \*\*Chat\*\* | Not through the pending direct route yet |' \
+    "$visum_repository/README.md" || fail "README must state Claude Chat's pending public-directory route without claiming it is unsupported"
+grep -q '^copilot plugin update visum$' "$visum_repository/README.md" \
+    || fail "README must use Copilot's documented unqualified plugin name for update"
+if grep -q '^copilot plugin update visum@visum$' "$visum_repository/README.md"; then
+    fail "README must not use the marketplace-qualified Copilot install selector for update"
+fi
 grep -q '^### Verification status right now$' "$visum_repository/README.md" \
     || fail "README must distinguish package validation from live-host verification"
 if grep -q 'Existing compatible installations remain supported' "$visum_repository/README.md"; then

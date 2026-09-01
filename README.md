@@ -14,7 +14,13 @@ For actual capture, training, inference or Confector execution, the current Visu
 
 ## Start here
 
-Choose the row for the AI product you actually use, then follow only that product's section. Do not mix commands from different sections. Each section answers the same five questions in the same order: **where it works, where to type the install command, how to start Visum Mode, how to verify it, and how to update or remove it**.
+Choose the row for the AI product you actually use, then follow only that product's section. Do not mix commands from different sections. Every product section tells you:
+
+1. the exact app, CLI or cloud surface that can use Visum;
+2. which installation route to choose;
+3. exactly where to type or paste each command;
+4. how to start Visum Mode and confirm it loaded; and
+5. how to update, remove or troubleshoot it.
 
 The guide uses three command locations:
 
@@ -24,9 +30,9 @@ The guide uses three command locations:
 
 “Direct install ready” and “listed in a public marketplace” are different statuses. Every supported host below has a direct route now. A pending public listing only affects whether someone can discover Visum by searching that company's catalogue.
 
-| Host | App / IDE | CLI / TUI | Cloud / web | Recommended route today | Public catalogue |
+| Host | Desktop app or IDE | Terminal agent | Cloud or web | Easiest working route today | Public catalogue |
 | --- | --- | --- | --- | --- | --- |
-| [Claude Code](#claude-code) | Yes: Claude Desktop **Code** and **Cowork** | Yes | Yes: repository skill for remote Code | Plugin for local app/CLI; repository skill for remote Code | Anthropic review pending |
+| [Claude](#claude-code) | Yes: Chat, Cowork and local Code; routes differ | Yes: Claude Code CLI | Yes: Chat after directory approval; repository skill for remote Code | Custom marketplace for Cowork/local Code; repository skill for remote Code | Anthropic review pending |
 | [OpenAI Codex](#openai-codex) | Yes: Codex desktop app | Yes | Yes: repository skill | Git marketplace plugin; native skill for IDE/cloud | Not submitted to OpenAI's universal directory |
 | [Cursor](#cursor) | Yes | Yes, on the same machine | Yes: repository skill | Native global or project skill | Cursor Marketplace review pending |
 | [Google Antigravity](#google-antigravity) | Yes: Antigravity 2.0 | Yes: `agy` | Not claimed here | Install separately for app and CLI | Direct installation; no listing required |
@@ -46,7 +52,7 @@ The guide uses three command locations:
 - A cloud agent can use the guided workflow and repository files, but it cannot capture or control a user's Mac unless the host is connected to that Mac.
 - External review is still unfinished for the Claude, Cursor and Kiro public listings. The optional OpenAI universal-directory route was not submitted, and the separate Awesome Copilot listing was declined. None of those catalogue states disables the direct routes documented below.
 
-Marketplace status was last checked on 1 September 2026.
+Marketplace status and every linked host instruction were last checked against official documentation on 1 September 2026.
 
 ### Verification status right now
 
@@ -87,28 +93,28 @@ Keep that Terminal in the `visum-releases` folder while running the agent-specif
 
 ## Claude Code
 
-**Ready now:** Yes, by direct install. Anthropic's public-directory review is still pending.
+**Ready now:** Yes, by direct install in Cowork, local Code and Claude Code CLI. Anthropic's public-directory review is still pending. Claude plugins require a paid Claude plan, but Visum does not charge a separate integration fee.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
-| Claude Desktop, **Cowork** | Yes | Claude plugin through **Customize → Plugins** |
+| Claude Desktop or web, ordinary **Chat** | Not through the pending direct route yet | The same plugin will work here after Anthropic publishes it in the public directory |
+| Claude Desktop, **Cowork** | Yes | Add the Visum Git marketplace in **Customize → Plugins** |
 | Claude Desktop, local **Code** session | Yes | Claude plugin or personal skill |
 | Claude Code CLI | Yes | The same Claude plugin |
 | Claude Desktop SSH session | Yes | Install the plugin or skill on the SSH host |
 | Claude remote/cloud Code session | Guided behaviour only | Commit a repository skill; plugins are unavailable in remote sessions |
-| Ordinary Claude Chat | No | Use Cowork or Code instead |
 
-**Choose one route:** Option A is the easiest route inside the Claude desktop app. Option B installs the same plugin from a normal Terminal and serves Claude Code CLI plus local Desktop Code sessions. Option C is a standalone local skill and does not use the plugin manager. Option D is for remote/cloud Code sessions.
+**Choose one route:** Option A is the easiest direct route for Cowork and local Code in the Claude desktop app. Option B installs the same plugin from a normal Terminal for Claude Code CLI and local Desktop Code. Option C installs only the standalone skill for local Desktop Code. Option D is for remote/cloud Code. Ordinary Chat on the web or desktop will gain one-click access when Anthropic approves Visum for its public directory; until then, use Cowork or Code.
 
 ### Option A — Claude Desktop app, no Terminal required
 
-1. Open Claude Desktop and select **Customize → Plugins**.
+1. Open Claude Desktop, choose **Cowork**, then select **Customize → Plugins**. For a local **Code** session, use **+ → Plugins** instead.
 2. Choose **Add marketplace**.
 3. Enter `roc1103/visum-releases` and add it.
 4. Find **Visum**, choose **Install**, then start a new Cowork or local Code session.
 5. Type `/visum:visum` or ask Claude to enter Visum Mode.
 
-In a local Code session, the equivalent controls are under **+ → Plugins**. Plugins are not available in Claude's remote Code sessions.
+This direct custom-marketplace route is for Cowork and local/SSH Code. It is not the installation route for ordinary Chat, and plugins are not available in Claude's remote Code sessions.
 
 **Check it worked:** return to **Customize → Plugins** or **+ → Plugins → Manage plugins** and confirm `visum` is installed and enabled. Then start a new session and type `/visum:visum`.
 
@@ -165,11 +171,11 @@ Push that commit. Claude will discover the skill when it opens the repository. C
 - Remove a project skill by rerunning the `--project` installer with `--remove`, then commit the deletion.
 - If `/plugin` is unknown, update Claude Code or use the normal-Terminal commands in Option B. Do not type Claude Code plugin commands into ordinary Claude Chat.
 
-Official references: [Claude Desktop skills, plugins and surface limits](https://code.claude.com/docs/en/desktop), [Claude marketplace installation and updates](https://code.claude.com/docs/en/discover-plugins), [Claude marketplace distribution](https://code.claude.com/docs/en/plugin-marketplaces).
+Official references: [Claude Desktop skills, plugins and surface limits](https://code.claude.com/docs/en/desktop), [Claude marketplace installation and updates](https://code.claude.com/docs/en/discover-plugins), [Cowork custom-marketplace installation](https://claude.com/docs/cowork/guide/plugins), [Claude public-directory surfaces and submission](https://claude.com/docs/plugins/submit), [Claude plugin plan availability](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
 ## OpenAI Codex
 
-**Ready now:** Yes, through the Visum Git marketplace. It is not yet in OpenAI's universal directory.
+**Ready now:** Yes, through the Visum Git marketplace. It is not yet in OpenAI's universal directory. The Git marketplace is enough for direct installation; the universal directory would add public discovery and one-click catalogue installation.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
@@ -253,7 +259,7 @@ In Codex CLI, `/plugins` opens the plugin browser. If the desktop app was alread
 
 For the standalone IDE skill, update the checkout and rerun `./install-native-skill.sh codex --replace`; remove it with `./install-native-skill.sh codex --remove`. For a cloud repository skill, replace or delete `.agents/skills/visum` and commit the change.
 
-Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.com/docs/build-plugins), [OpenAI Agent Skills and supported Codex surfaces](https://learn.chatgpt.com/docs/build-skills), [OpenAI plugin skills](https://developers.openai.com/plugins/concepts/skills).
+Official references: [OpenAI plugins in ChatGPT and Codex](https://learn.chatgpt.com/docs/build-plugins), [OpenAI Agent Skills and supported Codex surfaces](https://learn.chatgpt.com/docs/build-skills), [OpenAI plugin skills](https://developers.openai.com/plugins/concepts/skills). OpenAI's current documentation confirms that standalone skills work in the desktop app, Codex CLI and IDE extension, while a published plugin is shared through the universal ChatGPT/Codex directory.
 
 ## Cursor
 
@@ -420,7 +426,7 @@ Official references: [Antigravity plugins and CLI commands](https://antigravity.
 
 **Choose a route:** install the marketplace plugin for Copilot CLI, use the app's plugin UI for the Copilot app, or commit a repository skill for a cloud agent.
 
-### Install for Copilot CLI — Terminal
+### Install for Copilot CLI — normal Terminal
 
 ```sh
 copilot plugin marketplace add roc1103/visum-releases
@@ -464,7 +470,7 @@ To update:
 
 ```sh
 copilot plugin marketplace update visum
-copilot plugin update visum@visum
+copilot plugin update visum
 ```
 
 To remove:
@@ -561,13 +567,13 @@ To remove:
 "$HOME/visum-releases/install-native-skill.sh" windsurf --remove
 ```
 
-Windsurf's current documentation redirects this feature to Devin Desktop documentation; the global path and `@visum` invocation remain documented there.
+Windsurf's official Skills URL currently redirects to Devin Desktop's Cascade documentation. That official page still documents the global `~/.codeium/windsurf/skills/` path, Cascade's Skills UI and explicit `@skill-name` invocation used above.
 
 Official reference: [Cascade Skills, global paths and `@` invocation](https://docs.windsurf.com/windsurf/cascade/skills).
 
 ## Devin
 
-**Ready now:** Yes, as a repository skill. Devin's public plugin ecosystem is still closed beta.
+**Ready now:** Yes, as a repository skill. This route does not require access to Devin's separate plugin system, which remains in closed beta.
 
 | Surface | Works now? | What to install |
 | --- | --- | --- |
