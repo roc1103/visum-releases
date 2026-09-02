@@ -132,7 +132,7 @@ If an older Claude Code build does not recognise the non-interactive `claude plu
 In a normal macOS **Terminal**, install the personal skill for all local Claude Desktop projects:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --user
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.11/install-claude-code-app.sh | sh -s -- --user
 ```
 
 Restart the local Code session. Type `/` or use **+ → Slash commands**, then choose `visum`; asking Claude to enter Visum Mode also works. This route does not require a marketplace or plugin command, but it does not add Visum to Cowork.
@@ -146,7 +146,7 @@ For an SSH Code session, run the same installer on the remote Mac or Linux host.
 In a normal **Terminal**, from the repository that Claude will open:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --project "$PWD"
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.11/install-claude-code-app.sh | sh -s -- --project "$PWD"
 git add .claude/skills/visum
 git commit -m "Add Visum skill"
 ```

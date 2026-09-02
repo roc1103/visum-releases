@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-visum_release_version="0.1.2"
-visum_archive_sha256="ce6944aeb6f7850850f293cdfbab39c04f46cec3ae7f35329d5b22635aad5dd7"
+visum_release_version="0.1.10"
+visum_archive_sha256="8168938340d8d1f74fe29c075c540b847cf2bb38c88099899d6224cb7f4a51c8"
 visum_release_url="https://github.com/roc1103/visum-releases/releases/download/v${visum_release_version}/Visum-CLI-${visum_release_version}.zip"
 visum_archive_path=""
 visum_licences_accepted="no"

@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Official Visum integrations from RO Company",
-    "version": "0.1.9"
+    "version": "0.1.11"
   },
   "plugins": [
     {
@@ -14,7 +14,7 @@
       "source": "./plugins/visum-agent",
       "description": "Use Visum's local visual workflows through GitHub Copilot CLI.",
       "license": "Apache-2.0",
-      "version": "0.1.9",
+      "version": "0.1.11",
       "skills": "./skills/"
     }
   ]

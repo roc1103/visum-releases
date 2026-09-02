@@ -9,7 +9,8 @@ The official public source is `https://github.com/roc1103/visum-releases`.
 | Target | Native form | Installation or import | Activation |
 |---|---|---|---|
 | Claude Code terminal client | Claude Code plugin in an independent marketplace | Add marketplace `roc1103/visum-releases`, then install `visum@visum` | Invoke `/visum:visum` or ask Claude to use Visum. |
-| Claude Code web/desktop project | Repository skill | Commit the canonical skill at `.claude/skills/visum` in the selected repository | Ask Claude to use Visum or enter Visum Mode. |
+| Claude Desktop local or SSH Code | Claude Code plugin in the desktop plugin manager | Open **+ → Plugins**, add marketplace `roc1103/visum-releases`, then install Visum | Invoke `/visum:visum` or ask Claude to use Visum. |
+| Claude remote/cloud Code | Repository skill or repository-declared plugin | Commit the canonical skill at `.claude/skills/visum` in the selected repository | Ask Claude to use Visum or enter Visum Mode. |
 | Codex | Codex plugin in a Git marketplace | Add marketplace `roc1103/visum-releases`, then add `visum@visum` | Mention `$visum` or ask Codex to enter Visum Mode. |
 | Cursor | Agent Plugin | Install Visum from Cursor Marketplace when listed; local validation may use `~/.cursor/plugins/local/visum` | Invoke `/visum` or ask Cursor to enter Visum Mode. |
 | Google Antigravity | Agent Plugin | `agy plugin install https://github.com/roc1103/visum-releases` | Ask Antigravity to use Visum or enter Visum Mode. |
@@ -41,19 +42,25 @@ The plugin skill is namespaced as `/visum:visum`. Claude's marketplace copy prov
 
 These `/plugin` commands are not chat commands and are not available in Claude Code's web/desktop Code tab.
 
-## Claude Code web/desktop projects
+## Claude Desktop local and SSH Code
 
-Claude Code's hosted project sessions receive repository configuration, not a developer's local user-level plugin installation. Install the canonical Visum skill into the repository and commit it:
+Claude Desktop local and SSH Code sessions support plugins through the app UI. Open **+ → Plugins**, add marketplace `roc1103/visum-releases`, install Visum and start a new session. A plugin installed with the Claude Code terminal client is also available to local Desktop Code because both surfaces share local configuration.
+
+The `claude plugin ...` and interactive `/plugin` commands belong to the terminal client. Do not paste them into the Desktop chat; use the plugin manager UI there.
+
+## Claude remote/cloud Code
+
+Remote Code sessions run in a fresh cloud environment and do not inherit a plugin installed only on the user's Mac. Install the canonical Visum skill into the repository and commit it:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.9/install-claude-code-app.sh | sh -s -- --project "$PWD"
+curl -fsSL https://raw.githubusercontent.com/roc1103/visum-releases/v0.1.11/install-claude-code-app.sh | sh -s -- --project "$PWD"
 git add .claude/skills/visum
 git commit -m "Add Visum skill for Claude Code"
 ```
 
 The installer refuses to replace an existing project skill unless `--replace` is explicitly supplied. Use `--remove` to remove only the Visum project skill. For a local Claude Code installation that loads user skills, use `--user` instead.
 
-Project-skill discovery and Visum Engine execution are separate. Claude's hosted Code environment is not a macOS runtime and cannot run the local Apple-silicon Visum Engine. Use local Claude Code, or Remote Control connected to a local Claude Code session, for live Mac capture, training, inference and explicitly authorised Confector actions.
+Project-skill discovery and Visum Engine execution are separate. Claude's hosted Code environment is not the user's macOS runtime and cannot run that Mac's Visum Engine. Use local Claude Code, or Remote Control connected to a local Claude Code session, for live Mac capture, training, inference and explicitly authorised Confector actions. Anthropic also supports repository-declared plugins in `.claude/settings.json`; the committed skill remains the simplest self-contained route.
 
 ## Codex
 

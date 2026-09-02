@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-visum_skill_version="0.1.9"
-visum_archive_sha256="6fd4f6aa8e4eab672fd17bda35ed7a95591b5f7db3c4f80d1c23a67a0c3c818e"
+visum_skill_version="0.1.11"
+visum_archive_sha256="fd8d5626aecdf32c18a56baaa1ddc435d35d1991497f67d69d7609c6bcb1e167"
 visum_archive=""
 visum_scope=""
 visum_project=""
