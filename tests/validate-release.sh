@@ -197,8 +197,10 @@ visum_surface_count="$(grep -c '^| Surface | Availability | Installation |$' "$v
 visum_check_count="$(grep -c '^\*\*Verify installation:\*\*' "$visum_repository/docs/installation.md")"
 [ "$visum_check_count" -ge 11 ] || fail "installation guide must give a verification step for every current host"
 grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
-grep -q '^| Host | Direct route | Full instructions |$' \
+grep -q '^| Host | Quick-install route | Full instructions |$' \
     "$visum_repository/README.md" || fail "README must give a compact host route table"
+visum_details_count="$(grep -c '^<details>$' "$visum_repository/README.md")"
+[ "$visum_details_count" -eq 11 ] || fail "README must give one expandable quick installation per host"
 grep -q 'docs/installation.md#openai-codex' "$visum_repository/README.md" \
     || fail "README must link Codex alternatives to the installation guide"
 grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/docs/installation.md" \

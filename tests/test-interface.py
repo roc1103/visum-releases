@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import re
 import unittest
 
 
@@ -147,18 +148,20 @@ class InterfaceContractTests(unittest.TestCase):
             len(headings),
         )
         self.assertGreaterEqual(guide.count("**Verify installation:**"), len(headings))
-        self.assertIn("| Host | Direct route | Full instructions |", readme)
+        self.assertIn("| Host | Quick-install route | Full instructions |", readme)
         self.assertNotIn("| Surface | Availability | Installation |", readme)
         self.assertIn("Apple Silicon with macOS 14 or later", readme)
+        self.assertEqual(readme.count("<details>"), len(headings))
+        self.assertEqual(readme.count("</details>"), len(headings))
+        self.assertEqual(readme.count("<summary>"), len(headings))
         self.assertIn("/plugins", readme)
         self.assertIn("docs/installation.md#openai-codex", readme)
         for index, heading in enumerate(headings):
-            if heading == "OpenAI Codex":
-                self.assertIn(f"## {heading}", readme)
-            else:
-                slug = heading.lower().replace(" / ", "--").replace(" ", "-")
-                self.assertIn(f'<a id="{slug}"></a>', readme)
-                self.assertIn(f"docs/installation.md#{slug}", readme)
+            slug = heading.lower().replace(" / ", "--").replace(" ", "-")
+            self.assertIn(f'<a id="{slug}"></a>\n<details>', readme)
+            self.assertIn(f"[{heading}](#{slug})", readme)
+            self.assertIn(f"docs/installation.md#{slug}", readme)
+            self.assertIn(f"<summary>{heading} — ", readme)
             start = guide.index(f"## {heading}")
             if index + 1 < len(headings):
                 end = guide.index(f"## {headings[index + 1]}", start)
@@ -169,6 +172,34 @@ class InterfaceContractTests(unittest.TestCase):
                 self.assertIn("| Surface | Availability | Installation |", section)
                 self.assertIn("**Verify installation:**", section)
                 self.assertIn("Official reference", section)
+
+        quick_routes = {
+            "Cursor": "Install for Cursor desktop and local CLI — Terminal",
+            "Google Antigravity": "Install for Antigravity 2.0 desktop — normal Terminal, then app",
+            "Google Gemini CLI": "Install — Terminal",
+            "Windsurf / Cascade": "Install for the desktop app — Terminal, then app",
+            "Devin": "Install into a repository — Terminal",
+            "Cline": "Install for the IDE and CLI — Terminal",
+            "OpenCode": "Install — Terminal",
+        }
+        for heading, route in quick_routes.items():
+            slug = heading.lower().replace(" / ", "--").replace(" ", "-")
+            guide_section = guide.split(f"## {heading}\n", 1)[1].split("\n## ", 1)[0]
+            guide_route = guide_section.split(f"### {route}\n", 1)[1].split("\n### ", 1)[0]
+            command = re.search(r"```sh\n.*?\n```", guide_route, re.S)
+            self.assertIsNotNone(command)
+            landing_section = readme.split(f'<a id="{slug}"></a>\n<details>', 1)[1].split("</details>", 1)[0]
+            with self.subTest(host=heading):
+                self.assertIn(command.group(), landing_section)
+
+        for route in (
+            "roc1103/visum-releases",
+            "`/visum:visum`",
+            "`$visum`",
+            "**Customize → Plugins**",
+            "https://github.com/roc1103/visum-releases/tree/main/skills/visum",
+        ):
+            self.assertIn(route, readme)
 
         self.assertIn('<a id="roo-code-legacy-only"></a>', readme)
         self.assertIn('<a id="behaviour-and-safety"></a>', readme)
