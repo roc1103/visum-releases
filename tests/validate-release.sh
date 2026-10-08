@@ -187,8 +187,9 @@ grep -q 'without displaying a runnable Confector command or the internal bundle 
     "$visum_repository/skills/visum/references/confector.md" || {
     fail "blocked Confector responses can expose internal execution details"
 }
-grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "landing page does not mark Roo Code as legacy"
-grep -q 'Roo Code is not a current supported target' "$visum_repository/README.md" || fail "landing page does not exclude Roo Code from current support"
+grep -q '<a id="roo-code-legacy-only"></a>' "$visum_repository/README.md" || fail "landing page does not preserve the Roo anchor"
+grep -q 'Roo Code (legacy only)' "$visum_repository/docs/installation.md" || fail "installation guide does not mark Roo Code as legacy"
+grep -q 'It is not a current supported target' "$visum_repository/docs/installation.md" || fail "installation guide does not exclude Roo Code from current support"
 visum_availability_count="$(grep -c '^\*\*Availability:\*\*' "$visum_repository/docs/installation.md")"
 [ "$visum_availability_count" -eq 11 ] || fail "installation guide must contain one availability statement for each current host"
 visum_surface_count="$(grep -c '^| Surface | Availability | Installation |$' "$visum_repository/docs/installation.md")"

@@ -153,7 +153,12 @@ class InterfaceContractTests(unittest.TestCase):
         self.assertIn("/plugins", readme)
         self.assertIn("docs/installation.md#openai-codex", readme)
         for index, heading in enumerate(headings):
-            self.assertIn(f"## {heading}", readme)
+            if heading == "OpenAI Codex":
+                self.assertIn(f"## {heading}", readme)
+            else:
+                slug = heading.lower().replace(" / ", "--").replace(" ", "-")
+                self.assertIn(f'<a id="{slug}"></a>', readme)
+                self.assertIn(f"docs/installation.md#{slug}", readme)
             start = guide.index(f"## {heading}")
             if index + 1 < len(headings):
                 end = guide.index(f"## {headings[index + 1]}", start)
@@ -165,6 +170,8 @@ class InterfaceContractTests(unittest.TestCase):
                 self.assertIn("**Verify installation:**", section)
                 self.assertIn("Official reference", section)
 
+        self.assertIn('<a id="roo-code-legacy-only"></a>', readme)
+        self.assertIn('<a id="behaviour-and-safety"></a>', readme)
         self.assertIn("Claude Desktop, **Cowork**", guide)
         self.assertIn("Claude remote/cloud Code session", guide)
         self.assertIn("Codex IDE extension", guide)
