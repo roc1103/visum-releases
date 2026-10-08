@@ -127,6 +127,7 @@ class InterfaceContractTests(unittest.TestCase):
 
     def test_public_install_guide_is_surface_specific_and_self_contained(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        guide = (ROOT / "docs/installation.md").read_text(encoding="utf-8")
         headings = (
             "Claude Code",
             "OpenAI Codex",
@@ -140,29 +141,36 @@ class InterfaceContractTests(unittest.TestCase):
             "Kiro",
             "OpenCode",
         )
-        self.assertEqual(readme.count("**Availability:**"), len(headings))
+        self.assertEqual(guide.count("**Availability:**"), len(headings))
         self.assertEqual(
-            readme.count("| Surface | Availability | Installation |"),
+            guide.count("| Surface | Availability | Installation |"),
             len(headings),
         )
-        self.assertGreaterEqual(readme.count("**Verify installation:**"), len(headings))
+        self.assertGreaterEqual(guide.count("**Verify installation:**"), len(headings))
+        self.assertIn("| Host | Direct route | Full instructions |", readme)
+        self.assertNotIn("| Surface | Availability | Installation |", readme)
+        self.assertIn("Apple Silicon with macOS 14 or later", readme)
+        self.assertIn("/plugins", readme)
+        self.assertIn("docs/installation.md#openai-codex", readme)
         for index, heading in enumerate(headings):
-            start = readme.index(f"## {heading}")
+            self.assertIn(f"## {heading}", readme)
+            start = guide.index(f"## {heading}")
             if index + 1 < len(headings):
-                end = readme.index(f"## {headings[index + 1]}", start)
+                end = guide.index(f"## {headings[index + 1]}", start)
             else:
-                end = readme.index("## Roo Code (legacy only)", start)
-            section = readme[start:end]
+                end = guide.index("## Roo Code (legacy only)", start)
+            section = guide[start:end]
             with self.subTest(host=heading):
                 self.assertIn("| Surface | Availability | Installation |", section)
                 self.assertIn("**Verify installation:**", section)
                 self.assertIn("Official reference", section)
 
-        self.assertIn("Claude Desktop, **Cowork**", readme)
-        self.assertIn("Claude remote/cloud Code session", readme)
-        self.assertIn("Codex IDE extension", readme)
-        self.assertIn("discovered skills are enabled by default", readme)
-        self.assertIn("Kiro mobile does not currently install Powers", readme)
+        self.assertIn("Claude Desktop, **Cowork**", guide)
+        self.assertIn("Claude remote/cloud Code session", guide)
+        self.assertIn("Codex IDE extension", guide)
+        self.assertIn("discovered skills are enabled by default", guide)
+        self.assertIn("Kiro mobile does not currently install Powers", guide)
+        self.assertIn("[Apache License 2.0](../LICENSE.txt)", guide)
 
 
 if __name__ == "__main__":

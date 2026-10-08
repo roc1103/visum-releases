@@ -138,8 +138,8 @@ grep -q "Visum-CLI-$visum_expected_cli_version.zip" \
 }
 pass "AI Skill version is independent and pins the existing public CLI $visum_expected_cli_version"
 
-grep -q "/v$visum_expected_version/install-claude-code-app.sh" "$visum_repository/README.md" \
-    || fail "README Claude app installer does not use integration $visum_expected_version"
+grep -q "/v$visum_expected_version/install-claude-code-app.sh" "$visum_repository/docs/installation.md" \
+    || fail "installation guide Claude app installer does not use integration $visum_expected_version"
 grep -q "/v$visum_expected_version/install-claude-code-app.sh" \
     "$visum_repository/skills/visum/references/platforms.md" \
     || fail "packaged Claude app instructions do not use integration $visum_expected_version"
@@ -187,36 +187,38 @@ grep -q 'without displaying a runnable Confector command or the internal bundle 
     "$visum_repository/skills/visum/references/confector.md" || {
     fail "blocked Confector responses can expose internal execution details"
 }
-grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "Roo Code is not marked legacy"
-grep -q 'It is not a current supported target' "$visum_repository/README.md" || fail "Roo Code is not explicitly excluded from current support"
-visum_availability_count="$(grep -c '^\*\*Availability:\*\*' "$visum_repository/README.md")"
-[ "$visum_availability_count" -eq 11 ] || fail "README must contain one availability statement for each of the eleven current hosts"
-visum_surface_count="$(grep -c '^| Surface | Availability | Installation |$' "$visum_repository/README.md")"
-[ "$visum_surface_count" -eq 11 ] || fail "README must give an app/CLI/cloud surface table for each current host"
-visum_check_count="$(grep -c '^\*\*Verify installation:\*\*' "$visum_repository/README.md")"
-[ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
+grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "landing page does not mark Roo Code as legacy"
+grep -q 'Roo Code is not a current supported target' "$visum_repository/README.md" || fail "landing page does not exclude Roo Code from current support"
+visum_availability_count="$(grep -c '^\*\*Availability:\*\*' "$visum_repository/docs/installation.md")"
+[ "$visum_availability_count" -eq 11 ] || fail "installation guide must contain one availability statement for each current host"
+visum_surface_count="$(grep -c '^| Surface | Availability | Installation |$' "$visum_repository/docs/installation.md")"
+[ "$visum_surface_count" -eq 11 ] || fail "installation guide must give an app/CLI/cloud surface table for each current host"
+visum_check_count="$(grep -c '^\*\*Verify installation:\*\*' "$visum_repository/docs/installation.md")"
+[ "$visum_check_count" -ge 11 ] || fail "installation guide must give a verification step for every current host"
 grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
-grep -q '^| Host | Desktop app or IDE | Terminal agent | Cloud or web | Direct installation route | Public catalogue |$' \
-    "$visum_repository/README.md" || fail "README must expose app, CLI, cloud, install and catalogue status separately"
-grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/README.md" \
-    || fail "README must distinguish shell commands from agent-prompt commands"
-grep -q '^| Claude Desktop or web, ordinary \*\*Chat\*\* | Not through the pending direct route yet |' \
-    "$visum_repository/README.md" || fail "README must state Claude Chat's pending public-directory route without claiming it is unsupported"
-grep -q '^\*\*App or CLI?\*\* Both\.' "$visum_repository/README.md" \
-    || fail "README must give an immediate app/CLI answer for multi-surface hosts"
-grep -q 'discovered skills are enabled by default' "$visum_repository/README.md" \
-    || fail "README must explain Cline skill enablement"
-if grep -q 'Cascade in Windsurf/Devin Desktop' "$visum_repository/README.md"; then
-    fail "README must not conflate Windsurf and Devin Desktop"
+grep -q '^| Host | Direct route | Full instructions |$' \
+    "$visum_repository/README.md" || fail "README must give a compact host route table"
+grep -q 'docs/installation.md#openai-codex' "$visum_repository/README.md" \
+    || fail "README must link Codex alternatives to the installation guide"
+grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/docs/installation.md" \
+    || fail "installation guide must distinguish shell commands from agent prompts"
+grep -q '^| Claude Desktop or web, ordinary \*\*Chat\*\* | Pending public-directory listing |' \
+    "$visum_repository/docs/installation.md" || fail "installation guide must retain Claude Chat's pending public-directory route"
+grep -q '^\*\*Supported surfaces:\*\*' "$visum_repository/docs/installation.md" \
+    || fail "installation guide must describe supported app and CLI surfaces"
+grep -q 'discovered skills are enabled by default' "$visum_repository/docs/installation.md" \
+    || fail "installation guide must explain Cline skill enablement"
+if grep -q 'Cascade in Windsurf/Devin Desktop' "$visum_repository/docs/installation.md"; then
+    fail "installation guide must not conflate Windsurf and Devin Desktop"
 fi
-grep -q '^copilot plugin update visum$' "$visum_repository/README.md" \
-    || fail "README must use Copilot's documented unqualified plugin name for update"
-if grep -q '^copilot plugin update visum@visum$' "$visum_repository/README.md"; then
-    fail "README must not use the marketplace-qualified Copilot install selector for update"
+grep -q '^copilot plugin update visum$' "$visum_repository/docs/installation.md" \
+    || fail "installation guide must use Copilot's unqualified plugin name for update"
+if grep -q '^copilot plugin update visum@visum$' "$visum_repository/docs/installation.md"; then
+    fail "installation guide must not use the marketplace-qualified Copilot install selector for update"
 fi
-grep -q '^### Verification status right now$' "$visum_repository/README.md" \
-    || fail "README must distinguish package validation from live-host verification"
-if grep -q 'Existing compatible installations remain supported' "$visum_repository/README.md"; then
+grep -q '<a id="verification-status-right-now"></a>' "$visum_repository/docs/installation.md" \
+    || fail "installation guide must distinguish package validation from live-host verification"
+if grep -q 'Existing compatible installations remain supported' "$visum_repository/docs/installation.md"; then
     fail "obsolete Gemini individual-account claim remains"
 fi
 pass "release claims include current Roo and Gemini status"
