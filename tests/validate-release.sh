@@ -189,14 +189,14 @@ grep -q 'without displaying a runnable Confector command or the internal bundle 
 }
 grep -q 'Roo Code (legacy only)' "$visum_repository/README.md" || fail "Roo Code is not marked legacy"
 grep -q 'It is not a current supported target' "$visum_repository/README.md" || fail "Roo Code is not explicitly excluded from current support"
-visum_ready_count="$(grep -c '^\*\*Ready now:\*\*' "$visum_repository/README.md")"
-[ "$visum_ready_count" -eq 11 ] || fail "README must contain one Ready now statement for each of the eleven current hosts"
-visum_surface_count="$(grep -c '^| Surface | Works now? | What to install |$' "$visum_repository/README.md")"
+visum_availability_count="$(grep -c '^\*\*Availability:\*\*' "$visum_repository/README.md")"
+[ "$visum_availability_count" -eq 11 ] || fail "README must contain one availability statement for each of the eleven current hosts"
+visum_surface_count="$(grep -c '^| Surface | Availability | Installation |$' "$visum_repository/README.md")"
 [ "$visum_surface_count" -eq 11 ] || fail "README must give an app/CLI/cloud surface table for each current host"
-visum_check_count="$(grep -c '^\*\*Check it worked:\*\*' "$visum_repository/README.md")"
+visum_check_count="$(grep -c '^\*\*Verify installation:\*\*' "$visum_repository/README.md")"
 [ "$visum_check_count" -ge 11 ] || fail "README must give a verification step for every current host"
 grep -q '^## Start here$' "$visum_repository/README.md" || fail "README must begin with a host-selection guide"
-grep -q '^| Host | Desktop app or IDE | Terminal agent | Cloud or web | Easiest working route today | Public catalogue |$' \
+grep -q '^| Host | Desktop app or IDE | Terminal agent | Cloud or web | Direct installation route | Public catalogue |$' \
     "$visum_repository/README.md" || fail "README must expose app, CLI, cloud, install and catalogue status separately"
 grep -q '^- \*\*Terminal\*\* means the normal macOS Terminal app' "$visum_repository/README.md" \
     || fail "README must distinguish shell commands from agent-prompt commands"

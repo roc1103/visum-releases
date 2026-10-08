@@ -140,12 +140,12 @@ class InterfaceContractTests(unittest.TestCase):
             "Kiro",
             "OpenCode",
         )
-        self.assertEqual(readme.count("**Ready now:**"), len(headings))
+        self.assertEqual(readme.count("**Availability:**"), len(headings))
         self.assertEqual(
-            readme.count("| Surface | Works now? | What to install |"),
+            readme.count("| Surface | Availability | Installation |"),
             len(headings),
         )
-        self.assertGreaterEqual(readme.count("**Check it worked:**"), len(headings))
+        self.assertGreaterEqual(readme.count("**Verify installation:**"), len(headings))
         for index, heading in enumerate(headings):
             start = readme.index(f"## {heading}")
             if index + 1 < len(headings):
@@ -154,8 +154,8 @@ class InterfaceContractTests(unittest.TestCase):
                 end = readme.index("## Roo Code (legacy only)", start)
             section = readme[start:end]
             with self.subTest(host=heading):
-                self.assertIn("| Surface | Works now? | What to install |", section)
-                self.assertIn("**Check it worked:**", section)
+                self.assertIn("| Surface | Availability | Installation |", section)
+                self.assertIn("**Verify installation:**", section)
                 self.assertIn("Official reference", section)
 
         self.assertIn("Claude Desktop, **Cowork**", readme)
